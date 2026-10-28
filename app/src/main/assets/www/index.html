@@ -1,0 +1,2355 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>html{-webkit-tap-highlight-color:transparent} body{margin:0 0 20px}</style>
+<title>Kỳ Môn Binh Pháp</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+/* Bố cục: thanh điều khiển → [bàn | tổng luận] → la bàn 12 phương → chiêm việc quân → an doanh; thêm các trang Chọn giờ, Giáo trình, Tra cứu.
+   Cùng hệ màu với «Lạc Thư Kỳ Môn»: giấy xám lục, son đỏ làm nhấn, đồng thau cho tuần thủ. */
+:root{
+  --paper:#F0F1ED; --surface:#FCFCFA; --surface-2:#E6E8E1; --sunken:#E9EBE4;
+  --ink:#171A1B; --ink-2:#4C5354; --ink-3:#6F7779;
+  --line:#D3D7CD; --line-2:#BCC2B6; --line-3:#8E9689;
+  --cinnabar:#A93420; --brass:#8A6B1F;
+  --moc:#31684A; --hoa:#A93420; --tho:#8A6B1F; --kim:#576875; --thuy:#1E4459;
+  --cat:#2C6647; --hung:#A93420; --binh:#666E71;
+  --glow:rgba(169,52,32,.10); --hl:rgba(138,107,31,.16);
+  --shadow:0 1px 2px rgba(23,26,27,.06), 0 8px 24px -14px rgba(23,26,27,.28);
+  --on-accent:#FCFCFA;
+  --han:"Songti SC","STSong","SimSun","Noto Serif CJK SC","Noto Serif TC","Hiragino Mincho ProN",serif;
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"Be Vietnam Pro","Segoe UI",Roboto,system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1012; --surface:#15191B; --surface-2:#1D2225; --sunken:#101416;
+    --ink:#E9E7E0; --ink-2:#AAB1B2; --ink-3:#8D9699;
+    --line:#2E3538; --line-2:#414A4E; --line-3:#616C71;
+    --cinnabar:#DC6D4D; --brass:#C6A24F;
+    --moc:#5DA37B; --hoa:#DC6D4D; --tho:#C6A24F; --kim:#93A5B2; --thuy:#5A8FB4;
+    --cat:#5DA37B; --hung:#DC6D4D; --binh:#98A1A4;
+    --glow:rgba(220,109,77,.13); --hl:rgba(198,162,79,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -16px rgba(0,0,0,.8);
+    --on-accent:#15191B; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1012; --surface:#15191B; --surface-2:#1D2225; --sunken:#101416;
+  --ink:#E9E7E0; --ink-2:#AAB1B2; --ink-3:#8D9699;
+  --line:#2E3538; --line-2:#414A4E; --line-3:#616C71;
+  --cinnabar:#DC6D4D; --brass:#C6A24F;
+  --moc:#5DA37B; --hoa:#DC6D4D; --tho:#C6A24F; --kim:#93A5B2; --thuy:#5A8FB4;
+  --cat:#5DA37B; --hung:#DC6D4D; --binh:#98A1A4;
+  --glow:rgba(220,109,77,.13); --hl:rgba(198,162,79,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -16px rgba(0,0,0,.8);
+  --on-accent:#15191B; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper); color:var(--ink); font-family:var(--body); font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--surface)}
+h1,h2,h3,h4{margin:0; font-family:var(--display); font-weight:500; text-wrap:balance}
+p{margin:0}
+button,select,input{font-family:inherit; font-size:inherit; color:inherit}
+:focus-visible{outline:2px solid var(--cinnabar); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+.hz{font-family:var(--han)}
+.gutter{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
+.wrap{max-width:1220px; margin:0 auto}
+
+/* ---------- Đầu trang ---------- */
+.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:9; background:var(--surface); border-bottom:1px solid var(--line-2)}
+.top .wrap{display:flex; flex-wrap:wrap; align-items:center; gap:8px 22px; padding-block:10px}
+.brand{display:flex; align-items:center; gap:12px; min-width:0}
+.seal{flex:none; width:40px; height:40px; display:grid; place-items:center; font-family:var(--han); font-size:24px; line-height:1; color:var(--on-accent); background:var(--cinnabar); border-radius:3px}
+.brand h1{font-size:22px; letter-spacing:-.01em; line-height:1.1}
+.brand .sub{font-size:11px; color:var(--ink-3); letter-spacing:.08em; text-transform:uppercase}
+nav.views{display:flex; flex-wrap:wrap; gap:2px; margin-left:auto}
+nav.views a{color:var(--ink-3); text-decoration:none; padding:7px 12px; border-radius:3px; font-size:13.5px; font-weight:500}
+nav.views a:hover{color:var(--ink); background:var(--sunken)}
+nav.views a[aria-current="page"]{color:var(--ink); background:var(--surface-2); box-shadow:inset 0 -2px 0 var(--cinnabar)}
+
+main{padding-block:22px 64px}
+.view[hidden]{display:none!important}
+
+/* ---------- Thanh điều khiển ---------- */
+.controls{display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px 16px; background:var(--surface); border:1px solid var(--line); padding:13px 15px; border-radius:4px; box-shadow:var(--shadow)}
+.field{display:flex; flex-direction:column; gap:5px; min-width:0}
+.field > label, .field > .lab{font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); font-weight:600}
+.field input, .field select{background:var(--surface-2); border:1px solid var(--line-2); color:var(--ink); padding:7px 9px; border-radius:3px; font-variant-numeric:tabular-nums; max-width:100%}
+input.tin{width:5.4em; text-align:center}
+.btnrow{display:flex; gap:6px; align-items:center; flex-wrap:wrap}
+button.b{background:var(--surface-2); border:1px solid var(--line-2); color:var(--ink-2); padding:7px 12px; border-radius:3px; cursor:pointer; font-size:13.5px; font-weight:500}
+button.b:hover{background:var(--paper); color:var(--ink); border-color:var(--line-3)}
+button.b.primary{background:var(--cinnabar); border-color:var(--cinnabar); color:var(--on-accent)}
+.seg{display:inline-flex; border:1px solid var(--line-2); border-radius:3px; overflow:hidden; flex-wrap:wrap}
+.seg button{background:var(--surface-2); border:0; color:var(--ink-3); padding:7px 12px; cursor:pointer; font-size:13px; font-weight:500; border-right:1px solid var(--line-2)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+.chips{display:flex; flex-wrap:wrap; gap:6px}
+.chip{border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2); padding:4px 10px; border-radius:999px; font-size:12.5px; cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.manual{display:none; flex-wrap:wrap; gap:10px 14px; padding-top:10px; border-top:1px dashed var(--line-2); width:100%}
+.manual.on{display:flex}
+.chk{display:flex; align-items:center; gap:6px; font-size:13px; color:var(--ink-2)}
+
+/* ---------- Sân công cụ ---------- */
+.stage{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); gap:20px; align-items:start; margin-top:18px}
+@media (max-width:960px){.stage{grid-template-columns:minmax(0,1fr)}}
+.col{display:flex; flex-direction:column; gap:14px; min-width:0}
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:14px 16px 16px; min-width:0}
+.panel > h2, .ph{font-family:var(--body); font-size:10.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); margin-bottom:10px}
+.plate{background:var(--surface); border:1px solid var(--line-3); border-radius:4px; box-shadow:var(--shadow); overflow:hidden}
+.plate-head{display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; padding:9px 13px; border-bottom:1px solid var(--line-2); background:var(--surface-2); font-size:11.5px; letter-spacing:.06em; color:var(--ink-3)}
+.plate-head b{color:var(--ink-2); font-weight:600}
+.board{display:grid; grid-template-columns:repeat(3,1fr); background:var(--line-2); gap:1px}
+.cell{background:var(--surface); padding:8px 8px 7px; min-height:128px; display:flex; flex-direction:column; gap:4px; cursor:pointer; border:0; text-align:left; font:inherit; color:inherit; position:relative}
+.cell:hover{background:var(--sunken)}
+.cell.sel{background:linear-gradient(var(--glow),var(--glow)),var(--surface); box-shadow:inset 0 0 0 2px var(--cinnabar)}
+.cell.dt::after{content:""; position:absolute; inset:3px; border:1.5px dashed var(--brass); border-radius:2px; pointer-events:none}
+.cell.empty{cursor:default; background:var(--sunken)}
+.c-top{display:flex; justify-content:space-between; gap:4px; font-size:11px; color:var(--ink-3); min-width:0}
+.c-top span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.c-top .tinh{color:var(--ink-2); font-weight:600}
+.c-mon{font-size:12.5px; font-weight:600; align-self:center; padding:1px 8px; border:1px solid currentColor; border-radius:2px}
+.c-can{display:flex; justify-content:center; align-items:baseline; gap:8px; margin-top:2px}
+.c-can .tb{font-family:var(--display); font-size:21px; line-height:1}
+.c-can .db{font-family:var(--display); font-size:16px; color:var(--ink-2); line-height:1}
+.c-can .db::before{content:"/"; color:var(--line-3); margin-right:6px}
+.c-can .phu{font-size:12px; color:var(--ink-3)}
+.c-foot{margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:4px; font-size:10.5px; color:var(--ink-3)}
+.mk{display:inline-grid; place-items:center; width:16px; height:16px; border-radius:50%; border:1px solid currentColor; font-family:var(--han); font-size:10px; line-height:1}
+.mk.fu,.mk.shi{color:var(--brass)} .mk.kg{color:var(--binh)} .mk.ma{color:var(--cinnabar)}
+.marks{display:flex; gap:3px}
+.g-cat{color:var(--cat)} .g-hung{color:var(--hung)} .g-binh{color:var(--binh)}
+.midcell{cursor:default; justify-content:center; text-align:center; gap:4px}
+.midcell .cuc{font-family:var(--display); font-size:20px; line-height:1.1}
+.midcell .cuc b{color:var(--cinnabar); font-size:26px; font-weight:600}
+.midcell small{font-size:11px; color:var(--ink-3)}
+.legend{display:flex; flex-wrap:wrap; gap:6px 14px; padding:8px 13px; border-top:1px solid var(--line-2); background:var(--surface-2); font-size:11px; color:var(--ink-3)}
+.legend span{display:inline-flex; gap:5px; align-items:center}
+.legend .dash{width:16px; height:12px; border:1.5px dashed var(--brass); border-radius:2px; display:inline-block}
+
+/* ---------- Lời luận ---------- */
+.rd-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; margin-bottom:8px}
+.rd-head h2{font-size:24px}
+.rd-head .q{font-family:var(--han); font-size:22px; color:var(--cinnabar)}
+.rd-head .m{font-size:12px; color:var(--ink-3); letter-spacing:.04em}
+.layers{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px}
+.lay{font-size:12px; border:1px solid var(--line-2); border-radius:2px; padding:2px 8px; color:var(--ink-2); background:var(--surface-2)}
+.lay i{font-style:normal; color:var(--ink-3); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; margin-right:5px}
+
+.states{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px}
+.st{font-size:11.5px; padding:2px 8px; border-radius:2px; border:1px solid currentColor}
+.st.x{color:var(--hung)} .st.o{color:var(--cat)} .st.n{color:var(--binh)}
+.khung{font-size:13.5px; color:var(--ink-2); background:var(--sunken); border-left:3px solid var(--brass); padding:8px 12px; border-radius:0 3px 3px 0; margin-bottom:14px}
+.khung b{color:var(--ink); font-weight:600}
+.sec{margin-top:16px}
+.sec > h3{font-family:var(--body); font-size:10.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); margin-bottom:8px; display:flex; justify-content:space-between; gap:8px; align-items:baseline}
+.sec > h3 small{letter-spacing:.02em; text-transform:none; font-weight:400}
+table.t{width:100%; border-collapse:collapse; font-size:13px}
+table.t th{text-align:left; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); font-weight:600; padding:6px 10px 6px 0; border-bottom:1px solid var(--line-2); vertical-align:bottom}
+table.t td{padding:7px 10px 7px 0; border-bottom:1px solid var(--line); vertical-align:top}
+table.t td:first-child{font-weight:600; white-space:nowrap}
+table.t td.hd{color:var(--ink-2)}
+.tscroll{overflow-x:auto; max-width:100%}
+.card{border:1px solid var(--line); border-radius:3px; padding:10px 12px; background:var(--surface); display:flex; flex-direction:column; gap:5px; min-width:0}
+.card + .card{margin-top:8px}
+.card .k{font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); font-weight:600}
+.card .ttl{font-family:var(--display); font-size:17px; line-height:1.25}
+.card .ttl .hz{font-size:14px; color:var(--ink-3); margin-left:6px}
+.card p{font-size:13.5px; color:var(--ink-2)}
+.card p b{color:var(--ink); font-weight:600}
+.src{font-size:10.5px; color:var(--ink-3); letter-spacing:.04em}
+.han{font-family:var(--han); font-size:13.5px; color:var(--ink-3); line-height:1.7; border-left:2px solid var(--line-2); padding-left:9px}
+body:not(.show-han) .han{display:none}
+.vat{font-size:13px; color:var(--ink-2)}
+.empty-note{font-size:13px; color:var(--ink-3); font-style:italic}
+.grid2{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:10px}
+.timeline{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden}
+.timeline div{background:var(--surface); padding:8px 10px; font-size:12.5px}
+.timeline b{display:block; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3)}
+.timeline .now{background:var(--hl)}
+.dtlist{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden}
+.dtrow{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto; gap:8px; background:var(--surface); padding:7px 10px; font-size:13px; align-items:baseline}
+.dtrow .ps{display:flex; gap:4px; flex-wrap:wrap; justify-content:flex-end}
+.pbtn{border:1px solid var(--line-2); background:var(--surface-2); border-radius:2px; font-size:12px; padding:1px 7px; cursor:pointer; color:var(--ink-2)}
+.pbtn:hover{border-color:var(--cinnabar); color:var(--ink)}
+
+/* ---------- Cân theo việc ---------- */
+.cv-top{display:flex; align-items:flex-end; justify-content:space-between; gap:10px 16px; flex-wrap:wrap; margin-bottom:12px}
+.cv-top h2{font-family:var(--body); font-size:10.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3); margin:0 0 8px}
+.cv-top .field{min-width:200px}
+.verdict{display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:4px 14px; align-items:center; padding:10px 14px; border-radius:3px; background:var(--sunken); border-left:4px solid var(--binh); margin-bottom:12px}
+.verdict.v0{border-left-color:var(--cat)} .verdict.v2{border-left-color:var(--hung)}
+.verdict .vk{font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3)}
+.verdict.v0 .vk{color:var(--cat)} .verdict.v2 .vk{color:var(--hung)}
+.verdict .vt{font-family:var(--display); font-size:21px; line-height:1.25; color:var(--ink)}
+.verdict .vn{font-variant-numeric:tabular-nums; font-size:20px; font-weight:600; color:var(--ink-2)}
+.verdict .vs{grid-column:1 / -1; font-size:12.5px; color:var(--ink-2)}
+.cv-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(330px,1fr)); gap:8px}
+.cvrow{background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:8px 10px; display:grid; grid-template-columns:minmax(0,1fr) auto 46px; gap:2px 10px; align-items:center; font-size:13px}
+.cvrow.chu{box-shadow:inset 3px 0 0 var(--brass); background:var(--sunken)}
+.cvrow .nm b{font-weight:600; color:var(--ink)}
+.cvrow .nm .src{display:block; margin-top:1px}
+.cvrow .num{text-align:right; font-variant-numeric:tabular-nums; font-weight:600}
+.cvrow .num.pos{color:var(--cat)} .cvrow .num.neg{color:var(--hung)}
+.cvrow .yeu{grid-column:1 / -1; font-size:11.5px; color:var(--ink-3); line-height:1.5}
+.cvrow .yeu .p{color:var(--cat)} .cvrow .yeu .m{color:var(--hung)}
+.cvrow.vang{opacity:.6}
+.dbar{grid-column:1 / -1; position:relative; height:6px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.dbar::after{content:""; position:absolute; left:50%; top:-2px; bottom:-2px; width:1px; background:var(--line-3)}
+.dbar i{position:absolute; top:0; bottom:0; border-radius:3px}
+.dbar i.pos{left:50%; background:var(--cat)} .dbar i.neg{right:50%; background:var(--hung)}
+.cv-phe{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:12px; margin-bottom:12px}
+.cv-phe .pt{display:flex; justify-content:space-between; align-items:baseline; font-weight:600; margin-bottom:6px}
+.cv-phe .pt span{font-variant-numeric:tabular-nums}
+.cv-notes{list-style:none; margin:12px 0 0; padding:0; display:flex; flex-direction:column; gap:5px; font-size:13px; color:var(--ink-2)}
+.cv-notes li{padding-left:16px; position:relative}
+.cv-notes li::before{content:"·"; position:absolute; left:4px; color:var(--ink-3)}
+.cv-notes li.p::before{content:"+"; color:var(--cat); font-weight:700}
+.cv-notes li.m::before{content:"−"; color:var(--hung); font-weight:700}
+.cv-sub{font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin:14px 0 4px}
+.cv-foot{margin-top:12px}
+.lv-cung{font-size:12px; letter-spacing:0; text-transform:none; color:var(--ink-2); font-weight:500; margin-left:6px}
+.lv-out{margin-top:12px}
+.to-cung{align-self:flex-start}
+#reading{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 86px)}
+.rd-wide .cards2{display:grid; grid-template-columns:repeat(auto-fit, minmax(420px,1fr)); gap:10px; align-items:start}
+.rd-wide .cards2 .card{margin:0}
+@media (max-width:640px){.rd-wide .cards2{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- Giáo trình ---------- */
+.doc{display:grid; grid-template-columns:220px minmax(0,1fr); gap:32px; align-items:start}
+@media (max-width:900px){.doc{grid-template-columns:minmax(0,1fr)}}
+.toc{position:sticky; top:calc(env(safe-area-inset-top,0px) + 76px); font-size:13px; display:flex; flex-direction:column; gap:2px; max-height:calc(100vh - 100px); overflow:auto}
+@media (max-width:900px){.toc{position:static; max-height:none}}
+.toc a{color:var(--ink-3); text-decoration:none; padding:4px 8px; border-left:2px solid var(--line)}
+.toc a:hover{color:var(--ink); border-left-color:var(--cinnabar)}
+.prose{max-width:74ch; min-width:0}
+.prose h2{font-size:28px; margin:34px 0 12px; scroll-margin-top:90px}
+.prose h2:first-child{margin-top:0}
+.prose h3{font-size:19px; margin:22px 0 8px}
+.prose p, .prose li{font-size:15px; color:var(--ink-2)}
+.prose p + p{margin-top:10px}
+.prose ul, .prose ol{padding-left:20px; margin:8px 0}
+.prose li + li{margin-top:5px}
+.prose b, .prose strong{color:var(--ink); font-weight:600}
+.prose blockquote{margin:12px 0; padding:8px 14px; border-left:3px solid var(--cinnabar); background:var(--surface); color:var(--ink-2); font-size:14.5px}
+.prose blockquote .hz{display:block; font-size:14px; color:var(--ink-3); margin-top:4px}
+.prose .wide{max-width:none}
+.prose table.t{margin:10px 0}
+.note{font-size:13px; color:var(--ink-3); border-top:1px dashed var(--line-2); padding-top:8px; margin-top:12px}
+.steps{list-style:none; padding:0; margin:12px 0; counter-reset:s}
+.steps li{counter-increment:s; display:grid; grid-template-columns:30px minmax(0,1fr); gap:10px; padding:8px 0; border-bottom:1px solid var(--line)}
+.steps li::before{content:counter(s); font-family:var(--display); font-size:20px; color:var(--cinnabar); line-height:1.3}
+.explorer{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:12px; margin:12px 0; max-width:none}
+.mcgrid{border-collapse:collapse; font-size:12px; min-width:620px}
+.mcgrid th{font-weight:600; color:var(--ink-3); padding:5px 6px; font-size:11px}
+.mcgrid td{padding:0; border:1px solid var(--line)}
+.mcgrid button{width:100%; border:0; background:transparent; padding:6px 4px; cursor:pointer; font:inherit; color:inherit; text-align:center; line-height:1.25}
+.mcgrid button:hover, .mcgrid button.on{box-shadow:inset 0 0 0 2px var(--cinnabar)}
+.mcgrid .hz{font-size:13px}
+.r-hoa{background:color-mix(in srgb, var(--kim) 10%, transparent)}
+.r-sinh{background:color-mix(in srgb, var(--tho) 12%, transparent)}
+.r-duocSinh{background:color-mix(in srgb, var(--cat) 14%, transparent)}
+.r-khac{background:color-mix(in srgb, var(--hung) 16%, transparent)}
+.r-biKhac{background:color-mix(in srgb, var(--thuy) 12%, transparent)}
+.r-none{background:var(--sunken)}
+.keyrow{display:flex; flex-wrap:wrap; gap:6px 14px; font-size:11.5px; color:var(--ink-3); margin:8px 0}
+.keyrow span{display:inline-flex; align-items:center; gap:5px}
+.keyrow i{width:14px; height:12px; display:inline-block; border:1px solid var(--line-2)}
+.diag{max-width:100%; overflow-x:auto}
+.diag svg{display:block; max-width:100%; height:auto}
+
+/* ---------- Tra cứu ---------- */
+.tabs{display:flex; flex-wrap:wrap; gap:2px; border-bottom:1px solid var(--line-2); margin-bottom:14px}
+.tabs button{background:none; border:0; border-bottom:2px solid transparent; color:var(--ink-3); padding:7px 11px; cursor:pointer; font-size:13px; font-weight:500; margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--cinnabar)}
+.lookup td{font-size:13px}
+.lookup td .hz{color:var(--ink-3)}
+.tag{font-size:10.5px; padding:0 6px; border-radius:2px; border:1px solid currentColor; margin-left:4px; white-space:nowrap}
+
+footer.foot{border-top:1px solid var(--line); margin-top:40px; padding-top:14px; font-size:12px; color:var(--ink-3); line-height:1.7}
+.toast{position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--paper); padding:9px 18px; border-radius:3px; font-size:13px; opacity:0; pointer-events:none; transition:opacity .18s; z-index:20}
+.toast.on{opacity:1}
+@media (max-width:640px){
+  .brand h1{font-size:19px}
+  .cell{min-height:118px; padding:6px 5px}
+  .c-top{flex-direction:column; gap:0; font-size:10px}
+  .c-can .tb{font-size:18px} .c-can .db{font-size:14px}
+  .c-mon{font-size:11px; padding:1px 5px}
+  .rd-head h2{font-size:20px}
+  .dtrow{grid-template-columns:minmax(0,1fr)}
+  .dtrow .ps{justify-content:flex-start}
+  .cv-grid{grid-template-columns:minmax(0,1fr)}
+  .verdict .vt{font-size:18px}
+  .timeline{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ---------- Binh pháp: bổ sung ---------- */
+.controls{margin-bottom:18px}
+.stage{margin-top:0}
+.panel.wide{margin-top:20px}
+.cell.best{box-shadow:inset 0 0 0 2px var(--cat)}
+.cell.best.sel{box-shadow:inset 0 0 0 2px var(--cinnabar)}
+.c-cach{display:flex; gap:6px; justify-content:center; font-size:10.5px; min-height:14px}
+.sc{display:inline-grid; place-items:center; min-width:22px; height:16px; padding:0 4px; border-radius:2px; font-style:normal; font-size:10.5px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink-3); border:1px solid var(--line-2)}
+.sc.pos{color:var(--cat); border-color:currentColor} .sc.neg{color:var(--hung); border-color:currentColor}
+.mk.dich{color:var(--cinnabar); background:var(--glow)}
+.mini{font-size:12.5px; color:var(--ink-3); margin:4px 0 10px; max-width:80ch}
+.qh{font-family:var(--han); color:var(--ink-2)}
+.verdict.v1{border-left-color:var(--brass)} .verdict.v1 .vk{color:var(--brass)}
+.vote{display:inline-block; font-size:11.5px; margin:2px 8px 2px 0; color:var(--ink-3)}
+.vote b{font-weight:600} .vote.v-k b{color:var(--cat)} .vote.v-c b{color:var(--brass)}
+.dirs{display:flex; flex-direction:column; gap:8px}
+.dirs > div{display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.dirs .k{font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); font-weight:600; min-width:72px}
+.pbtn.pos b{color:var(--cat)} .pbtn.neg b{color:var(--hung)}
+.tlist{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden}
+.trow{background:var(--surface)}
+.trow summary{display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 12px; padding:7px 10px; cursor:pointer; list-style:none; font-size:13px; align-items:baseline}
+.trow summary::-webkit-details-marker{display:none}
+.trow .tn-ket{text-align:right}
+.trow .tn-ten{font-weight:600; color:var(--ink); padding-left:12px; position:relative}
+.trow .tn-ten::before{content:""; position:absolute; left:0; top:.55em; width:6px; height:6px; border-radius:50%; background:var(--binh)}
+.trow.tp .tn-ten::before{background:var(--cat)} .trow.tm .tn-ten::before{background:var(--hung)}
+.trow .tn-ten .hz{font-weight:400; color:var(--ink-3); font-size:12px}
+.trow .tn-ket{color:var(--ink-2)} .trow.tm .tn-ket{color:var(--hung)} .trow.tp .tn-ket{color:var(--cat)}
+.trow p{padding:0 10px 10px 22px; font-size:13px; color:var(--ink-2)}
+.trow[open]{background:var(--sunken)}
+.cols2{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:14px; margin-top:12px}
+.mh{font-family:var(--body); font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin-bottom:6px}
+.notes{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--ink-2)}
+.notes li{padding-left:16px; position:relative}
+.notes li::before{content:"·"; position:absolute; left:4px; color:var(--ink-3)}
+.notes li.p::before{content:"+"; color:var(--cat); font-weight:700}
+.notes li.m::before{content:"−"; color:var(--hung); font-weight:700}
+.card.cc{border-top:2px solid var(--cat)} .card.ch{border-top:2px solid var(--hung)}
+.card + .card{margin-top:0}
+.cv-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(290px,1fr)); gap:10px; align-items:start}
+.cv{background:var(--surface); border:1px solid var(--line); border-radius:3px; padding:10px 12px; border-left:3px solid var(--binh); min-width:0}
+.cv.tp{border-left-color:var(--cat)} .cv.tm{border-left-color:var(--hung)}
+.cv header .k{font-family:var(--han); font-size:12px; color:var(--ink-3)}
+.cv h3{font-size:17px; line-height:1.25; margin:2px 0 4px}
+.cv .ket{font-size:13.5px; font-weight:600; color:var(--ink)}
+.cv.tp .ket{color:var(--cat)} .cv.tm .ket{color:var(--hung)}
+.cv details{margin-top:6px}
+.cv summary{font-size:12px; color:var(--ink-3); cursor:pointer}
+.cv .notes{margin-top:8px}
+.cv .src{display:block; margin-top:6px}
+.lb-wrap{display:grid; grid-template-columns:minmax(0,420px) minmax(0,1fr); gap:20px; align-items:start}
+@media (max-width:900px){.lb-wrap{grid-template-columns:minmax(0,1fr)}}
+.lb-side{min-width:0}
+.diag svg{width:100%; max-width:420px; margin:0 auto}
+.lb-ring{fill:var(--surface); stroke:var(--line-3); stroke-width:1}
+.lb-in{fill:var(--surface-2); stroke:var(--line-2)}
+.lb-sp{stroke:var(--line); stroke-width:1}
+.lb-chi{font-family:var(--han); font-size:17px; fill:var(--ink); text-anchor:middle}
+.lb-vi{font-size:9.5px; fill:var(--ink-3); text-anchor:middle}
+.lb-dir{font-size:9px; fill:var(--ink-3); text-anchor:middle; letter-spacing:.06em; text-transform:uppercase}
+.lb-more{font-size:10px; fill:var(--ink-3); text-anchor:middle}
+.lb-chip rect{stroke-width:1}
+.lb-chip text{font-family:var(--han); font-size:10.5px; text-anchor:middle}
+.lb-chip.c-brass rect{fill:var(--hl); stroke:var(--brass)} .lb-chip.c-brass text{fill:var(--brass)}
+.lb-chip.c-cin rect{fill:var(--glow); stroke:var(--cinnabar)} .lb-chip.c-cin text{fill:var(--cinnabar)}
+.lb-chip.c-gray rect{fill:var(--surface-2); stroke:var(--line-3)} .lb-chip.c-gray text{fill:var(--ink-3)}
+.lb-chip.c-moc rect{fill:var(--surface); stroke:var(--moc)} .lb-chip.c-moc text{fill:var(--moc)}
+.lb-chip.c-thuy rect{fill:var(--surface); stroke:var(--thuy)} .lb-chip.c-thuy text{fill:var(--thuy)}
+.sw{width:12px; height:12px; display:inline-block; border:1px solid; border-radius:2px}
+.sw.c-brass,.pill.c-brass{color:var(--brass)} .sw.c-cin,.pill.c-cin{color:var(--cinnabar)} .sw.c-gray,.pill.c-gray{color:var(--ink-3)} .sw.c-moc,.pill.c-moc{color:var(--moc)} .sw.c-thuy,.pill.c-thuy{color:var(--thuy)}
+.pill{display:inline-block; font-size:11px; padding:0 6px; border:1px solid currentColor; border-radius:2px; line-height:1.6; margin:1px 0; font-family:var(--han)}
+td .pill{font-family:var(--body)}
+#laBanTab td:first-child .pill{font-family:var(--han)}
+.dn-wall{fill:var(--surface-2); stroke:var(--line-2)}
+.dn-pt circle{fill:var(--surface); stroke:var(--line-3)}
+.dn-pt.tuong circle{stroke:var(--cinnabar); stroke-width:2} .dn-pt.mon circle{stroke:var(--brass); stroke-width:2}
+.dn-pt.co circle{fill:var(--sunken); stroke-dasharray:3 3}
+.dn-can{font-family:var(--han); font-size:13px; fill:var(--ink); text-anchor:middle}
+.dn-ten{font-size:7.5px; fill:var(--ink-3); text-anchor:middle}
+.dn-vai{font-size:10px; fill:var(--ink-2); text-anchor:middle; font-weight:600}
+.dn-mid{font-family:var(--display); font-size:18px; fill:var(--ink); text-anchor:middle}
+.dn-mid2{font-size:10px; fill:var(--ink-3); text-anchor:middle}
+table.gio tr.xau td{opacity:.55}
+table.gio tr.tot td:first-child{box-shadow:inset 3px 0 0 var(--cat); padding-left:8px}
+table.gio td:first-child{white-space:nowrap}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px}
+.prose ol > li{margin-top:6px}
+@media (max-width:640px){
+  .c-cach{font-size:9.5px; gap:3px}
+  .trow .tn-ket{text-align:left; padding-left:12px}
+  .c-foot{flex-wrap:wrap}
+}
+
+.stage.bp{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); grid-template-areas:"board tong" "cung tong"; gap:20px; align-items:start}
+.stage.bp .a-board{grid-area:board} .stage.bp .a-tong{grid-area:tong} .stage.bp .a-cung{grid-area:cung}
+@media (max-width:960px){.stage.bp{grid-template-columns:minmax(0,1fr); grid-template-areas:"board" "tong" "cung"}}
+.lb-chip text{font-size:10px}
+.lb-card{font-size:10px; letter-spacing:.14em; fill:var(--ink-3); text-anchor:middle; font-weight:600}
+.sw{background:color-mix(in srgb, currentColor 14%, transparent); border-color:currentColor}
+.canh{font-size:13px; color:var(--hung); background:var(--glow); border:1px solid var(--hung); border-radius:3px; padding:8px 12px; margin-bottom:12px}
+.canh b{font-weight:600}
+.tt4{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border:1px solid var(--line-2); border-radius:3px; overflow:hidden; background:var(--line-2); gap:1px}
+.tt4 > div{background:var(--surface); display:flex; flex-direction:column; align-items:center; gap:2px; padding:9px 4px; text-align:center}
+.tt4 .k{font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); font-weight:600}
+.tt4 b{font-family:var(--display); font-size:20px; font-weight:500; line-height:1.2; color:var(--ink)}
+.tt4 .hz{font-size:12px; color:var(--ink-3)}
+.ttm{display:grid; grid-template-columns:auto 1fr; gap:6px 12px; margin:12px 0 0; font-size:13.5px}
+.ttm dt{color:var(--ink-3)} .ttm dd{margin:0; text-align:right; color:var(--ink)} .ttm dd b{font-weight:600}
+@media (max-width:400px){.tt4 b{font-size:17px}}
+.tt-panel{margin-bottom:18px}
+#tuTru{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:14px 24px; align-items:center}
+#tuTru .ttm{margin:0}
+@media (max-width:760px){#tuTru{grid-template-columns:minmax(0,1fr)}}
+
+</style>
+
+<header class="top gutter">
+  <div class="wrap">
+    <div class="brand">
+      <span class="seal" aria-hidden="true">兵</span>
+      <div><h1>Kỳ Môn Binh Pháp</h1><p class="sub">奇門兵法 · 主客 · 九遁 · 攻守 · 安營</p></div>
+    </div>
+    <nav class="views" aria-label="Phần trang">
+      <a href="#cong-cu" data-v="cong-cu" aria-current="page">Công cụ</a>
+      <a href="#chon-gio" data-v="chon-gio">Chọn giờ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="gutter">
+<div class="wrap">
+
+<form class="controls" id="ctrl" autocomplete="off">
+  <div class="field"><label for="fDate">Ngày dương lịch</label><input type="date" id="fDate"></div>
+  <div class="field"><label for="fTime">Giờ (24h)</label><input type="text" id="fTime" class="tin" inputmode="numeric" maxlength="5" placeholder="00:00"></div>
+  <div class="field"><label for="fTz">Múi giờ</label>
+    <select id="fTz"><option value="7">UTC+7 · Việt Nam</option><option value="8">UTC+8 · Trung Quốc</option><option value="9">UTC+9 · Nhật · Hàn</option><option value="0">UTC+0</option></select></div>
+  <div class="field"><span class="lab">Giờ</span>
+    <div class="btnrow"><button type="button" class="b" id="bPrev" aria-label="Lùi một giờ">◀</button><button type="button" class="b primary" id="bNow">Bây giờ</button><button type="button" class="b" id="bNext" aria-label="Tới một giờ">▶</button></div></div>
+  <div class="field"><span class="lab">Phái</span>
+    <div class="seg" id="segPhai"><button type="button" data-v="chuyen">Chuyển bàn</button><button type="button" data-v="phi">Phi bàn</button></div></div>
+  <div class="field"><span class="lab">Định cục</span>
+    <div class="seg" id="segCuc"><button type="button" data-v="chuyetbo">Chuyết bổ</button><button type="button" data-v="trinhuan">Trí nhuận</button></div></div>
+  <div class="field"><span class="lab">Trực sử khi tuần thủ ở Trung 5</span>
+    <div class="seg" id="segSu"><button type="button" data-v="trung" title="元靈經 卷一: đếm từ chính Trung 5">Đếm từ Trung 5</button><button type="button" data-v="khon" title="Cách của Lạc Thư Kỳ Môn: ký Khôn 2 rồi đếm">Ký Khôn 2</button></div></div>
+  <div class="field"><label for="fTy">Giao ngày</label>
+    <select id="fTy"><option value="1">Tý muộn · 23:00</option><option value="0">00:00</option></select></div>
+  <div class="field"><span class="lab">Nguyên văn</span>
+    <div class="seg" id="segHan"><button type="button" data-v="0">Ẩn</button><button type="button" data-v="1">Hiện chữ Hán</button></div></div>
+</form>
+
+<!-- ============ CÔNG CỤ ============ -->
+<section class="view" id="v-cong-cu" aria-label="Công cụ binh pháp">
+  <section class="panel tt-panel" aria-labelledby="hTt"><h2 id="hTt">Tứ trụ</h2><div id="tuTru"></div></section>
+  <div class="stage bp">
+      <section class="plate a-board" aria-label="Bàn cửu cung">
+        <div class="plate-head"><span id="phLeft">—</span><span id="phRight">—</span></div>
+        <div class="board" id="board"></div>
+        <div class="legend">
+          <span><i class="mk fu">符</i> Trực phù</span><span><i class="mk fu">使</i> Trực sử</span><span><i class="mk dich">敵</i> Lục Canh (địch)</span><span><i class="mk kg">空</i> Tuần không</span><span><i class="mk ma">馬</i> Dịch mã</span><span><i class="sc pos">+2</i> Điểm phương</span>
+        </div>
+      </section>
+      <section class="panel a-tong" aria-labelledby="hTong"><h2 id="hTong">Tổng luận giờ này</h2><div id="tong"></div></section>
+      <section class="panel a-cung" id="cungPanel" aria-live="polite"></section>
+  </div>
+</section>
+
+<!-- ============ CHỌN GIỜ ============ -->
+<section class="view" id="v-chon-gio" aria-label="Chọn giờ xuất quân" hidden>
+  <section class="panel">
+    <h2>Mười hai giờ trong ngày</h2>
+    <p class="mini" id="gioHead"></p>
+    <p class="mini">Đổi ngày ở thanh trên. Mỗi dòng là một bàn giờ: lợi chủ hay khách, các dấu lành và kỵ của giờ, phương có kỳ môn hội hợp (tam kỳ thiên bàn + Khai/Hưu/Sinh). Dòng nhạt là giờ có từ ba điều kỵ hoặc ngũ bất ngộ.</p>
+    <div class="tscroll" id="gioTab"></div>
+  </section>
+</section>
+
+</section>
+
+<footer class="foot">Trang tổng hợp để học. Lời cổ thư dịch sát ý, mỗi luật ghi tên sách. Chỗ công cụ tự hiểu khi sách không nói rõ được gắn nhãn «suy rộng».</footer>
+</div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>window.KMB_CFG={dc:"trinhuan",ls:"kmb-binh-phap-gon-v1"};</script>
+<script>/* Lõi lập bàn Kỳ Môn — trích nguyên từ trang «Lạc Thư Kỳ Môn» (cùng tác giả, đã qua kiểm của người dùng).
+   Gồm: bảng 100 cách thập can khắc ứng (KM_CACH), thiên văn tiết khí (QMAstro), lõi bài bàn (KyMon). */
+(function (root) {
+/* ============ Thập can khắc ứng — cách cục giữa thiên bàn can và địa bàn can ============
+   100 ô: 10 can thiên bàn × 10 can địa bàn.
+   Giáp không tự hiện trên bàn mà độn vào lục nghi: nghi nào là độn can của tuần thủ giờ
+   thì chính nghi ấy LÀ Giáp, và cung đó đọc thêm được một cách theo hàng/cột Giáp.
+   Mỗi ô: [tên Việt, tên Hán, tính (cat/hung/binh), lời đoán, tên khác]
+========================================================================================= */
+var CACH = {
+  'Giáp': {
+    'Giáp': ['Song Mộc Thành Lâm', '雙木成林', 'binh', 'Thiên địa cùng can là phục ngâm, mọi việc bế tắc trở ngại; an phận giữ yên thì tốt.'],
+    'Ất': ['Thanh Long Hợp Linh', '青龍合靈', 'binh', 'Gặp bát môn cát thì việc tài lộc tốt, gặp bát môn hung thì việc hung.'],
+    'Bính': ['Thanh Long Phản Thủ', '青龍返首', 'cat', 'Đại cát đại lợi, gặp hung hóa cát. Nếu gặp bức, mộ, kích hình thì chẳng lành.'],
+    'Đinh': ['Thanh Long Diệu Minh', '青龍耀明', 'cat', 'Yết kiến quý nhân, cầu danh cầu lợi đều tốt. Gặp mộ hoặc bức thì chuốc thị phi.'],
+    'Mậu': ['Thiên Địa Phục Khắc', '天地伏剋', 'hung', 'Mọi việc bế tắc nhiều trở ngại, nên tĩnh chẳng nên động.'],
+    'Kỷ': ['Quý Nhân Nhập Ngục', '貴人入獄', 'hung', 'Việc công việc tư đều bất lợi, dùng thì gặp trở ngại và điều hung.'],
+    'Canh': ['Trực Phù Phi Cung', '值符飛宮', 'hung', 'Việc lành chẳng thành, việc dữ càng dữ.'],
+    'Tân': ['Thanh Long Chiết Túc', '青龍折足', 'hung', 'Kim khắc mộc. Gặp môn cát trợ giúp còn mưu tính được, gặp môn hung thì chuốc hung phá tài.'],
+    'Nhâm': ['Long Nhập Thiên Lao', '龍入天牢', 'hung', 'Việc công việc tư, việc âm việc dương đều chẳng lành, phạm hung.'],
+    'Quý': ['Thanh Long Hoa Cái', '青龍華蓋', 'binh', 'Thủy sinh mộc là tốt; môn cát ứng cát, môn hung ứng hung.']
+  },
+  'Ất': {
+    'Giáp': ['Đằng La Bán Mộc', '藤蘿絆木', 'binh', 'Lợi bề âm hại bề dương; gặp môn hung thì phá tài thương người.'],
+    'Ất': ['Nhật Kỳ Phục Ngâm', '日奇伏吟', 'binh', 'Không nên yết kiến cầu danh, chỉ nên an phận giữ mình.'],
+    'Bính': ['Kỳ Nghi Thuận Toại', '奇儀順遂', 'cat', 'Việc lành thì thăng quan tiến chức; việc dữ thì vợ chồng ly biệt.'],
+    'Đinh': ['Kỳ Nghi Tương Tá', '奇儀相佐', 'cat', 'Việc văn thư tốt lành, trăm việc đều có thể làm.'],
+    'Mậu': ['Lợi Âm Hại Dương', '利陰害陽', 'binh', 'Lợi cho bề âm, hại cho bề dương. Gặp môn hung bức thì phá tài thương người.'],
+    'Kỷ': ['Nhật Kỳ Nhập Vụ', '日奇入霧', 'hung', 'Bị thổ che mờ, môn hung ắt hung. Được Khai Môn thì thành cách Địa Độn.'],
+    'Canh': ['Nhật Kỳ Bị Hình', '日奇被刑', 'hung', 'Tranh tụng phá sản, vợ chồng mỗi người một dạ riêng.'],
+    'Tân': ['Thanh Long Đào Tẩu', '青龍逃走', 'hung', 'Kẻ dưới phản chủ mang của đi, lục súc đều tổn thương.'],
+    'Nhâm': ['Nhật Kỳ Nhập Địa', '日奇入地', 'hung', 'Trên dưới đảo lộn, quan tụng thị phi.'],
+    'Quý': ['Hoa Cái Phùng Tinh', '華蓋逢星', 'cat', 'Ẩn dật tu đạo, giấu mình lánh nạn thì tốt.']
+  },
+  'Bính': {
+    'Giáp': ['Phi Điểu Điệt Huyệt', '飛鳥跌穴', 'cat', 'Trăm việc cát tường như ý, có thể chẳng nhọc mà được, cầu gì nên nấy.'],
+    'Ất': ['Nhật Nguyệt Tịnh Hành', '日月並行', 'cat', 'Việc công việc tư mưu tính đều tốt.'],
+    'Bính': ['Nguyệt Kỳ Bội Sư', '月奇悖師', 'hung', 'Văn thư bức bách, hao tổn thất lạc.'],
+    'Đinh': ['Nguyệt Kỳ Chu Tước', '月奇朱雀', 'cat', 'Quý nhân lợi về văn thư, người thường bình yên. Được Sinh Môn thì thành cách Thiên Độn.'],
+    'Mậu': ['Phi Điểu Điệt Huyệt', '飛鳥跌穴', 'cat', 'Trăm việc cát tường như ý, chẳng nhọc mà được, cầu gì nên nấy. Chim về đúng tổ.', 'Kỳ Phùng Trùng Sinh 奇逢重生'],
+    'Kỷ': ['Đại Bội Nhập Hình', '大悖入刑', 'hung', 'Tù nhân chịu hình trượng, văn thư không thông. Môn cát thì đỡ, môn hung càng hung.'],
+    'Canh': ['Huỳnh Nhập Thái Bạch', '熒入太白', 'hung', 'Hỏa nhập kim hương: cửa nhà phá bại, trộm cắp hao tổn.', 'Hỏa Nhập Kim Hương 火入金鄉'],
+    'Tân': ['Mưu Sự Tựu Thành', '謀事就成', 'cat', 'Việc mưu tính được thành, người bệnh chẳng nguy.'],
+    'Nhâm': ['Hỏa Nhập Thiên La', '火入天羅', 'hung', 'Làm khách bất lợi, thị phi nhiều bề.'],
+    'Quý': ['Hoa Cái Bội Sư', '華蓋悖師', 'hung', 'Người âm phá việc, tai họa dồn dập.']
+  },
+  'Đinh': {
+    'Giáp': ['Thanh Long Chuyển Quang', '青龍轉光', 'cat', 'Quan ngoài thăng cấp, hồng đồ rộng mở, cầu mưu rất nên.'],
+    'Ất': ['Nhân Độn Cát Cách', '人遁吉格', 'cat', 'Quý nhân thăng quan tiến tước, người thường được hôn nhân tài hỷ.'],
+    'Bính': ['Tinh Tùy Nguyệt Chuyển', '星隨月轉', 'cat', 'Quý nhân vượt cấp thăng cao; người thường vui rồi sinh buồn.'],
+    'Đinh': ['Kỳ Nhập Thái Âm', '奇入太陰', 'cat', 'Văn thư đến ngay, việc mừng vừa lòng.'],
+    'Mậu': ['Tinh Kỳ Thừa Long', '星奇乘龍', 'cat', 'Gặp quý nhân giúp, cầu quan mưu chức đều toại.'],
+    'Kỷ': ['Hỏa Nhập Câu Trần', '火入勾陳', 'hung', 'Gian tư thù oán, việc rắc rối do đàn bà mà ra.'],
+    'Canh': ['Văn Thư Trở Cách', '文書阻隔', 'binh', 'Văn thư bị ngăn trở; người đi ắt sẽ về.'],
+    'Tân': ['Chu Tước Nhập Ngục', '朱雀入獄', 'binh', 'Tội nhân được thả, người làm quan mất chức.'],
+    'Nhâm': ['Ngũ Thần Hỗ Hợp', '五神互合', 'cat', 'Quý nhân được chiếu vời, việc ngục tụng công bằng.'],
+    'Quý': ['Chu Tước Đầu Giang', '朱雀投江', 'hung', 'Văn thư khẩu thiệt đều tiêu tan, tin tức chìm mất.']
+  },
+  'Mậu': {
+    'Giáp': ['Địa Khắc Thanh Long', '地剋青龍', 'hung', 'Mọi việc chẳng thuận, oan ức khó tỏ; giữ yên là thượng sách.'],
+    'Ất': ['Thanh Long Hợp Linh', '青龍合靈', 'binh', 'Môn cát thì việc cát, môn hung thì việc hung.'],
+    'Bính': ['Thanh Long Phản Thủ', '青龍返首', 'cat', 'Cử động đại cát. Nếu gặp môn bức, nhập mộ hay kích hình thì việc lành hóa dữ.'],
+    'Đinh': ['Thanh Long Diệu Minh', '青龍耀明', 'cat', 'Yết kiến cầu danh tốt lợi. Nếu gặp mộ hoặc bức thì chuốc thị phi.'],
+    'Mậu': ['Thanh Long Phục Ngâm', '青龍伏吟', 'binh', 'Mọi việc bế tắc trở trệ, giữ yên là hơn.'],
+    'Kỷ': ['Quý Nhân Nhập Ngục', '貴人入獄', 'hung', 'Việc công việc tư đều bất lợi.'],
+    'Canh': ['Trực Phù Phi Cung', '值符飛宮', 'hung', 'Việc lành chẳng lành, việc dữ càng dữ.'],
+    'Tân': ['Thanh Long Chiết Túc', '青龍折足', 'hung', 'Có môn cát còn mưu tính được; gặp môn hung chủ chuốc tai, mất của, đau chân.'],
+    'Nhâm': ['Thanh Long Nhập Thiên Lao', '青龍入天牢', 'hung', 'Việc âm việc dương đều chẳng lành.'],
+    'Quý': ['Thanh Long Hoa Cái', '青龍華蓋', 'binh', 'Gặp cách cát thì được phúc; môn hung thì nhiều trắc trở.']
+  },
+  'Kỷ': {
+    'Giáp': ['Khuyển Phùng Thanh Long', '犬逢青龍', 'binh', 'Môn cát còn mưu tính được, môn hung ắt nhiều trở ngại.'],
+    'Ất': ['Mộ Thần Bất Minh', '墓神不明', 'hung', 'Khí mờ tối, nên ẩn dật giấu mình mới yên.'],
+    'Bính': ['Hỏa Bội Địa Hộ', '火悖地戶', 'hung', 'Người dương oan oan tương báo, người âm ắt đến chỗ ô uế.'],
+    'Đinh': ['Chu Tước Nhập Mộ', '朱雀入墓', 'binh', 'Đơn từ kiện tụng, trước cong sau thẳng.'],
+    'Mậu': ['Minh Đường Tòng Lộc', '明堂從祿', 'cat', 'Gặp môn cát việc thành; gặp môn hung làm gì cũng chẳng toại, uổng công.'],
+    'Kỷ': ['Địa Hộ Phùng Quỷ', '地戶逢鬼', 'hung', 'Người bệnh ắt nguy, trăm việc chẳng thành.'],
+    'Canh': ['Lợi Cách Phản Danh', '利格返名', 'hung', 'Kiện tụng ai động trước thì bất lợi; sao âm có ý mưu hại.'],
+    'Tân': ['Du Hồn Nhập Mộ', '遊魂入墓', 'hung', 'Người lớn thì hồn ma quấy, người nhỏ thì tổ tiên làm nhiễu.'],
+    'Nhâm': ['Địa Võng Cao Trương', '地網高張', 'hung', 'Trai gái buông tuồng, gian tình dẫn tới thương tổn.'],
+    'Quý': ['Địa Hình Huyền Vũ', '地刑玄武', 'hung', 'Nam nữ bệnh nguy kịch, kiện tụng có tai ngục tù.']
+  },
+  'Canh': {
+    'Giáp': ['Thiên Ất Phục Cung', '天乙伏宮', 'hung', 'Trăm việc chẳng thể mưu tính, ắt có ứng hung.'],
+    'Ất': ['Thái Bạch Bồng Tinh', '太白蓬星', 'binh', 'Lui thì tốt, tiến thì hung.'],
+    'Bính': ['Thái Bạch Nhập Huỳnh', '太白入熒', 'hung', 'Xem trộm cắp ắt có; làm khách được lợi, làm chủ phá tài.'],
+    'Đinh': ['Đình Đình Chi Cách', '亭亭之格', 'binh', 'Vì chuyện riêng tư mà sinh quan tụng; môn cát thì có chỗ cứu.'],
+    'Mậu': ['Thiên Ngục Đồng Môn', '天獄同門', 'hung', 'Mọi việc bất lợi, mưu sự không thành, đề phòng kiện tụng.'],
+    'Kỷ': ['Quan Phục Hình Cách', '官伏刑格', 'hung', 'Vì việc quan mà chịu hình nặng, kỵ việc quan và kiện tụng.', 'Hình Cách 刑格'],
+    'Canh': ['Thái Bạch Đồng Cung', '太白同宮', 'hung', 'Còn gọi Chiến Cách. Tai họa quan phi, anh em công kích lẫn nhau.', 'Chiến Cách 戰格'],
+    'Tân': ['Bạch Hổ Can Cách', '白虎干格', 'hung', 'Đi xa ắt hung, xe cộ huyết quang, tai nạn bất ngờ.'],
+    'Nhâm': ['Thái Bạch Thoái Vị', '太白退位', 'hung', 'Đi xa lạc đường, nam nữ tin tức khó thông.', 'Thượng Cách 上格 · Tiểu Cách 小格'],
+    'Quý': ['Đại Cách Phản Ngâm', '大格返吟', 'hung', 'Người đi không tới, quan tụng phá tài. Sinh nở mẹ con đều tổn, đại hung.', 'Đại Cách 大格']
+  },
+  'Tân': {
+    'Giáp': ['Khốn Long Bị Thương', '困龍被傷', 'hung', 'Quan tụng phá bại, nên tĩnh chẳng nên động, càn động chuốc họa.'],
+    'Ất': ['Bạch Hổ Xương Cuồng', '白虎猖狂', 'hung', 'Người mất nhà tan, đi xa nhiều tai ương, người trên chẳng ưa, xe thuyền đều tổn.'],
+    'Bính': ['Can Hợp Bội Sư', '干合悖師', 'hung', 'Xem việc ắt vì tiền của mà sinh kiện tụng.'],
+    'Đinh': ['Ngục Thần Đắc Kỳ', '獄神得奇', 'cat', 'Buôn bán lời gấp bội, tù nhân gặp ân xá.'],
+    'Mậu': ['Long Hổ Tranh Cường', '龍虎爭強', 'hung', 'Kiện tụng ắt bại, nên lui nên giữ, động ắt có tai.'],
+    'Kỷ': ['Nhập Ngục Tự Hình', '入獄自刑', 'hung', 'Kẻ dưới phản chủ, kiện tụng khó tỏ bày.'],
+    'Canh': ['Bạch Hổ Xuất Lực', '白虎出力', 'hung', 'Đao kiếm chạm nhau, chủ khách tàn hại. Nhún nhường lui bước còn khá, cố công thì máu vấy áo.'],
+    'Tân': ['Phục Ngâm Thiên Đình', '伏吟天庭', 'hung', 'Bỏ việc công theo việc tư, ngục tụng tự chuốc tội danh.'],
+    'Nhâm': ['Hung Xà Nhập Ngục', '凶蛇入獄', 'hung', 'Hai trai tranh một gái, kiện tụng không dứt, ai động trước thì đuối lý.'],
+    'Quý': ['Thiên Lao Hoa Cái', '天牢華蓋', 'hung', 'Nhật nguyệt mất sáng, lỡ vào thiên võng, động tĩnh đều trái.']
+  },
+  'Nhâm': {
+    'Giáp': ['Tiểu Xà Hóa Long', '小蛇化龍', 'cat', 'Nam giới sự nghiệp phát đạt, nữ giới sinh nở thuận lợi.'],
+    'Ất': ['Tiểu Xà Nhật Kỳ', '小蛇日奇', 'binh', 'Nữ thì mềm thuận, nam thì than thở. Xem thai thì sinh con trai, lộc mã sáng đẹp.'],
+    'Bính': ['Thủy Xà Nhập Hỏa', '水蛇入火', 'hung', 'Quan tai hình cấm nối nhau chẳng dứt.'],
+    'Đinh': ['Can Hợp Xà Hình', '干合蛇刑', 'binh', 'Văn thư liên lụy, quý nhân vội vã, nam cát nữ hung.'],
+    'Mậu': ['Xà Nhập Thiên Môn', '蛇入天門', 'cat', 'Nam giới phát đạt, nữ giới sinh con.'],
+    'Kỷ': ['Can Hợp Xà Hình', '干合蛇刑', 'hung', 'Đại họa sắp tới, thuận theo mà giữ thì tốt, kiện tụng đuối lý.'],
+    'Canh': ['Thái Bạch Cầm Xà', '太白擒蛇', 'cat', 'Hình ngục công bằng, tà chính phân minh.'],
+    'Tân': ['Đằng Xà Tương Triền', '螣蛇相纏', 'hung', 'Dẫu được kỳ môn cũng biến chẳng yên; có mưu vọng thì bị người lừa gạt.'],
+    'Nhâm': ['Xà Nhập Địa La', '蛇入地羅', 'hung', 'Người ngoài quấy nhiễu, việc trong rối ren; phải môn cát tinh cát mới khỏi lận đận.'],
+    'Quý': ['Ấu Nữ Gian Dâm', '幼女姦淫', 'hung', 'Nhà có tiếng xấu; môn cát mà tinh hung thì họa lại hóa phúc.']
+  },
+  'Quý': {
+    'Giáp': ['Thiên Ất Hội Hợp', '天乙會合', 'cat', 'Cầu tài thuận toại, nhân duyên tốt lành; gặp môn hung bức chế thì có quan phi.'],
+    'Ất': ['Hoa Cái Bồng Tinh', '華蓋蓬星', 'binh', 'Quý nhân được lộc vị, người thường bình an.'],
+    'Bính': ['Hoa Cái Bội Sư', '華蓋悖師', 'binh', 'Sang hèn gặp đều được người trên vui lòng.'],
+    'Đinh': ['Đằng Xà Yêu Kiểu', '螣蛇夭矯', 'hung', 'Văn thư quan tụng, lửa cháy khó thoát.'],
+    'Mậu': ['Thanh Long Nhập Địa', '青龍入地', 'cat', 'Tiến tài, hôn nhân việc mừng mỹ mãn; gặp môn hung bức chế thì bất lợi.', 'Thiên Ất Hội Hợp 天乙會合'],
+    'Kỷ': ['Hoa Cái Địa Hộ', '華蓋地戶', 'binh', 'Nam nữ xem đều bị trở tin tức; lánh tai tránh nạn thì tốt.'],
+    'Canh': ['Thái Bạch Nhập Võng', '太白入網', 'hung', 'Lấy bạo mà tranh tụng, khó phân thắng bại.'],
+    'Tân': ['Võng Cái Thiên Lao', '網蓋天牢', 'hung', 'Xem bệnh xem kiện, tội nặng khó thoát.'],
+    'Nhâm': ['Phục Kiến Đằng Xà', '復見螣蛇', 'hung', 'Cưới gả tái hôn, lấy sau không con, chẳng giữ được tuổi xanh.'],
+    'Quý': ['Thiên Võng Tứ Trương', '天網四張', 'hung', 'Người đi lạc bạn, bệnh và kiện đều tổn hại.']
+  }
+};
+root.KM_CACH = CACH;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+/* ===================== Thiên văn: kinh độ mặt trời & 24 tiết khí =====================
+   VSOP87 (rút gọn, Meeus - Astronomical Algorithms, Appendix III) cho kinh độ nhật tâm
+   của Trái Đất; suy ra kinh độ hoàng đạo biểu kiến của Mặt Trời.
+   Sai số ~1-2 giây cung  ->  sai số thời điểm giao tiết khí ~2-4 giây.
+====================================================================================== */
+(function (root) {
+  'use strict';
+
+  var L0 = [
+    [175347046, 0, 0], [3341656, 4.6692568, 6283.07585], [34894, 4.6261, 12566.1517],
+    [3497, 2.7441, 5753.3849], [3418, 2.8289, 3.5231], [3136, 3.6277, 77713.7715],
+    [2676, 4.4181, 7860.4194], [2343, 6.1352, 3930.2097], [1324, 0.7425, 11506.7698],
+    [1273, 2.0371, 529.691], [1199, 1.1096, 1577.3435], [990, 5.233, 5884.927],
+    [902, 2.045, 26.298], [857, 3.508, 398.149], [780, 1.179, 5223.694],
+    [753, 2.533, 5507.553], [505, 4.583, 18849.228], [492, 4.205, 775.523],
+    [357, 2.92, 0.067], [317, 5.849, 11790.629], [284, 1.899, 796.298],
+    [271, 0.315, 10977.079], [243, 0.345, 5486.778], [206, 4.806, 2544.314],
+    [205, 1.869, 5573.143], [202, 2.458, 6069.777], [156, 0.833, 213.299],
+    [132, 3.411, 2942.463], [126, 1.083, 20.775], [115, 0.645, 0.98],
+    [103, 0.636, 4694.003], [102, 0.976, 15720.839], [102, 4.267, 7.114],
+    [99, 6.21, 2146.17], [98, 0.68, 155.42], [86, 5.98, 161000.69],
+    [85, 1.3, 6275.96], [85, 3.67, 71430.7], [80, 1.81, 17260.15],
+    [79, 3.04, 12036.46], [75, 1.76, 5088.63], [74, 3.5, 3154.69],
+    [74, 4.68, 801.82], [70, 0.83, 9437.76], [62, 3.98, 8827.39],
+    [61, 1.82, 7084.9], [57, 2.78, 6286.6], [56, 4.39, 14143.5],
+    [56, 3.47, 6279.55], [52, 0.19, 12139.55], [52, 1.33, 1748.02],
+    [51, 0.28, 5856.48], [49, 0.49, 1194.45], [41, 5.37, 8429.24],
+    [41, 2.4, 19651.05], [39, 6.17, 10447.39], [37, 6.04, 10213.29],
+    [37, 2.57, 1059.38], [36, 1.71, 2352.87], [36, 1.78, 6812.77],
+    [33, 0.59, 17789.85], [30, 0.44, 83996.85], [30, 2.74, 1349.87],
+    [25, 3.16, 4690.48]
+  ];
+  var L1 = [
+    [628331966747, 0, 0], [206059, 2.678235, 6283.07585], [4303, 2.6351, 12566.1517],
+    [425, 1.59, 3.523], [119, 5.796, 26.298], [109, 2.966, 1577.344],
+    [93, 2.59, 18849.23], [72, 1.14, 529.69], [68, 1.87, 398.15],
+    [67, 4.41, 5507.55], [59, 2.89, 5223.69], [56, 2.17, 155.42],
+    [45, 0.4, 796.3], [36, 0.47, 775.52], [29, 2.65, 7.11],
+    [21, 5.34, 0.98], [19, 1.85, 5486.78], [19, 4.97, 213.3],
+    [17, 2.99, 6275.96], [16, 0.03, 2544.31], [16, 1.43, 2146.17],
+    [15, 1.21, 10977.08], [12, 2.83, 1748.02], [12, 3.26, 5088.63],
+    [12, 5.27, 1194.45], [12, 2.08, 4694], [11, 0.77, 553.57],
+    [10, 1.3, 6286.6], [10, 4.24, 1349.87], [9, 2.7, 242.73],
+    [9, 5.64, 951.72], [8, 5.3, 2352.87], [6, 2.65, 9437.76], [6, 4.67, 4690.48]
+  ];
+  var L2 = [
+    [52919, 0, 0], [8720, 1.0721, 6283.0758], [309, 0.867, 12566.152],
+    [27, 0.05, 3.52], [16, 5.19, 26.3], [16, 3.68, 155.42], [10, 0.76, 18849.23],
+    [9, 2.06, 77713.77], [7, 0.83, 775.52], [5, 4.66, 1577.34], [4, 1.03, 7.11],
+    [4, 3.44, 5573.14], [3, 5.14, 796.3], [3, 6.05, 5507.55], [3, 1.19, 242.73],
+    [3, 6.12, 529.69], [3, 0.31, 398.15], [3, 2.28, 553.57], [2, 4.38, 5223.69],
+    [2, 3.75, 0.98]
+  ];
+  var L3 = [
+    [289, 5.844, 6283.076], [35, 0, 0], [17, 5.49, 12566.15], [3, 5.2, 155.42],
+    [1, 4.72, 3.52], [1, 5.3, 18849.23], [1, 5.97, 242.73]
+  ];
+  var L4 = [[114, 3.142, 0], [8, 4.13, 6283.08], [1, 3.84, 12566.15]];
+  var L5 = [[1, 3.14, 0]];
+
+  var D2R = Math.PI / 180, R2D = 180 / Math.PI;
+
+  function series(tab, tau) {
+    var s = 0;
+    for (var i = 0; i < tab.length; i++) s += tab[i][0] * Math.cos(tab[i][1] + tab[i][2] * tau);
+    return s;
+  }
+
+  function norm360(x) { x = x % 360; return x < 0 ? x + 360 : x; }
+
+  /* Kinh độ hoàng đạo biểu kiến của Mặt Trời (độ), tham số JDE (thời gian động lực TT) */
+  function sunApparentLon(jde) {
+    var tau = (jde - 2451545.0) / 365250.0;
+    var L = (series(L0, tau) + series(L1, tau) * tau + series(L2, tau) * tau * tau +
+      series(L3, tau) * Math.pow(tau, 3) + series(L4, tau) * Math.pow(tau, 4) +
+      series(L5, tau) * Math.pow(tau, 5)) / 1e8;           // radian
+    var theta = norm360(L * R2D + 180);                     // kinh độ địa tâm hình học
+    var T = tau * 10;
+    // Bán kính vector (đủ chính xác cho quang sai)
+    var M = (357.52911 + 35999.05029 * T - 0.0001537 * T * T) * D2R;
+    var R = 1.00014 - 0.01671 * Math.cos(M) - 0.00014 * Math.cos(2 * M);
+    // Chương động kinh độ (xấp xỉ, sai số < 0.5")
+    var Om = (125.04452 - 1934.136261 * T) * D2R;
+    var Ls = (280.4665 + 36000.7698 * T) * D2R;
+    var Lm = (218.3165 + 481267.8813 * T) * D2R;
+    var dpsi = (-17.20 * Math.sin(Om) - 1.32 * Math.sin(2 * Ls)
+      - 0.23 * Math.sin(2 * Lm) + 0.21 * Math.sin(2 * Om)) / 3600;
+    // Chuyển VSOP87 -> FK5 và quang sai
+    var fk5 = -0.09033 / 3600;
+    var aber = -20.4898 / (3600 * R);
+    return norm360(theta + dpsi + aber + fk5);
+  }
+
+  /* Delta T (TT - UT), giây — đa thức Espenak & Meeus */
+  function deltaT(y) {
+    var t, u;
+    if (y < 1900) { u = (y - 1820) / 100; return -20 + 32 * u * u; }
+    if (y < 1920) { t = y - 1900; return -2.79 + 1.494119 * t - 0.0598939 * t * t + 0.0061966 * t * t * t - 0.000197 * Math.pow(t, 4); }
+    if (y < 1941) { t = y - 1920; return 21.20 + 0.84493 * t - 0.076100 * t * t + 0.0020936 * t * t * t; }
+    if (y < 1961) { t = y - 1950; return 29.07 + 0.407 * t - t * t / 233 + t * t * t / 2547; }
+    if (y < 1986) { t = y - 1975; return 45.45 + 1.067 * t - t * t / 260 - t * t * t / 718; }
+    if (y < 2005) { t = y - 2000; return 63.86 + 0.3345 * t - 0.060374 * t * t + 0.0017275 * t * t * t + 0.000651814 * Math.pow(t, 4) + 0.00002373599 * Math.pow(t, 5); }
+    if (y < 2050) { t = y - 2000; return 62.92 + 0.32217 * t + 0.005589 * t * t; }
+    if (y < 2150) { u = (y - 1820) / 100; return -20 + 32 * u * u - 0.5628 * (2150 - y); }
+    u = (y - 1820) / 100; return -20 + 32 * u * u;
+  }
+
+  /* JD (UT) <-> lịch Gregory */
+  function jdFromUTC(y, m, d, hh, mi, ss) {
+    hh = hh || 0; mi = mi || 0; ss = ss || 0;
+    var a = Math.floor((14 - m) / 12), yy = y + 4800 - a, mm = m + 12 * a - 3;
+    var jdn = d + Math.floor((153 * mm + 2) / 5) + 365 * yy + Math.floor(yy / 4)
+      - Math.floor(yy / 100) + Math.floor(yy / 400) - 32045;
+    return jdn - 0.5 + (hh + mi / 60 + ss / 3600) / 24;
+  }
+  function utcFromJD(jd) {
+    var z = Math.floor(jd + 0.5), f = jd + 0.5 - z;
+    var alpha = Math.floor((z - 1867216.25) / 36524.25);
+    var A = z + 1 + alpha - Math.floor(alpha / 4);
+    var B = A + 1524, C = Math.floor((B - 122.1) / 365.25), D = Math.floor(365.25 * C);
+    var E = Math.floor((B - D) / 30.6001);
+    var day = B - D - Math.floor(30.6001 * E) + f;
+    var month = E < 14 ? E - 1 : E - 13;
+    var year = month > 2 ? C - 4716 : C - 4715;
+    var di = Math.floor(day), frac = (day - di) * 24;
+    var hh = Math.floor(frac); frac = (frac - hh) * 60;
+    var mi = Math.floor(frac); var ss = Math.round((frac - mi) * 60);
+    if (ss >= 60) { ss -= 60; mi++; } if (mi >= 60) { mi -= 60; hh++; }
+    return { y: year, m: month, d: di, hh: hh, mi: mi, ss: ss };
+  }
+
+  /* Số ngày Julian (kiểu số nguyên, mốc giữa trưa) của một ngày dương lịch */
+  function jdn(y, m, d) {
+    var a = Math.floor((14 - m) / 12), yy = y + 4800 - a, mm = m + 12 * a - 3;
+    return d + Math.floor((153 * mm + 2) / 5) + 365 * yy + Math.floor(yy / 4)
+      - Math.floor(yy / 100) + Math.floor(yy / 400) - 32045;
+  }
+
+  /* Tìm thời điểm (JD, UT) Mặt Trời đạt kinh độ `lon` gần mốc `jdGuess` */
+  function solveLon(lon, jdGuess) {
+    var jd = jdGuess, i, diff;
+    for (i = 0; i < 12; i++) {
+      var y = utcFromJD(jd).y;
+      var jde = jd + deltaT(y) / 86400;
+      diff = sunApparentLon(jde) - lon;
+      while (diff > 180) diff -= 360;
+      while (diff < -180) diff += 360;
+      var step = diff / 0.9856473;
+      jd -= step;
+      if (Math.abs(step) < 1e-7) break;
+    }
+    return jd;
+  }
+
+  root.QMAstro = {
+    sunApparentLon: sunApparentLon, deltaT: deltaT,
+    jdFromUTC: jdFromUTC, utcFromJD: utcFromJD, jdn: jdn, solveLon: solveLon, norm360: norm360
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+/* ===================== LÕI KỲ MÔN ĐỘN GIÁP =====================
+   - Tứ trụ theo tiết khí (Lập Xuân đổi năm, 12 tiết đổi tháng)
+   - Định cục: Chuyết bổ pháp (拆補法) & Trí nhuận pháp (置閏法, siêu thần tiếp khí)
+   - Địa bàn tam kỳ lục nghi, Thiên bàn cửu tinh, Nhân bàn bát môn, Thần bàn bát thần
+   - Hai phái bài bàn: Chuyển bàn (轉盤) & Phi bàn (飛盤)
+================================================================= */
+(function (root) {
+  'use strict';
+  var A = root.QMAstro;
+
+  /* ---------- Từ vựng ---------- */
+  var CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
+  var CAN_HAN = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+  var CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+  var CHI_HAN = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+  var CAN_NGU_HANH = ['Mộc', 'Mộc', 'Hỏa', 'Hỏa', 'Thổ', 'Thổ', 'Kim', 'Kim', 'Thủy', 'Thủy'];
+  var CHI_NGU_HANH = ['Thủy', 'Thổ', 'Mộc', 'Mộc', 'Thổ', 'Hỏa', 'Hỏa', 'Thổ', 'Kim', 'Kim', 'Thổ', 'Thủy'];
+
+  // 24 tiết khí: [tên Việt, chữ Hán, kinh độ mặt trời]
+  var TIET = [
+    ['Lập Xuân', '立春', 315], ['Vũ Thủy', '雨水', 330], ['Kinh Trập', '驚蟄', 345],
+    ['Xuân Phân', '春分', 0], ['Thanh Minh', '清明', 15], ['Cốc Vũ', '穀雨', 30],
+    ['Lập Hạ', '立夏', 45], ['Tiểu Mãn', '小滿', 60], ['Mang Chủng', '芒種', 75],
+    ['Hạ Chí', '夏至', 90], ['Tiểu Thử', '小暑', 105], ['Đại Thử', '大暑', 120],
+    ['Lập Thu', '立秋', 135], ['Xử Thử', '處暑', 150], ['Bạch Lộ', '白露', 165],
+    ['Thu Phân', '秋分', 180], ['Hàn Lộ', '寒露', 195], ['Sương Giáng', '霜降', 210],
+    ['Lập Đông', '立冬', 225], ['Tiểu Tuyết', '小雪', 240], ['Đại Tuyết', '大雪', 255],
+    ['Đông Chí', '冬至', 270], ['Tiểu Hàn', '小寒', 285], ['Đại Hàn', '大寒', 300]
+  ];
+  // Tam nguyên cục số theo tiết khí: [thượng, trung, hạ]; dấu + là dương độn, - là âm độn
+  var CUC = {
+    'Lập Xuân': [8, 5, 2], 'Vũ Thủy': [9, 6, 3], 'Kinh Trập': [1, 7, 4],
+    'Xuân Phân': [3, 9, 6], 'Thanh Minh': [4, 1, 7], 'Cốc Vũ': [5, 2, 8],
+    'Lập Hạ': [4, 1, 7], 'Tiểu Mãn': [5, 2, 8], 'Mang Chủng': [6, 3, 9],
+    'Hạ Chí': [9, 3, 6], 'Tiểu Thử': [8, 2, 5], 'Đại Thử': [7, 1, 4],
+    'Lập Thu': [2, 5, 8], 'Xử Thử': [1, 4, 7], 'Bạch Lộ': [9, 3, 6],
+    'Thu Phân': [7, 1, 4], 'Hàn Lộ': [6, 9, 3], 'Sương Giáng': [5, 8, 2],
+    'Lập Đông': [6, 9, 3], 'Tiểu Tuyết': [5, 8, 2], 'Đại Tuyết': [4, 7, 1],
+    'Đông Chí': [1, 7, 4], 'Tiểu Hàn': [2, 8, 5], 'Đại Hàn': [3, 9, 6]
+  };
+  // Dương độn: Đông Chí -> Mang Chủng. Âm độn: Hạ Chí -> Đại Tuyết.
+  var DUONG_DON = ['Đông Chí', 'Tiểu Hàn', 'Đại Hàn', 'Lập Xuân', 'Vũ Thủy', 'Kinh Trập',
+    'Xuân Phân', 'Thanh Minh', 'Cốc Vũ', 'Lập Hạ', 'Tiểu Mãn', 'Mang Chủng'];
+
+  var CUNG = {
+    1: { ten: 'Khảm', so: 1, han: '坎', huong: 'Bắc', hanh: 'Thủy', tinh: 'Thiên Bồng', mon: 'Hưu Môn' },
+    2: { ten: 'Khôn', so: 2, han: '坤', huong: 'Tây Nam', hanh: 'Thổ', tinh: 'Thiên Nhuế', mon: 'Tử Môn' },
+    3: { ten: 'Chấn', so: 3, han: '震', huong: 'Đông', hanh: 'Mộc', tinh: 'Thiên Xung', mon: 'Thương Môn' },
+    4: { ten: 'Tốn', so: 4, han: '巽', huong: 'Đông Nam', hanh: 'Mộc', tinh: 'Thiên Phụ', mon: 'Đỗ Môn' },
+    5: { ten: 'Trung', so: 5, han: '中', huong: 'Trung cung', hanh: 'Thổ', tinh: 'Thiên Cầm', mon: null },
+    6: { ten: 'Càn', so: 6, han: '乾', huong: 'Tây Bắc', hanh: 'Kim', tinh: 'Thiên Tâm', mon: 'Khai Môn' },
+    7: { ten: 'Đoài', so: 7, han: '兌', huong: 'Tây', hanh: 'Kim', tinh: 'Thiên Trụ', mon: 'Kinh Môn' },
+    8: { ten: 'Cấn', so: 8, han: '艮', huong: 'Đông Bắc', hanh: 'Thổ', tinh: 'Thiên Nhâm', mon: 'Sinh Môn' },
+    9: { ten: 'Ly', so: 9, han: '離', huong: 'Nam', hanh: 'Hỏa', tinh: 'Thiên Anh', mon: 'Cảnh Môn' }
+  };
+
+  var TINH_HAN = { 'Thiên Bồng': '天蓬', 'Thiên Nhuế': '天芮', 'Thiên Xung': '天沖', 'Thiên Phụ': '天輔', 'Thiên Cầm': '天禽', 'Thiên Tâm': '天心', 'Thiên Trụ': '天柱', 'Thiên Nhâm': '天任', 'Thiên Anh': '天英' };
+  var MON_HAN = { 'Hưu Môn': '休門', 'Sinh Môn': '生門', 'Thương Môn': '傷門', 'Đỗ Môn': '杜門', 'Cảnh Môn': '景門', 'Tử Môn': '死門', 'Kinh Môn': '驚門', 'Khai Môn': '開門' };
+  var THAN_HAN = { 'Trực Phù': '值符', 'Đằng Xà': '螣蛇', 'Thái Âm': '太陰', 'Lục Hợp': '六合', 'Bạch Hổ': '白虎', 'Huyền Vũ': '玄武', 'Cửu Địa': '九地', 'Cửu Thiên': '九天', 'Câu Trần': '勾陳', 'Chu Tước': '朱雀' };
+  var MON_CAT = { 'Khai Môn': 'cát', 'Hưu Môn': 'cát', 'Sinh Môn': 'cát', 'Cảnh Môn': 'bình', 'Đỗ Môn': 'bình', 'Thương Môn': 'hung', 'Tử Môn': 'hung', 'Kinh Môn': 'hung' };
+  var TINH_CAT = { 'Thiên Tâm': 'cát', 'Thiên Nhâm': 'cát', 'Thiên Cầm': 'cát', 'Thiên Phụ': 'cát', 'Thiên Xung': 'bình', 'Thiên Trụ': 'bình', 'Thiên Anh': 'bình', 'Thiên Bồng': 'hung', 'Thiên Nhuế': 'hung' };
+
+  var VONG_CHUYEN = [1, 8, 3, 4, 9, 2, 7, 6];      // vòng tròn hậu thiên (thuận chiều kim đồng hồ)
+  var VONG_PHI = [1, 2, 3, 4, 6, 7, 8, 9];         // thứ tự cửu cung Lạc Thư, bỏ trung cung
+  var CHI_CUNG = [1, 8, 8, 3, 4, 4, 9, 2, 2, 7, 6, 6]; // địa chi -> cung
+
+  function mod(a, n) { return ((a % n) + n) % n; }
+
+  /* Đếm cung theo thứ tự số cửu cung Lạc Thư — dương độn thuận 1→2→…→9→1,
+     âm độn nghịch 9→8→…→1→9. Trung cung 5 CÓ tính là một bước.
+     Dùng để tìm cung rơi của trực sử môn ("dương thuận âm nghịch hành cửu cung"). */
+  function diCuuCung(from, buoc, duong) {
+    return mod(from - 1 + (duong ? buoc : -buoc), 9) + 1;
+  }
+  function canChi(i) { return CAN[i % 10] + ' ' + CHI[i % 12]; }
+  function canChiHan(i) { return CAN_HAN[i % 10] + CHI_HAN[i % 12]; }
+
+  /* ---------- Tiết khí quanh một mốc ---------- */
+  // Trả về danh sách {ten, han, lon, jd(UT), tsLocal} của tất cả tiết khí trong [year-1, year+1]
+  var tietCache = {};
+  function tietKhiNam(year) {
+    if (tietCache[year]) return tietCache[year];
+    var out = [];
+    for (var i = 0; i < 24; i++) {
+      var t = TIET[i], lon = t[2];
+      // mốc ước lượng: kinh độ 0 rơi ~20/3
+      var approxDay = A.jdFromUTC(year, 3, 20, 12, 0, 0) + lon * 365.2422 / 360;
+      var jd = A.solveLon(lon, approxDay);
+      var u = A.utcFromJD(jd);
+      if (u.y !== year) { // đưa về đúng năm
+        jd = A.solveLon(lon, approxDay + (u.y > year ? -365.2422 : 365.2422));
+        u = A.utcFromJD(jd);
+      }
+      out.push({ ten: t[0], han: t[1], lon: lon, jd: jd, idx: i });
+    }
+    out.sort(function (a, b) { return a.jd - b.jd; });
+    tietCache[year] = out;
+    return out;
+  }
+  function tietKhiKhoang(y0, y1) {
+    var out = [];
+    for (var y = y0; y <= y1; y++) out = out.concat(tietKhiNam(y));
+    out.sort(function (a, b) { return a.jd - b.jd; });
+    return out;
+  }
+
+  /* ---------- Tứ trụ ---------- */
+  /*  opts: {tz: số giờ lệch UTC, tyMuon: true nếu 23h đổi sang ngày mới} */
+  function tuTru(y, m, d, hh, mi, opts) {
+    opts = opts || {};
+    var tz = opts.tz === undefined ? 7 : opts.tz;
+    var tyMuon = opts.tyMuon === undefined ? true : opts.tyMuon;
+
+    var jdLocal = A.jdFromUTC(y, m, d, hh, mi, 0) - tz / 24;   // JD (UT) của thời điểm nhập
+    var list = tietKhiKhoang(y - 1, y + 1);
+
+    // tiết khí đang ở trong (mốc quy về giờ địa phương để so sánh)
+    var cur = null, curIdx = -1;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].jd <= jdLocal) { cur = list[i]; curIdx = i; } else break;
+    }
+    // Trụ năm: đổi tại Lập Xuân
+    var namDL = y;
+    var lapXuan = null;
+    for (var j = 0; j < list.length; j++) {
+      if (list[j].ten === 'Lập Xuân') {
+        var uy = A.utcFromJD(list[j].jd + tz / 24).y;
+        if (uy === y) { lapXuan = list[j]; break; }
+      }
+    }
+    if (lapXuan && jdLocal < lapXuan.jd) namDL = y - 1;
+    var namIdx = mod(namDL - 4, 60);
+
+    // Trụ ngày
+    var dJdn = A.jdn(y, m, d);
+    if (tyMuon && hh === 23) dJdn += 1;
+    var ngayIdx = mod(dJdn + 49, 60);
+
+    // Trụ giờ
+    var chiGio = Math.floor(mod(hh + 1, 24) / 2);
+    var canGio = mod(((ngayIdx % 10) % 5) * 2 + chiGio, 10);
+    var gioIdx = ganZhiIndex(canGio, chiGio);
+
+    // Trụ tháng: theo 12 "tiết" (Lập Xuân, Kinh Trập, Thanh Minh, Lập Hạ, Mang Chủng,
+    // Tiểu Thử, Lập Thu, Bạch Lộ, Hàn Lộ, Lập Đông, Đại Tuyết, Tiểu Hàn)
+    var TIET_THANG = { 'Lập Xuân': 2, 'Kinh Trập': 3, 'Thanh Minh': 4, 'Lập Hạ': 5, 'Mang Chủng': 6, 'Tiểu Thử': 7, 'Lập Thu': 8, 'Bạch Lộ': 9, 'Hàn Lộ': 10, 'Lập Đông': 11, 'Đại Tuyết': 0, 'Tiểu Hàn': 1 };
+    var chiThang = null;
+    for (var k = curIdx; k >= 0; k--) { if (TIET_THANG[list[k].ten] !== undefined) { chiThang = TIET_THANG[list[k].ten]; break; } }
+    if (chiThang === null) chiThang = 2;
+    var soThang = mod(chiThang - 2, 12);                       // 0 = tháng Dần
+    var canDauNam = mod((namIdx % 10) % 5 * 2 + 2, 10);         // ngũ hổ độn
+    var canThang = mod(canDauNam + soThang, 10);
+    var thangIdx = ganZhiIndex(canThang, chiThang);
+
+    return {
+      nam: namIdx, thang: thangIdx, ngay: ngayIdx, gio: gioIdx,
+      tiet: cur, tietIdx: curIdx, danhSachTiet: list, jdLocal: jdLocal,
+      namDuongLich: namDL, chiGio: chiGio, tz: tz, ngayJDN: dJdn
+    };
+  }
+  function ganZhiIndex(can, chi) {
+    for (var i = 0; i < 60; i++) if (i % 10 === can && i % 12 === chi) return i;
+    return -1;
+  }
+
+  /* ---------- Định cục ---------- */
+  var NGUYEN_TEN = ['Thượng nguyên', 'Trung nguyên', 'Hạ nguyên'];
+
+  // Chuyết bổ pháp: lùi tìm phù đầu (ngày Giáp hoặc Kỷ) gần nhất, địa chi phù đầu -> nguyên
+  function dinhCucChuyetBo(tt) {
+    var ngay = tt.ngay;
+    var lui = 0;
+    while (lui < 10) {
+      var idx = mod(ngay - lui, 60);
+      var can = idx % 10;
+      if (can === 0 || can === 5) break;   // Giáp hoặc Kỷ
+      lui++;
+    }
+    var phuDau = mod(ngay - lui, 60);
+    var chiPD = phuDau % 12;
+    var nguyen; // 0 thượng, 1 trung, 2 hạ
+    if ([0, 6, 3, 9].indexOf(chiPD) >= 0) nguyen = 0;        // Tý Ngọ Mão Dậu
+    else if ([2, 8, 5, 11].indexOf(chiPD) >= 0) nguyen = 1;  // Dần Thân Tỵ Hợi
+    else nguyen = 2;                                          // Thìn Tuất Sửu Mùi
+    var tenTiet = tt.tiet.ten;
+    var duong = DUONG_DON.indexOf(tenTiet) >= 0;
+    return {
+      phap: 'Chuyết bổ', tiet: tenTiet, tietHan: tt.tiet.han, nguyen: nguyen,
+      nguyenTen: NGUYEN_TEN[nguyen], cuc: CUC[tenTiet][nguyen], duong: duong,
+      phuDau: phuDau, cachPhuDau: lui, nhuan: false
+    };
+  }
+
+  // Trí nhuận pháp (siêu thần tiếp khí): phù đầu thượng nguyên (Giáp Tý/Kỷ Mão/Giáp Ngọ/Kỷ Dậu)
+  // mở đầu 15 ngày tam nguyên; siêu thần quá 9 ngày sau Mang Chủng / Đại Tuyết thì đặt nhuận cục.
+  function dinhCucTriNhuan(tt) {
+    var ngay = tt.ngay;
+    // phù đầu thượng nguyên gần nhất <= hôm nay
+    var lui = 0;
+    while (lui < 15) {
+      var idx = mod(ngay - lui, 60);
+      if (idx === 0 || idx === 15 || idx === 30 || idx === 45) break;
+      lui++;
+    }
+    var jdPhuDau = tt.ngayJDN - lui;                      // số ngày Julian của phù đầu
+    var nguyen = Math.floor(lui / 5);
+
+    // gán tiết khí cho từng khối phù đầu (quy về ngày địa phương)
+    var tzo = tt.tz / 24;
+    var list = tt.danhSachTiet.map(function (t) { return { ten: t.ten, han: t.han, day: Math.floor(t.jd + tzo + 0.5) }; });
+    var start = jdPhuDau - 15 * 30;                       // lùi ~450 ngày
+    var blocks = [];
+    for (var b = start; b <= jdPhuDau; b += 15) blocks.push(b);
+    // con trỏ tiết khí: tiết đầu tiên có day >= blocks[0]-9
+    var p = 0;
+    while (p < list.length - 1 && list[p].day < blocks[0] - 9) p++;
+    var assigned = null, prev = null, nhuan = false;
+    for (var q = 0; q < blocks.length; q++) {
+      var F = blocks[q];
+      var lead = list[p] ? list[p].day - F : 0;           // >0: phù đầu đi trước tiết = siêu thần
+      var isNhuan = false;
+      if (lead >= 9 && prev && (prev.ten === 'Mang Chủng' || prev.ten === 'Đại Tuyết')) {
+        assigned = prev; isNhuan = true;                  // nhuận cục: lặp lại tiết trước
+      } else {
+        assigned = list[p] || prev; prev = assigned; p++; isNhuan = false;
+      }
+      if (q === blocks.length - 1) nhuan = isNhuan;
+    }
+    var tenTiet = assigned ? assigned.ten : tt.tiet.ten;
+    var duong = DUONG_DON.indexOf(tenTiet) >= 0;
+    return {
+      phap: 'Trí nhuận', tiet: tenTiet, tietHan: assigned ? assigned.han : tt.tiet.han,
+      nguyen: nguyen, nguyenTen: NGUYEN_TEN[nguyen], cuc: CUC[tenTiet][nguyen],
+      duong: duong, phuDau: mod(ngay - lui, 60), cachPhuDau: lui, nhuan: nhuan
+    };
+  }
+
+  /* ---------- Địa bàn tam kỳ lục nghi ---------- */
+  var THU_TU_NGHI = [4, 5, 6, 7, 8, 9, 3, 2, 1];  // Mậu Kỷ Canh Tân Nhâm Quý Đinh Bính Ất
+  function diaBan(cuc, duong) {
+    var dp = {};
+    for (var i = 0; i < 9; i++) {
+      var p = duong ? mod(cuc - 1 + i, 9) + 1 : mod(cuc - 1 - i, 9) + 1;
+      dp[p] = THU_TU_NGHI[i];
+    }
+    return dp;
+  }
+
+  /* ---------- Bài bàn ---------- */
+  var TINH_THEO_CUNG = { 1: 'Thiên Bồng', 2: 'Thiên Nhuế', 3: 'Thiên Xung', 4: 'Thiên Phụ', 5: 'Thiên Cầm', 6: 'Thiên Tâm', 7: 'Thiên Trụ', 8: 'Thiên Nhâm', 9: 'Thiên Anh' };
+  var MON_THEO_CUNG = { 1: 'Hưu Môn', 2: 'Tử Môn', 3: 'Thương Môn', 4: 'Đỗ Môn', 6: 'Khai Môn', 7: 'Kinh Môn', 8: 'Sinh Môn', 9: 'Cảnh Môn' };
+
+  function laiBan(tt, dc, phai, opt) {
+    opt = opt || {};
+    var duong = dc.duong, cuc = dc.cuc;
+    var dp = diaBan(cuc, duong);
+
+    // Tuần thủ & độn can của giờ
+    var gio = tt.gio;
+    var tuanThuGio = gio - (gio % 10);
+    var donCanGio = [4, 5, 6, 7, 8, 9][tuanThuGio / 10];   // Mậu Kỷ Canh Tân Nhâm Quý
+    var viTriGio = gio % 10;                                // 0..9 thứ tự trong tuần
+
+    // Cung của trực phù (nơi độn can của tuần thủ đóng ở địa bàn)
+    var cungTrucPhu = null;
+    for (var p = 1; p <= 9; p++) if (dp[p] === donCanGio) cungTrucPhu = p;
+    var cungTrucPhuKy = cungTrucPhu === 5 ? 2 : cungTrucPhu;   // trung cung ký khôn 2
+
+    var trucPhuTinh = TINH_THEO_CUNG[cungTrucPhu];
+    var trucSuMon = MON_THEO_CUNG[cungTrucPhuKy];
+
+    // Can giờ thật (Giáp thì độn theo nghi của tuần thủ)
+    var canGio = gio % 10;
+    var canGioDon = canGio === 0 ? donCanGio : canGio;
+    var cungCanGio = null;
+    for (var p2 = 1; p2 <= 9; p2++) if (dp[p2] === canGioDon) cungCanGio = p2;
+
+    var thienBanTinh = {}, thienBanCan = {}, nhanBanMon = {}, thanBan = {}, amCan = {};
+
+    /* Cung rơi của TRỰC SỬ MÔN — chung cho cả hai phái.
+       Từ bản cung của trực sử, đếm theo thứ tự số cửu cung (dương thuận, âm nghịch),
+       số bước bằng vị thứ của giờ trong tuần; trung cung tính một bước, rơi vào thì ký khôn 2. */
+    /* opt.suTuTrung: tuần thủ ở Trung 5 thì đếm trực sử từ chính Trung 5 (元靈經 卷一: «自中宮甲寅順數至丙辰，亦在兌宮，即借坤宮死門加於兌宮»);
+       mặc định (false) giữ cách cũ: ký Khôn 2 rồi mới đếm. */
+    var goc = (opt.suTuTrung && cungTrucPhu === 5) ? 5 : cungTrucPhuKy;
+    var cungTrucSuRoi = diCuuCung(goc, viTriGio, duong);
+    var cungTrucSuKy = cungTrucSuRoi === 5 ? 2 : cungTrucSuRoi;
+
+    if (phai === 'phi') {
+      /* ---- PHI BÀN: cửu tinh bay theo cửu cung 1..9; bát môn & bát thần bay theo 8 cung (bỏ trung) ---- */
+      var off = mod(cungCanGio - cungTrucPhu, 9);
+      for (var h = 1; h <= 9; h++) {
+        var land = mod(h - 1 + off, 9) + 1;
+        thienBanTinh[land] = TINH_THEO_CUNG[h];
+        thienBanCan[land] = dp[h];
+      }
+      // Bát môn bay theo thứ tự số cửu cung: dịch chuyển cứng cả tám môn
+      var offMon = mod(cungTrucSuRoi - cungTrucPhuKy, 9);
+      for (var g = 0; g < VONG_PHI.length; g++) {
+        var hp = VONG_PHI[g], lp = mod(hp - 1 + offMon, 9) + 1;
+        nhanBanMon[lp] = MON_THEO_CUNG[hp];
+        amCan[lp] = dp[hp];
+      }
+      var cungTPTinh = null;
+      for (var t1 = 1; t1 <= 9; t1++) if (thienBanTinh[t1] === trucPhuTinh) cungTPTinh = t1;
+      var THAN = duong ? ['Trực Phù', 'Đằng Xà', 'Thái Âm', 'Lục Hợp', 'Bạch Hổ', 'Huyền Vũ', 'Cửu Địa', 'Cửu Thiên']
+        : ['Trực Phù', 'Đằng Xà', 'Thái Âm', 'Lục Hợp', 'Câu Trần', 'Chu Tước', 'Cửu Địa', 'Cửu Thiên'];
+      for (var n = 0; n < 8; n++) thanBan[diCuuCung(cungTPTinh, n, duong)] = THAN[n];
+      var kq = { cungTrucPhuTinh: cungTPTinh };
+    } else {
+      /* ---- CHUYỂN BÀN: cửu tinh & bát môn xoay nguyên vòng quanh 8 cung ---- */
+      var from = VONG_CHUYEN.indexOf(cungTrucPhuKy);
+      var toCung = cungCanGio === 5 ? 2 : cungCanGio;
+      var to = VONG_CHUYEN.indexOf(toCung);
+      var offT = mod(to - from, 8);
+      for (var r = 0; r < 8; r++) {
+        var homeP = VONG_CHUYEN[r];
+        var landP = VONG_CHUYEN[mod(r + offT, 8)];
+        thienBanTinh[landP] = TINH_THEO_CUNG[homeP];
+        thienBanCan[landP] = dp[homeP];
+      }
+      // Thiên Cầm ký cùng Thiên Nhuế (cung khôn 2), mang theo can trung cung
+      var cungNhue = null;
+      for (var z = 1; z <= 9; z++) if (thienBanTinh[z] === 'Thiên Nhuế') cungNhue = z;
+
+      // Trực sử rơi cung nào (đếm theo số cửu cung), rồi CẢ VÒNG tám môn xoay theo
+      // đúng thứ tự Hưu — Sinh — Thương — Đỗ — Cảnh — Tử — Kinh — Khai thuận chiều kim đồng hồ.
+      var homeMon2 = VONG_CHUYEN.indexOf(cungTrucPhuKy);
+      var offM = mod(VONG_CHUYEN.indexOf(cungTrucSuKy) - homeMon2, 8);
+      for (var r2 = 0; r2 < 8; r2++) {
+        var hp2 = VONG_CHUYEN[r2];
+        var lp2 = VONG_CHUYEN[mod(r2 + offM, 8)];
+        nhanBanMon[lp2] = MON_THEO_CUNG[hp2];
+        amCan[lp2] = dp[hp2];
+      }
+      var cungTPTinh2 = null;
+      for (var t2 = 1; t2 <= 9; t2++) if (thienBanTinh[t2] === trucPhuTinh) cungTPTinh2 = t2;
+      if (cungTPTinh2 === null && trucPhuTinh === 'Thiên Cầm') cungTPTinh2 = cungNhue;
+      var s2 = VONG_CHUYEN.indexOf(cungTPTinh2);
+      var THAN2 = duong ? ['Trực Phù', 'Đằng Xà', 'Thái Âm', 'Lục Hợp', 'Bạch Hổ', 'Huyền Vũ', 'Cửu Địa', 'Cửu Thiên']
+        : ['Trực Phù', 'Đằng Xà', 'Thái Âm', 'Lục Hợp', 'Câu Trần', 'Chu Tước', 'Cửu Địa', 'Cửu Thiên'];
+      for (var n2 = 0; n2 < 8; n2++) thanBan[VONG_CHUYEN[duong ? mod(s2 + n2, 8) : mod(s2 - n2, 8)]] = THAN2[n2];
+      var kq = { cungTrucPhuTinh: cungTPTinh2, cungThienCam: cungNhue, thienCamCan: dp[5] };
+    }
+
+    // Tuần không (giờ & ngày), dịch mã
+    function khong(idx) {
+      var head = idx - (idx % 10), hc = head % 12;
+      return [mod(hc + 10, 12), mod(hc + 11, 12)];
+    }
+    var khongGio = khong(tt.gio), khongNgay = khong(tt.ngay);
+    function ma(chi) {
+      if ([8, 0, 4].indexOf(chi) >= 0) return 2;   // Thân Tý Thìn -> Dần
+      if ([2, 6, 10].indexOf(chi) >= 0) return 8;  // Dần Ngọ Tuất -> Thân
+      if ([5, 9, 1].indexOf(chi) >= 0) return 11;  // Tỵ Dậu Sửu -> Hợi
+      return 5;                                     // Hợi Mão Mùi -> Tỵ
+    }
+    var maGio = ma(tt.gio % 12), maNgay = ma(tt.ngay % 12);
+
+    var cungKhongGio = khongGio.map(function (c) { return CHI_CUNG[c]; });
+    var cungKhongNgay = khongNgay.map(function (c) { return CHI_CUNG[c]; });
+
+    // Cung của trực sử môn
+    var cungTrucSu = null;
+    for (var m2 = 1; m2 <= 9; m2++) if (nhanBanMon[m2] === trucSuMon) cungTrucSu = m2;
+
+    return {
+      phai: phai, duong: duong, cuc: cuc, diaBan: dp,
+      thienBanTinh: thienBanTinh, thienBanCan: thienBanCan,
+      nhanBanMon: nhanBanMon, thanBan: thanBan, amCan: amCan,
+      trucPhuTinh: trucPhuTinh, trucSuMon: trucSuMon,
+      cungTrucPhuGoc: cungTrucPhu, cungTrucPhu: kq.cungTrucPhuTinh, cungTrucSu: cungTrucSu,
+      cungThienCam: kq.cungThienCam || null, thienCamCan: kq.thienCamCan,
+      /* Trung cung không có phương vị nên không đứng riêng được, phải ký sang Khôn 2.
+         Chuyển bàn thì chỉ có can địa bàn để ký, ghép với thiên bàn sẵn có của Khôn 2.
+         Phi bàn thì cả tầng Trung 5 — sao, môn, thần, thiên bàn, địa bàn — ký nguyên
+         sang, đọc thành một lượt riêng chứ không trộn với tầng vốn có. */
+      cungKy: 2,
+      diaBanKy: dp[5],
+      lopKy: phai === 'phi' ? {
+        tinh: thienBanTinh[5] || null, can: thienBanCan[5],
+        mon: nhanBanMon[5] || null, than: thanBan[5] || null,
+        am: amCan[5], dia: dp[5]
+      } : null,
+      cungTrucSuRoi: cungTrucSuRoi,
+      tuanThuGio: tuanThuGio, donCanGio: donCanGio, viTriGio: viTriGio,
+      canGioDon: canGioDon, cungCanGio: cungCanGio,
+      khongGio: khongGio, khongNgay: khongNgay,
+      cungKhongGio: cungKhongGio, cungKhongNgay: cungKhongNgay,
+      maGio: maGio, maNgay: maNgay,
+      cungMaGio: CHI_CUNG[maGio], cungMaNgay: CHI_CUNG[maNgay]
+    };
+  }
+
+  function lap(y, m, d, hh, mi, opts) {
+    opts = opts || {};
+    var tt = tuTru(y, m, d, hh, mi, opts);
+    var dcCB = dinhCucChuyetBo(tt);
+    var dcTN = dinhCucTriNhuan(tt);
+    var dc = opts.dinhCuc === 'trinhuan' ? dcTN : dcCB;
+    var ban = laiBan(tt, dc, opts.phai === 'phi' ? 'phi' : 'chuyen', { suTuTrung: !!opts.suTuTrung });
+    return { tuTru: tt, dinhCuc: dc, chuyetBo: dcCB, triNhuan: dcTN, ban: ban };
+  }
+
+  root.KyMon = {
+    CAN: CAN, CAN_HAN: CAN_HAN, CHI: CHI, CHI_HAN: CHI_HAN,
+    CAN_NGU_HANH: CAN_NGU_HANH, CHI_NGU_HANH: CHI_NGU_HANH,
+    CUNG: CUNG, TINH_HAN: TINH_HAN, MON_HAN: MON_HAN, THAN_HAN: THAN_HAN,
+    MON_CAT: MON_CAT, TINH_CAT: TINH_CAT, TIET: TIET, CUC: CUC, CHI_CUNG: CHI_CUNG,
+    canChi: canChi, canChiHan: canChiHan, tuTru: tuTru, diaBan: diaBan,
+    dinhCucChuyetBo: dinhCucChuyetBo, dinhCucTriNhuan: dinhCucTriNhuan,
+    laiBan: laiBan, lap: lap, tietKhiNam: tietKhiNam, mod: mod
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+<script>/* Kỳ Môn Binh Pháp — dữ liệu nguyên văn + bản dịch.
+   Nguồn (殆知閣 daizhigev20, nhánh data): 易藏/术数: 奇门遁甲统宗, 奇门旨归 (卷三十六–三十七), 奇门遁甲元灵经 (卷二十四),
+   奇门遁甲秘笈大全 (卷七 兵占, 卷十九), 奇门法窍, 遁甲符应经 (宋 杨惟德), 奇门宝鉴御定;
+   子藏/兵家: 神机制敌太白阴经 卷八 遁甲 (唐 李筌), 虎钤经 卷十一–十二 (宋 许洞), 兵要望江南.
+   Viết tắt nguồn: TT 統宗 · CQ 旨歸 · NL 元靈經 · BK 秘笈 · PK 法竅 · PU 符應經 · BG 寶鑑 · TB 太白陰經 · HK 虎鈐經 · VG 兵要望江南 */
+(function (root) {
+  'use strict';
+  var SRC = {
+    TT: '奇門遁甲統宗', CQ: '奇門旨歸', NL: '奇門遁甲元靈經', BK: '奇門遁甲秘笈大全', PK: '奇門法竅',
+    PU: '遁甲符應經 (Tống)', BG: '御定奇門寶鑑', TB: '太白陰經 (Đường)', HK: '虎鈐經 (Tống)', VG: '兵要望江南'
+  };
+
+  /* ---------- Cách cục: ý nghĩa trong binh ----------
+     Mỗi cách: ten, han (tên Hán), loai ('cat'|'hung'), y [{s:nguồn, han, vi}] */
+  var CACH = {
+    longPhan: { ten: 'Thanh Long phản thủ', han: '青龍返首', loai: 'cat', dk: 'Thiên bàn Mậu (Giáp) gia địa bàn Bính', y: [
+      { s: 'BK', han: '返首一戰成功', vi: 'Một trận là thành công.' },
+      { s: 'TT', han: '龍回首主兵大利，客亦不凶', vi: 'Chủ binh được lợi lớn, khách cũng không xấu.' },
+      { s: 'CQ', han: '此時宜舉百事有欣悅稱心之驗，行軍俱吉', vi: 'Hành quân đều tốt.' }] },
+    dieuDiet: { ten: 'Phi điểu điệt huyệt', han: '飛鳥跌穴', loai: 'cat', dk: 'Thiên bàn Bính gia địa bàn Mậu (Giáp)', y: [
+      { s: 'BK', han: '跌穴伏兵取勝', vi: 'Dùng phục binh mà thắng.' },
+      { s: 'CQ', han: '戰陣皆吉', vi: 'Chiến trận đều tốt.' }] },
+    thienDon: { ten: 'Thiên độn', han: '天遁', loai: 'cat', dk: 'Thiên Bính + Sinh môn + địa Đinh', y: [
+      { s: 'BK', han: '天遁大開旗鼓，所戰必克', vi: 'Mở cờ trống lớn, đánh đâu thắng đó.' },
+      { s: 'PU', han: '生門與六丙日奇合地下六丁為天遁，蔽也', vi: 'Được che chở (khí nguyệt tinh); ra quân phương ấy.' }] },
+    diaDon: { ten: 'Địa độn', han: '地遁', loai: 'cat', dk: 'Thiên Ất + Khai môn + địa Kỷ', y: [
+      { s: 'BK', han: '地遁安置營壘，埋伏出奇', vi: 'Đặt doanh lũy, mai phục, xuất kỳ binh.' },
+      { s: 'CQ', han: '宜設伏、藏兵、立寨、安營……出陣、攻城全師捷勝', vi: 'Hợp đặt phục, giấu quân, lập trại, công thành; toàn quân thắng gọn.' }] },
+    nhanDon: { ten: 'Nhân độn', han: '人遁', loai: 'cat', dk: 'Thiên Đinh + Hưu môn + Thái Âm', y: [
+      { s: 'BK', han: '人遁利偵探', vi: 'Lợi do thám.' },
+      { s: 'CQ', han: '宜選將求賢，說敵和仇', vi: 'Hợp chọn tướng, cầu người tài, thuyết địch giảng hòa.' }] },
+    thanDon: { ten: 'Thần độn', han: '神遁', loai: 'cat', dk: 'Thiên Bính + Sinh môn + Cửu Thiên', y: [
+      { s: 'BK', han: '神遁使陰謀', vi: 'Dùng mưu kín.' },
+      { s: 'CQ', han: '格中神遁最難逢，大將行兵立見功', vi: 'Khó gặp nhất; đại tướng hành binh thấy công ngay.' }] },
+    quyDon: { ten: 'Quỷ độn', han: '鬼遁', loai: 'cat', dk: 'TT: thiên Ất + Đỗ môn + Cửu Địa · CQ/BK: thiên Đinh + Hưu/Sinh/Khai + Cửu Địa', y: [
+      { s: 'BK', han: '鬼遁偷刦可行', vi: 'Đánh lén, cướp trại được.' },
+      { s: 'CQ', han: '宜於其方採探賊情，偷營劫寨，行間諜，布謠言', vi: 'Dò tình giặc, đánh úp doanh trại, dùng gián điệp, tung tin đồn.' }] },
+    phongDon: { ten: 'Phong độn', han: '風遁', loai: 'cat', dk: 'Thiên Ất + Khai/Hưu/Sinh tại Tốn 4', y: [
+      { s: 'BK', han: '風雲二遁抽避為良', vi: 'Phong, Vân độn: hợp rút tránh.' },
+      { s: 'CQ', han: '呼風破敵用火攻……順風擊之', vi: 'Thuận gió mà đánh, dùng hỏa công.' }] },
+    vanDon: { ten: 'Vân độn', han: '雲遁', loai: 'cat', dk: 'Thiên Ất + Khai/Hưu/Sinh + địa Tân', y: [
+      { s: 'BK', han: '風雲二遁抽避為良', vi: 'Hợp rút tránh.' },
+      { s: 'CQ', han: '大將逢之宜埋伏掩襲', vi: 'Đại tướng gặp thì nên mai phục, đánh úp.' }] },
+    longDon: { ten: 'Long độn', han: '龍遁', loai: 'cat', dk: 'Thiên Ất + Khai/Hưu/Sinh tại Khảm 1 (hoặc trên địa Quý)', y: [
+      { s: 'BK', han: '龍遁祈禱大利', vi: 'Cầu đảo được lợi lớn.' },
+      { s: 'CQ', han: '演習水戰，密運機謀……把守關津隘口、水軍對敵', vi: 'Thủy chiến, giữ bến, cửa ải; thủy quân đối địch.' }] },
+    hoDon: { ten: 'Hổ độn', han: '虎遁', loai: 'cat', dk: 'Thiên Ất + Hưu/Sinh + địa Tân tại Cấn 8 (hoặc thiên Tân + Sinh tại Cấn)', y: [
+      { s: 'BK', han: '虎遁招討，威振遠方', vi: 'Chiêu an, thảo phạt; uy vang xa.' },
+      { s: 'CQ', han: '據險守險，設計衝鋒', vi: 'Chiếm hiểm giữ hiểm, đặt kế xung phong.' }] },
+    tamTra: { ten: 'Tam trá', han: '三詐', loai: 'cat', dk: 'Thiên tam kỳ + Khai/Hưu/Sinh + Thái Âm (chân trá) / Cửu Địa (trùng trá) / Lục Hợp (hưu trá)', y: [
+      { s: 'BK', han: '三詐爭戰定勝……三詐宮，百戰皆捷', vi: 'Tranh chiến ắt thắng; cung tam trá trăm trận đều thắng.' }] },
+    nguGia: { ten: 'Ngũ giả', han: '五假', loai: 'cat', dk: 'Thiên giả (Cảnh + kỳ + Cửu Thiên) · Địa giả (Đỗ + Đinh/Kỷ/Quý + Cửu Địa) · Nhân giả (Kinh + Nhâm + Cửu Thiên) · Quỷ giả (Tử + Đinh/Kỷ/Quý + Cửu Địa) · Vật giả (Thương + Đinh/Kỷ/Quý + Lục Hợp)', y: [
+      { s: 'BK', han: '五假變陣成功', vi: 'Biến trận mà thành công.' },
+      { s: 'CQ', han: '假者，假其氣以用事，須以其事而符其氣', vi: 'Mượn khí mà làm việc — việc phải hợp với khí ấy mới có ích.' }] },
+    longTau: { ten: 'Thanh Long đào tẩu', han: '青龍逃走', loai: 'hung', dk: 'Thiên Ất gia địa Tân', y: [
+      { s: 'BK', han: '乙加辛宜防敗北', vi: 'Phải phòng thua chạy.' },
+      { s: 'CQ', han: '此時不宜舉兵，主將士逃竄', vi: 'Không nên cử binh; tướng sĩ bỏ trốn.' },
+      { s: 'TT', han: '乙加辛，賊來偷刦，必自敗而退', vi: 'Giặc tới đánh lén thì ắt tự bại mà lui (lời 行兵雜摘).' }] },
+    hoCuong: { ten: 'Bạch Hổ xương cuồng', han: '白虎猖狂', loai: 'hung', dk: 'Thiên Tân gia địa Ất', y: [
+      { s: 'BK', han: '辛加乙宜勿圖謀', vi: 'Đừng mưu tính.' },
+      { s: 'TT', han: '蛇妖矯、虎猖狂，不利主，宜先舉', vi: 'Bất lợi cho chủ — nên ra tay trước.' }] },
+    xaKieu: { ten: 'Đằng Xà yêu kiểu', han: '螣蛇夭矯', loai: 'hung', dk: 'Thiên Quý gia địa Đinh', y: [
+      { s: 'BK', han: '癸加丁軍謠有變', vi: 'Trong quân có lời đồn sinh biến.' },
+      { s: 'TT', han: '夭矯不可對敵，宜移帳到戊己方', vi: 'Không thể đối địch; dời trướng sang phương Mậu Kỷ.' },
+      { s: 'CQ', han: '兵家值此尤防敵人妖術火攻', vi: 'Phòng địch dùng hỏa công.' }] },
+    tuocGiang: { ten: 'Chu Tước đầu giang', han: '朱雀投江', loai: 'hung', dk: 'Thiên Đinh gia địa Quý', y: [
+      { s: 'BK', han: '丁加癸將……凝況', vi: 'Tướng bị trì trệ (bản số hóa mất chữ, nghĩa chưa chắc).' },
+      { s: 'TT', han: '龍逃走、雀投江，不利客，宜後應', vi: 'Bất lợi cho khách — nên ứng sau.' },
+      { s: 'CQ', han: '文書泄漏', vi: 'Văn thư (quân lệnh) lộ ra ngoài.' }] },
+    bachNhapHuynh: { ten: 'Thái Bạch nhập Huỳnh', han: '太白入熒', loai: 'hung', dk: 'Thiên Canh gia địa Bính', y: [
+      { s: 'BK', han: '白入熒兮窮寇而莫追', vi: 'Giặc cùng đường — chớ đuổi.' },
+      { s: 'TT', han: '白入熒利主……白入熒賊來偷營，即伏兵於此方迎戰', vi: 'Lợi chủ; giặc đến đánh lén doanh — đặt phục binh ở phương này đón đánh.' },
+      { s: 'CQ', han: '尤防賊來刦營，伏兵丙宮挫其鋒', vi: 'Phòng giặc cướp doanh; phục ở cung Bính để bẻ mũi nhọn.' },
+      { s: 'PU', han: '若庚加丙時，對敵宜防賊來', vi: 'Đối địch phải phòng giặc tới.' }] },
+    huynhNhapBach: { ten: 'Huỳnh nhập Thái Bạch', han: '熒入太白', loai: 'hung', dk: 'Thiên Bính gia địa Canh', y: [
+      { s: 'BK', han: '熒入白兮詐退而必返', vi: 'Giặc giả lui rồi ắt quay lại.' },
+      { s: 'CQ', han: '行兵主賊去，宜尾追，有不戰而賊自敗之象', vi: 'Giặc rút; nên bám đuôi — có tượng không đánh mà giặc tự bại.' },
+      { s: 'TT', han: '熒入白利客……凡遇賊兵，可即時發兵，遲則讓賊為客', vi: 'Lợi khách; gặp giặc phát binh ngay, chậm là nhường thế khách cho giặc.' },
+      { s: 'PU', han: '若丙加庚，此時聞賊，必當退避……占賊不來', vi: 'Nghe tin giặc thì nên lui tránh; chiêm giặc thì giặc không tới.' }] },
+    phiCung: { ten: 'Phi cung', han: '飛宮格', loai: 'hung', dk: 'Thiên bàn trực phù (nghi tuần thủ) gia địa Canh', y: [
+      { s: 'BK', han: '飛宮先鋒失機', vi: 'Tiên phong lỡ thời cơ.' },
+      { s: 'CQ', han: '戰主大將遭擒……用兵先舉者必敗', vi: 'Đánh thì đại tướng bị bắt; ai ra tay trước ắt bại.' },
+      { s: 'TT', han: '天乙飛宮，切勿進兵……飛宮則將軍當隨天上值符而飛', vi: 'Chớ tiến binh; tướng quân theo trực phù thiên bàn mà dời.' }] },
+    phucCung: { ten: 'Phục cung', han: '伏宮格', loai: 'hung', dk: 'Thiên Canh gia địa trực phù (nghi tuần thủ)', y: [
+      { s: 'BK', han: '伏宮勁敵難禦', vi: 'Kình địch khó chống.' },
+      { s: 'TT', han: '天乙伏宮，須移帳於丙丁方避之', vi: 'Phải dời trướng sang phương Bính Đinh mà tránh.' },
+      { s: 'PU', han: '此時戰，主客皆不利', vi: 'Đánh lúc này chủ khách đều bất lợi.' }] },
+    phucCan: { ten: 'Phục can', han: '伏干格', loai: 'hung', dk: 'Thiên Canh gia địa can ngày', y: [
+      { s: 'BK', han: '伏干當慮暴出之師', vi: 'Phải lo đạo quân bất ngờ xông ra.' },
+      { s: 'CQ', han: '此時戰必遭擒，主客兩傷', vi: 'Đánh ắt bị bắt; chủ khách cùng tổn.' }] },
+    phiCan: { ten: 'Phi can', han: '飛干格', loai: 'hung', dk: 'Thiên can ngày gia địa Canh', y: [
+      { s: 'BK', han: '飛干恐墮敵人之計', vi: 'Sợ sa vào kế của địch.' },
+      { s: 'PU', han: '此時戰，主、客兩傷', vi: 'Đánh thì hai bên cùng tổn.' }] },
+    daiCach: { ten: 'Đại cách', han: '大格', loai: 'hung', dk: 'Thiên Canh gia địa Quý', y: [
+      { s: 'BK', han: '大隔怕遭刦掠', vi: 'Sợ bị cướp bóc.' },
+      { s: 'TT', han: '大格、刑格必敗……遇此車破馬倒，慎勿追趕', vi: 'Ắt bại; xe gãy ngựa đổ, chớ đuổi.' }] },
+    tieuCach: { ten: 'Tiểu cách', han: '小格', loai: 'hung', dk: 'Thiên Canh gia địa Nhâm', y: [
+      { s: 'BK', han: '小隔須防伏兵', vi: 'Phải phòng phục binh.' }] },
+    hinhCach: { ten: 'Hình cách', han: '刑格', loai: 'hung', dk: 'Thiên Canh gia địa Kỷ', y: [
+      { s: 'BK', han: '刑格戰鬪罕利', vi: 'Giao chiến hiếm khi có lợi.' },
+      { s: 'PU', han: '車破馬傷，中道而止，士卒逃亡', vi: 'Xe gãy ngựa thương, đi nửa đường phải dừng, sĩ tốt bỏ trốn.' }] },
+    boiCach: { ten: 'Bội cách', han: '悖格', loai: 'hung', dk: 'Thiên Bính gia địa can năm/tháng/ngày/giờ hoặc trực phù', y: [
+      { s: 'BK', han: '悖格乍起軍驚', vi: 'Quân bỗng kinh động.' },
+      { s: 'CQ', han: '此宜固守不可輕動，利主不利客', vi: 'Nên cố thủ, đừng động nhẹ; lợi chủ không lợi khách.' }] },
+    tueCach: { ten: 'Tuế cách', han: '歲格', loai: 'hung', dk: 'Thiên Canh gia địa can năm', y: [{ s: 'BK', han: '歲格主營生變', vi: 'Trong doanh sinh biến.' }] },
+    nguyetCach: { ten: 'Nguyệt cách', han: '月格', loai: 'hung', dk: 'Thiên Canh gia địa can tháng', y: [{ s: 'BK', han: '月格偏將受傷', vi: 'Thiên tướng (phó tướng) bị thương.' }] },
+    nhatCach: { ten: 'Nhật cách', han: '日格', loai: 'hung', dk: 'Thiên Canh gia địa can ngày', y: [{ s: 'BK', han: '日時格豈堪搦戰', vi: 'Sao kham nổi khiêu chiến.' }] },
+    thoiCach: { ten: 'Thời cách', han: '時格', loai: 'hung', dk: 'Thiên Canh gia địa can giờ', y: [
+      { s: 'BK', han: '日時格豈堪搦戰', vi: 'Sao kham nổi khiêu chiến.' },
+      { s: 'PU', han: '六庚加時干，亦名伏吟格。此時不宜舉事，用兵凶', vi: 'Không nên cử sự; dụng binh hung.' }] },
+    thienVong: { ten: 'Thiên võng tứ trương', han: '天網四張', loai: 'hung', dk: 'Giờ Quý (thiên Quý gia can giờ)', y: [
+      { s: 'BK', han: '網羅豈避坑陷', vi: 'Lưới giăng — sao tránh khỏi hố bẫy.' },
+      { s: 'CQ', han: '網高者天上六癸加五六七八九宮大凶不可用，網低者天上六癸加一二三四宮可匍匐而出', vi: 'Thiên Quý ở cung 5–9 là lưới cao, đại hung; ở 1–4 là lưới thấp, bò mà ra được.' }] },
+    diaLa: { ten: 'Địa la già', han: '地羅遮', loai: 'hung', dk: 'Thiên Nhâm gia can giờ', y: [
+      { s: 'CQ', han: '天上六壬加時干，忌出兵出行', vi: 'Kỵ xuất binh, xuất hành.' }] },
+    nguBatNgo: { ten: 'Ngũ bất ngộ thời', han: '五不遇時', loai: 'hung', dk: 'Can giờ khắc can ngày (cùng âm dương)', y: [
+      { s: 'BK', han: '五不遇切勿進征', vi: 'Tuyệt đối chớ tiến đánh.' },
+      { s: 'PK', han: '時干克日損其明……損兵折將棄干城', vi: 'Hao binh gãy tướng, mất thành trì; có kỳ môn cũng không dùng.' }] },
+    kichHinh: { ten: 'Lục nghi kích hình', han: '六儀擊刑', loai: 'hung', dk: 'Nghi tuần thủ (trực phù) rơi cung tự hình/tương hình: Mậu 3, Kỷ 2, Canh 8, Tân 9, Nhâm 4, Quý 4', y: [
+      { s: 'BK', han: '六儀擊刑，戰雖利而有損', vi: 'Đánh dù lợi cũng có tổn.' },
+      { s: 'TT', han: '六儀擊刑最凶，雖為值符亦不可用', vi: 'Hung nhất, dù là trực phù cũng không dùng.' },
+      { s: 'CQ', han: '安營值其方尤忌', vi: 'Đóng doanh ở phương ấy càng kỵ.' }] },
+    kyMo: { ten: 'Tam kỳ nhập mộ', han: '三奇入墓', loai: 'hung', dk: 'Thiên Ất ở Khôn 2, Bính ở Càn 6, Đinh ở Cấn 8', y: [
+      { s: 'BK', han: '三奇入墓與刑制，副將援兵不協情', vi: 'Phó tướng và viện binh không đồng lòng.' },
+      { s: 'TT', han: '三奇入墓，百無一成', vi: 'Trăm việc không thành một.' }] },
+    phucNgam: { ten: 'Phục ngâm', han: '伏吟', loai: 'hung', dk: 'Sao/môn về bản cung', y: [
+      { s: 'BK', han: '返伏卻忌交兵', vi: 'Phản, phục ngâm: kỵ giao binh.' },
+      { s: 'TT', han: '伏吟宜藏兵暗地，使敵入我伏中', vi: 'Nên giấu quân chỗ kín, nhử địch vào ổ phục của ta.' },
+      { s: 'PU', han: '不宜用兵，宜收斂貨財', vi: 'Không nên dụng binh, nên thu gom của cải.' }] },
+    phanNgam: { ten: 'Phản ngâm', han: '反吟', loai: 'hung', dk: 'Sao/môn ở cung đối xung', y: [
+      { s: 'TT', han: '反吟有吉格，亦宜進兵，當乘亂破殺', vi: 'Nếu có cát cách thì vẫn nên tiến binh, thừa lúc rối mà phá.' },
+      { s: 'PU', han: '不利舉兵動眾，利散恤倉廩之事', vi: 'Không lợi cử binh; lợi phát chẩn kho lẫm.' }] },
+    monBuc: { ten: 'Môn bức', han: '門迫', loai: 'hung', dk: 'Môn khắc cung', y: [
+      { s: 'BK', han: '門空制迫，營雖固而防衝', vi: 'Doanh tuy vững vẫn phải phòng bị xung phá.' },
+      { s: 'PU', han: '若吉門被迫，則吉事不成。凶門被迫，凶災尤甚', vi: 'Cát môn bị bức thì việc tốt không thành; hung môn bị bức thì tai càng nặng.' }] }
+  };
+
+  /* ---------- Cửu tinh trực thời (sao trực phù của giờ) ---------- */
+  var TINH_THOI = {
+    'Thiên Bồng': { pu: '天蓬時，宜安撫邊境，修築城池。春、夏，左將大勝；秋、冬凶亡。其士卒利主不利客', vi: 'Nên an phủ biên cảnh, sửa thành trì. Xuân hạ tả tướng đại thắng; thu đông hung. Sĩ tốt lợi chủ không lợi khách.', ca: '天蓬平穩宜堅固', caVi: 'Thiên Bồng: vững vàng, nên giữ chắc.', tb: '宜安居保國、修築營壘，主不利客', mua: { xh: 1, td: -1 } },
+    'Thiên Nhuế': { pu: '天芮時……不可用兵', vi: 'Hợp sùng đạo, kết bạn, thờ thầy; không thể dụng binh.', ca: '天芮須憂士卒亡', caVi: 'Thiên Nhuế: lo sĩ tốt chết.', mua: { xh: -1, td: 0 } },
+    'Thiên Xung': { pu: '天冲時，宜出師報仇。春、夏，左將勝；秋、冬，無功', vi: 'Nên xuất quân báo thù. Xuân hạ tả tướng thắng; thu đông không công.', ca: '天冲揚威萬里行', caVi: 'Thiên Xung: dương uy đi vạn dặm.', mua: { xh: 1, td: -1 } },
+    'Thiên Phụ': { pu: '天輔時……將兵春、夏勝，得平地千里', vi: 'Hợp giữ đạo, dạy dỗ. Đem binh xuân hạ thắng, được đất bằng nghìn dặm.', ca: '天輔遠凶近則吉', caVi: 'Thiên Phụ: đi xa hung, gần thì tốt.', mua: { xh: 1, td: 0 } },
+    'Thiên Cầm': { pu: '天禽時……將兵四時，吉，百福助。不戰用謀，敵人畏服', vi: 'Đem binh bốn mùa đều tốt; không đánh mà dùng mưu, địch sợ phục.', ca: '天禽雄猛敵軍驚', caVi: 'Thiên Cầm: hùng mãnh, quân địch kinh.', mua: { xh: 1, td: 1 } },
+    'Thiên Tâm': { pu: '天心時，宜療病合藥。將兵，秋、冬勝，得地千里；春、夏不利', vi: 'Hợp chữa bệnh, hợp thuốc. Đem binh thu đông thắng, được đất nghìn dặm; xuân hạ bất lợi.', ca: '天心密計他須敗', caVi: 'Thiên Tâm: kế kín, địch ắt bại.', mua: { xh: -1, td: 1 } },
+    'Thiên Trụ': { pu: '天柱時，宜屯兵自固，隱跡藏形。將兵，車破馬傷，士卒敗亡', vi: 'Nên đóng quân tự giữ, ẩn dấu tung tích. Đem binh thì xe gãy ngựa thương, sĩ tốt bại vong.', ca: '天柱軍馬近還傷', caVi: 'Thiên Trụ: quân mã ở gần cũng bị thương.', mua: { xh: -1, td: -1 } },
+    'Thiên Nhâm': { pu: '天任時，宜請謁通才。將兵，四時吉。萬神助之，敵人自降', vi: 'Đem binh bốn mùa đều tốt; vạn thần giúp, địch tự hàng.', ca: '天任何憂不大贏', caVi: 'Thiên Nhâm: lo gì không thắng lớn.', mua: { xh: 1, td: 1 } },
+    'Thiên Anh': { pu: '天英時，宜出行，遠行，飲宴作樂。利嫁娶。不宜出兵', vi: 'Hợp đi xa, yến tiệc, cưới hỏi; không nên xuất binh.', ca: '天英兵將何從出，亦應危難見恓惶', caVi: 'Thiên Anh: binh tướng ra lối nào, cũng gặp nguy khốn.', mua: { xh: -1, td: -1 } }
+  };
+  /* 三元經 (dẫn trong 符應經, 太白陰經): bậc cát hung của sao giờ */
+  var TINH_BAC = { 'Thiên Phụ': 'thượng cát', 'Thiên Cầm': 'thượng cát', 'Thiên Tâm': 'thượng cát', 'Thiên Xung': 'thứ cát', 'Thiên Nhâm': 'thứ cát', 'Thiên Bồng': 'đại hung', 'Thiên Nhuế': 'đại hung', 'Thiên Anh': 'tiểu hung', 'Thiên Trụ': 'tiểu hung' };
+
+  /* ---------- Bát môn trong binh ---------- */
+  var MON_BINH = {
+    'Khai Môn': { bk: '開壁迎敵、遣使', pu: '開門宜遠行征罰，所向通達', vi: 'Mở lũy đón địch, sai sứ; đi xa chinh phạt, đâu cũng thông.' },
+    'Hưu Môn': { bk: '養生、納降', pu: '休門宜和集萬事，洽兵習業', vi: 'Dưỡng quân, nhận hàng; tập binh. TT: «休門只宜堅守» — chỉ nên cố thủ.' },
+    'Sinh Môn': { bk: '休營壘、安軍圖', pu: '生門宜見貴人，營造事始', vi: 'Lập doanh lũy, an quân; tam thắng cung.' },
+    'Thương Môn': { bk: '賞罰、捕逃', pu: '傷門宜漁獵捕罰，行逢盜賊', vi: 'Thưởng phạt, bắt kẻ trốn. TT: «交戰最利傷門» — giao chiến lợi nhất là Thương môn.' },
+    'Đỗ Môn': { bk: '伏險、夜遁、堅壁', pu: '杜門宜邀遮隱伏，誅伐凶逆', vi: 'Phục chỗ hiểm, rút đêm, giữ vững lũy; chặn đường, ẩn phục.' },
+    'Cảnh Môn': { bk: '投書、探聽', pu: '景門宜上書遣使，突陣破圍', vi: 'Gửi thư, dò nghe; phá vây đột trận. TT: «景門勝而不久» — thắng mà không lâu; NL: «景宜破陣».' },
+    'Tử Môn': { bk: '行刑、錄囚', pu: '死門宜行誅戮，弔死送喪', vi: 'Hành hình, ghi tù; lối đánh vào (背生擊死).' },
+    'Kinh Môn': { bk: '擒殺', pu: '驚門宜掩捕鬥訟，攻擊驚恐', vi: 'Bắt giết, đánh úp, gây kinh hoảng; NL: «亂之，要法視驚門».' }
+  };
+
+  /* ---------- 兵占 (秘笈 卷七): vai trò từng ký hiệu trong quân ---------- */
+  var VAI = {
+    than: { 'Trực Phù': 'sĩ tốt, cờ trống', 'Đằng Xà': 'quân lệnh, ty lệnh ba quân', 'Thái Âm': 'âm mưu, mai phục, tư thông', 'Lục Hợp': 'mưu thần, tán họa (tham mưu)', 'Chu Tước': 'gián điệp, tin đồn', 'Huyền Vũ': 'gián điệp, giặc trộm', 'Bạch Hổ': 'đao binh, sát phạt', 'Câu Trần': 'giằng co, bắt bớ', 'Cửu Địa': 'phục tàng (TB: 九地之下可以伏藏)', 'Cửu Thiên': 'bày binh (TB: 九天之上可以力勝)' },
+    can: ['diễn binh (tướng)', 'phó tướng', 'tiên phong', 'thuyết khách', 'đại đội', 'quân nhu', 'kình địch', 'du kỵ', 'kỵ binh', 'hào hiểm'],
+    tinh: { 'Thiên Bồng': 'mãnh tướng', 'Thiên Nhâm': 'toan tướng', 'Thiên Xung': 'chiến tướng', 'Thiên Phụ': 'nho tướng', 'Thiên Anh': 'hung tướng', 'Thiên Nhuế': 'ngoan tướng', 'Thiên Cầm': 'nghĩa tướng', 'Thiên Trụ': 'hùng tướng', 'Thiên Tâm': 'thiên tướng' },
+    canHan: ['演戎', '副將', '先鋒', '說客', '大隊', '輜重', '勁敵', '游騎', '騎兵', '天塹']
+  };
+
+  /* ---------- 天罡所指 (旨歸 卷三十七 / 秘笈 卷十九) — theo chi mặt đất dưới Thiên Cương ---------- */
+  var CUONG_CHI = {
+    5: ['天地初開', 'Trời đất mới mở — xuất quân đại thắng, mở đất nghìn dặm.', 1],
+    6: ['天地縱橫', 'Trời đất ngang dọc — không nên xuất quân, ngồi trướng gảy đàn.', -1],
+    7: ['天地小通', 'Tiểu thông — xuất quân cũng tốt.', 1],
+    8: ['天地爭更', 'Trời đất tranh đổi — dụng binh phải kỵ.', -1],
+    9: ['天地閉塞', 'Bế tắc — xe gãy ngựa chết, đánh đại hung.', -2],
+    10: ['乖隔', 'Ngăn cách — sĩ tốt lìa lòng, tổn hòa khí.', -1],
+    11: ['天窄', 'Trời hẹp — dụng binh tổn thương kinh sợ.', -1],
+    0: ['半路魂魄散', 'Nửa đường hồn vía tan — đi giữa chừng bất an.', -1],
+    1: ['途宿待明', 'Tiểu thông — xuất quân ba mươi dặm thì nghỉ đợi sáng mai, rồi tùy ý tiến ắt đại thắng.', 1],
+    2: ['有喜戰獲勝', 'Có tin vui — đánh ắt thắng lớn.', 2],
+    3: ['閉塞宜埋藏', 'Bế tắc — nên ẩn nấp tránh, mọi việc không nên.', -1],
+    4: ['關梁塞', 'Cửa ải cầu đường bị tắc — chỉ nên đóng doanh hạ trại, không được vọng động.', -1]
+  };
+  /* 虎鈐經 卷十一 天罡第一百二十四 (bản khác) */
+  var CUONG_HK = {
+    0: 'Trời đất thông — điềm tốt.', 1: 'Trời đất không (hoặc ít) thông — không nên vì giận riêng mà hưng binh; đi ba mươi dặm thì dừng.',
+    2: 'Trời đất vui — làm việc nhỏ thì tốt.', 3: 'Trời đất mở cách — không nên cử đại chúng.', 4: 'Trời đất mới hô — đừng xâm lấn đất người; giữ đất mình thì địch không đánh được.',
+    5: 'Thần phù hộ — không lo; nhưng tiến binh vào đất địch, gặp địch thì dừng đóng doanh, đừng giao chiến ngay.', 6: 'Trời đất mới dậy mà ngang dọc — hung.',
+    7: 'Tiểu thông — cẩn thận, ban thưởng, vỗ về tướng hiệu, giữ gìn binh mã thì tốt.', 8: 'Không giương binh xa — giữ lũy phòng bị thì tốt.',
+    9: 'Cửa trời đất đóng, không đường — xuất binh giữa đường tan chạy, gặp địch là bại; nên giữ doanh.', 10: 'Trời đất nghịch — lại sĩ mưu giết chủ tướng, chủ tướng phải phòng.', 11: 'Trời đất bức, không đường — người đi phải dừng.'
+  };
+
+  /* ---------- 占賊來否 天罡加孟仲季 (元靈經 卷二十四, đối chiếu 虎鈐經) ---------- */
+  var CUONG_MTQ = [
+    ['Giặc có tới không', 'Không tới', 'Nửa đường, tới một nửa', 'Tới hết'],
+    ['Giặc có đi không', 'Còn ở', 'Đi một nửa', 'Đi hết'],
+    ['Giặc có ra quân không', 'Không ra', 'Ra một nửa', 'Ra hết'],
+    ['Lợi cho ai', 'Chủ lợi', 'Hai bên cùng tổn', 'Lợi khách'],
+    ['Đường nào gần (thông)', 'Đường trái', 'Đường giữa', 'Đường phải'],
+    ['Bị vây', 'Có thể chờ', 'Đụng nhau', 'Mau đi'],
+    ['Có đi không', 'Chưa đi', 'Sắp đi', 'Đã đi']
+  ];
+
+  /* ---------- 六甲安營 — ba bản ---------- */
+  var DOANH = [
+    // [can, tên vị, TT/CQ 下營法 + 安營方所, BG 釋六甲安營, BK 安營]
+    ['甲', 'Thanh Long', 'Đại tướng (大將居青龍)', 'Đại tướng', 'Đại tướng'],
+    ['乙', 'Bồng Tinh', 'Cờ trống (旗鼓居蓬星)', 'Cờ trống', 'Cờ trống'],
+    ['丙', 'Minh Đường', 'Sĩ tốt (士卒居明堂)', 'Sĩ tốt', 'Thứ tướng'],
+    ['丁', 'Thái Âm', 'Phục binh (伏兵居太陰)', 'Phục binh', 'Đường riêng ra vào, dò tin quân, thoát thân'],
+    ['戊', 'Thiên Môn', 'Cửa quân (軍門居天門)', 'Kỳ binh', 'Cửa quân — việc tốt ra vào'],
+    ['己', 'Địa Hộ', 'Tiểu tướng (小將居地戶)', 'Tì tướng', 'Phục binh, việc hung ra vào, ẩn nấp'],
+    ['庚', 'Thiên Hình / Thiên Ngục', 'Tề chúng, chém quyết (齊眾斬斷)', 'Chém quyết', 'Chứa lương thảo'],
+    ['辛', 'Thiên Đình', 'Xử tội, vận lương (判罪運糧)', 'Trị sự', 'Phán xử, chém quyết'],
+    ['壬', 'Thiên Lao', 'Giam giữ, dời thóc (囚繫移穀)', 'Cỏ lương (天廩)', 'Tích trữ'],
+    ['癸', 'Thiên Tàng / Hoa Cái', 'Kho phủ (府藏之庫)', 'Binh khí', 'Thoát nạn: vào Thái Âm ra Thiên Tàng']
+  ];
+
+  /* ---------- 二十地形 (旨歸 卷三十六 行軍擇地) ---------- */
+  var DIA_HINH = [
+    ['天塹', 'Thiên tiệm', 'Sông dài chắn trước, cầu thuyền đều đứt'], ['天井', 'Thiên tỉnh', 'Núi cao vây kín, nước dồn về'],
+    ['天房', 'Thiên phòng', 'Đỉnh núi lổn nhổn, đường rẽ nhiều, đi về không thấy nhau'], ['天羅', 'Thiên la', 'Rừng rậm ép sát, bốn mặt quanh co'],
+    ['天牢', 'Thiên lao', 'Núi kẹp hai bên, tùng bách tối, đường như ruột dê'], ['天陷', 'Thiên hãm', 'Đất trũng ẩm, bùn dính chân'],
+    ['天隙', 'Thiên khích', 'Đá quái khắp nơi, giếng ao lởm chởm'], ['天障', 'Thiên chướng', 'Cây cối mấy dặm, lối đi bắt buộc qua'],
+    ['天市', 'Thiên thị', 'Thành ấp kề nhau, đồng nhiều xóm cây, gà chó hay kinh'], ['天屏', 'Thiên bình', 'Trước đồng bằng, sau núi bọc, rừng che'],
+    ['天梯', 'Thiên thê', 'Đèo dốc vòng trước, không lối bên, càng đi càng cao'], ['天潤', 'Thiên nhuận', 'Núi chia tả hữu vách trăm nhận, một dòng thác'],
+    ['天月', 'Thiên nguyệt', 'Hiểm trở bên cạnh, một đỉnh vút lên trông khắp tám phương'], ['天界', 'Thiên giới', 'Hai bờ núi lớn, giữa dòng nước đổ từ cao'],
+    ['天灶', 'Thiên táo', 'Cỏ leo lan, lau sậy rậm, gió hay nổi (dễ bị hỏa công)'], ['天場', 'Thiên trường', 'Mênh mông bốn phía không núi, bằng như đá mài'],
+    ['天棧', 'Thiên sạn', 'Đường vòng đỉnh núi gập ghềnh, cả ngày không hết'], ['天穴', 'Thiên huyệt', 'Cây đan nhau che trời, lối nhỏ vào núi'],
+    ['天倉', 'Thiên thương', 'Núi vòng mấy dặm, lối vào không thông, bên trong giàu có'], ['天府', 'Thiên phủ', 'Mặt núi lưng nước — tiến đánh được, lui giữ được'],
+    ['天幽', 'Thiên u', 'Mồ hoang mả cổ, chùa quán liền nhau, đêm nhiều ma trơi']
+  ];
+
+  root.KMB_D = { SRC: SRC, CACH: CACH, TINH_THOI: TINH_THOI, TINH_BAC: TINH_BAC, MON_BINH: MON_BINH, VAI: VAI, CUONG_CHI: CUONG_CHI, CUONG_HK: CUONG_HK, CUONG_MTQ: CUONG_MTQ, DOANH: DOANH, DIA_HINH: DIA_HINH };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+<script>/* Kỳ Môn Binh Pháp — engine (UMD, global KMB). Cần KyMon (ky-mon-core.js) và KMB_D (data-binh.js).
+   Mọi luật đều ghi nguồn; chỗ suy rộng gắn cờ `suy: true`. */
+(function (root) {
+  'use strict';
+  var K = root.KyMon, D = root.KMB_D;
+  var mod = K.mod;
+  var CAN = K.CAN, CANH = K.CAN_HAN, CHI = K.CHI, CHIH = K.CHI_HAN;
+  var GIAP = 0, AT = 1, BINH = 2, DINH = 3, MAU = 4, KY = 5, CANH_ = 6, TAN = 7, NHAM = 8, QUY = 9;
+
+  var HANH_TINH = { 'Thiên Bồng': 'Thủy', 'Thiên Nhuế': 'Thổ', 'Thiên Xung': 'Mộc', 'Thiên Phụ': 'Mộc', 'Thiên Cầm': 'Thổ', 'Thiên Tâm': 'Kim', 'Thiên Trụ': 'Kim', 'Thiên Nhâm': 'Thổ', 'Thiên Anh': 'Hỏa' };
+  var HANH_MON = { 'Hưu Môn': 'Thủy', 'Sinh Môn': 'Thổ', 'Thương Môn': 'Mộc', 'Đỗ Môn': 'Mộc', 'Cảnh Môn': 'Hỏa', 'Tử Môn': 'Thổ', 'Kinh Môn': 'Kim', 'Khai Môn': 'Kim' };
+  var DUONG_TINH = ['Thiên Bồng', 'Thiên Nhâm', 'Thiên Xung', 'Thiên Phụ', 'Thiên Cầm'];
+  var SINH = { 'Mộc': 'Hỏa', 'Hỏa': 'Thổ', 'Thổ': 'Kim', 'Kim': 'Thủy', 'Thủy': 'Mộc' };
+  var KHAC = { 'Mộc': 'Thổ', 'Thổ': 'Thủy', 'Thủy': 'Hỏa', 'Hỏa': 'Kim', 'Kim': 'Mộc' };
+  var CAT_MON = ['Khai Môn', 'Hưu Môn', 'Sinh Môn'];
+  var VONG = [1, 8, 3, 4, 9, 2, 7, 6];
+  var DOI = { 1: 9, 9: 1, 2: 8, 8: 2, 3: 7, 7: 3, 4: 6, 6: 4, 5: 5 };
+  var CHI_CUNG = K.CHI_CUNG;
+  var CUNG_CHI = { 1: [0], 2: [7, 8], 3: [3], 4: [4, 5], 6: [10, 11], 7: [9], 8: [1, 2], 9: [6], 5: [] };
+  var KY_CUNG_CAN = [2, 4, 5, 7, 5, 7, 8, 10, 11, 1];   // 十干寄宮 (六壬): 甲寅 乙辰 丙戊巳 丁己未 庚申 辛戌 壬亥 癸丑
+  var HUONG_CHI = ['Bắc', 'Bắc lệch Đông', 'Đông Bắc lệch Đông', 'Đông', 'Đông lệch Nam', 'Nam lệch Đông', 'Nam', 'Nam lệch Tây', 'Tây Nam lệch Tây', 'Tây', 'Tây lệch Bắc', 'Bắc lệch Tây'];
+  var HUONG_CHI_GON = ['Bắc', 'Đông Bắc', 'Đông Bắc', 'Đông', 'Đông Nam', 'Đông Nam', 'Nam', 'Tây Nam', 'Tây Nam', 'Tây', 'Tây Bắc', 'Tây Bắc'];
+
+  function quanHe(a, b) {
+    if (!a || !b) return null;
+    if (a === b) return 'hoa';
+    if (SINH[a] === b) return 'sinh';
+    if (SINH[b] === a) return 'duocSinh';
+    if (KHAC[a] === b) return 'khac';
+    return 'biKhac';
+  }
+  var QH_VI = { hoa: 'tị hòa', sinh: 'sinh', duocSinh: 'được sinh bởi', khac: 'khắc', biKhac: 'bị khắc bởi' };
+  function lenhHanh(chi) { return [ 'Thủy', 'Thổ', 'Mộc', 'Mộc', 'Thổ', 'Hỏa', 'Hỏa', 'Thổ', 'Kim', 'Kim', 'Thổ', 'Thủy' ][chi]; }
+  function vuongSuy(hanh, chiThang) {
+    var L = lenhHanh(chiThang);
+    if (hanh === L) return { ten: 'Vượng', d: 2 };
+    if (SINH[L] === hanh) return { ten: 'Tướng', d: 1 };
+    if (SINH[hanh] === L) return { ten: 'Hưu', d: 0 };
+    if (KHAC[hanh] === L) return { ten: 'Tù', d: -1 };
+    return { ten: 'Tử', d: -2 };
+  }
+  function hanhCung(p) { return K.CUNG[p].hanh; }
+  function tenCung(p) { var c = K.CUNG[p]; return p + ' ' + c.ten + (p === 5 ? '' : ' (' + c.huong + ')'); }
+  function tenChi(c) { return CHI[c] + ' ' + CHIH[c] + ' · ' + HUONG_CHI[c]; }
+
+  /* ---------- Đọc bàn ---------- */
+  function lop(r, p) {
+    var b = r.ban, o = { p: p, tinh: b.thienBanTinh[p] || null, mon: b.nhanBanMon[p] || null, than: b.thanBan[p] || null, tb: b.thienBanCan[p], tbPhu: null, tinhPhu: null, db: b.diaBan[p], dbPhu: null };
+    if (o.tb === undefined) o.tb = null;
+    if (b.phai !== 'phi') {
+      if (p === 5) return null;
+      if (p === b.cungThienCam) { o.tbPhu = b.thienCamCan; o.tinhPhu = 'Thiên Cầm'; }
+      if (p === 2) o.dbPhu = b.diaBan[5];
+    }
+    return o;
+  }
+  function cacCung(r) { return r.ban.phai === 'phi' ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : [1, 2, 3, 4, 6, 7, 8, 9]; }
+  function coTb(o, c) { return o && (o.tb === c || o.tbPhu === c); }
+  function coDb(o, c) { return o && (o.db === c || o.dbPhu === c); }
+  function cungCanThien(r, c) { var a = []; cacCung(r).forEach(function (p) { if (coTb(lop(r, p), c)) a.push(p); }); return a; }
+  function cungCanDia(r, c) { var a = []; cacCung(r).forEach(function (p) { if (coDb(lop(r, p), c)) a.push(p); }); return a; }
+  function cungTinh(r, t) { var b = r.ban; for (var p = 1; p <= 9; p++) if (b.thienBanTinh[p] === t) return p; if (t === 'Thiên Cầm' && b.cungThienCam) return b.cungThienCam; return null; }
+  function cungMon(r, m) { var b = r.ban; for (var p = 1; p <= 9; p++) if (b.nhanBanMon[p] === m) return p; return null; }
+  function cungThan(r, t) { var b = r.ban; for (var p = 1; p <= 9; p++) if (b.thanBan[p] === t) return p; return null; }
+  /* 統宗: «勾陳（下有白虎）», «朱雀（下有玄武）» — dương độn không có Câu Trần/Chu Tước, âm độn không có Bạch Hổ/Huyền Vũ */
+  var THAY = { 'Huyền Vũ': 'Chu Tước', 'Chu Tước': 'Huyền Vũ', 'Bạch Hổ': 'Câu Trần', 'Câu Trần': 'Bạch Hổ' };
+  function cungThanThay(r, t) { var p = cungThan(r, t); if (p) return { p: p, ten: t }; var t2 = THAY[t]; return t2 ? { p: cungThan(r, t2), ten: t2, thay: true } : { p: null, ten: t }; }
+  function noiNgoai(r, p) { if (p === 5) return 'trung'; var noi = r.ban.duong ? [1, 8, 3, 4] : [9, 2, 7, 6]; return noi.indexOf(p) >= 0 ? 'nội' : 'ngoại'; }
+  function keCung(p, q) { if (p === 5 || q === 5) return false; var i = VONG.indexOf(p), j = VONG.indexOf(q); var d = Math.abs(i - j); return d === 1 || d === 7; }
+  function canThat(i) { return i % 10; }
+  function canDon(r, idx) { var c = idx % 10; if (c !== 0) return c; return [4, 5, 6, 7, 8, 9][(idx - idx % 10) / 10]; }   // Giáp → nghi tuần thủ
+  function chiThang(r) { return r.tuTru.thang % 12; }
+
+  /* ---------- Nguyệt tướng (月將) — đổi tại trung khí ---------- */
+  var TRUNG_KHI = { 'Vũ Thủy': 11, 'Xuân Phân': 10, 'Cốc Vũ': 9, 'Tiểu Mãn': 8, 'Hạ Chí': 7, 'Đại Thử': 6, 'Xử Thử': 5, 'Thu Phân': 4, 'Sương Giáng': 3, 'Tiểu Tuyết': 2, 'Đông Chí': 1, 'Đại Hàn': 0 };
+  var TUONG_TEN = ['Thần Hậu', 'Đại Cát', 'Công Tào', 'Thái Xung', 'Thiên Cương', 'Thái Ất', 'Thắng Quang', 'Tiểu Cát', 'Truyền Tống', 'Tòng Khôi', 'Hà Khôi', 'Đăng Minh'];
+  var TUONG_HAN = ['神后', '大吉', '功曹', '太沖', '天罡', '太乙', '勝光', '小吉', '傳送', '從魁', '河魁', '登明'];
+  function nguyetTuong(r) {
+    var tt = r.tuTru, list = tt.danhSachTiet;
+    for (var i = tt.tietIdx; i >= 0; i--) if (TRUNG_KHI[list[i].ten] !== undefined) return { chi: TRUNG_KHI[list[i].ten], trungKhi: list[i].ten };
+    return { chi: 11, trungKhi: '?' };
+  }
+  /* 月將加時: chi thiên bàn (trên) đặt lên chi địa bàn (dưới) */
+  function thienDia(r) {
+    var nt = nguyetTuong(r), cg = r.tuTru.gio % 12, sh = mod(nt.chi - cg, 12);
+    return { nt: nt, sh: sh, tren: function (g) { return mod(g + sh, 12); }, duoi: function (u) { return mod(u - sh, 12); } };
+  }
+  function mtq(c) { return [2, 8, 5, 11].indexOf(c) >= 0 ? 0 : [0, 6, 3, 9].indexOf(c) >= 0 ? 1 : 2; }   // 0 mạnh(孟) 1 trọng(仲) 2 quý(季)
+  var MTQ_TEN = ['mạnh (孟)', 'trọng (仲)', 'quý (季)'];
+
+  /* ---------- Cách cục trong một cung ---------- */
+  function cachCung(r, p) {
+    var o = lop(r, p); if (!o) return [];
+    var b = r.ban, tt = r.tuTru, out = [];
+    var trucNghi = b.donCanGio;
+    var canNam = canDon(r, tt.nam), canThang = canDon(r, tt.thang), canNgay = canDon(r, tt.ngay), canGio = b.canGioDon;
+    function add(k, them) { var c = D.CACH[k]; out.push({ k: k, ten: c.ten, han: c.han, loai: c.loai, ghi: them || '' }); }
+    var tbs = [o.tb, o.tbPhu].filter(function (x) { return x !== null && x !== undefined; });
+    var dbs = [o.db, o.dbPhu].filter(function (x) { return x !== null && x !== undefined; });
+    function pair(u, l) { return tbs.indexOf(u) >= 0 && dbs.indexOf(l) >= 0; }
+    var catMon = CAT_MON.indexOf(o.mon) >= 0;
+    // Thập can
+    if (pair(MAU, BINH)) add('longPhan', trucNghi === MAU && b.cungTrucPhu === p ? 'Mậu chính là Giáp Tý trực phù' : '');
+    if (pair(BINH, MAU)) add('dieuDiet');
+    if (pair(AT, TAN)) add('longTau');
+    if (pair(TAN, AT)) add('hoCuong');
+    if (pair(QUY, DINH)) add('xaKieu');
+    if (pair(DINH, QUY)) add('tuocGiang');
+    if (pair(CANH_, BINH)) add('bachNhapHuynh');
+    if (pair(BINH, CANH_)) add('huynhNhapBach');
+    if (trucNghi !== CANH_) {
+      if (pair(trucNghi, CANH_)) add('phiCung');
+      if (pair(CANH_, trucNghi)) add('phucCung');
+    }
+    if (pair(CANH_, QUY)) add('daiCach');
+    if (pair(CANH_, NHAM)) add('tieuCach');
+    if (pair(CANH_, KY)) add('hinhCach');
+    if (canNgay !== CANH_) { if (pair(CANH_, canNgay)) add('phucCan', 'cũng là nhật cách'); if (pair(canNgay, CANH_)) add('phiCan'); }
+    if (canNam !== CANH_ && pair(CANH_, canNam)) add('tueCach');
+    if (canThang !== CANH_ && pair(CANH_, canThang)) add('nguyetCach');
+    if (canGio !== CANH_ && pair(CANH_, canGio)) add('thoiCach');
+    var boi = [];
+    [[canNam, 'năm'], [canThang, 'tháng'], [canNgay, 'ngày'], [canGio, 'giờ'], [trucNghi, 'trực phù']].forEach(function (x) { if (x[0] !== BINH && pair(BINH, x[0]) && boi.indexOf(x[1]) < 0) boi.push(x[1]); });
+    if (boi.length) add('boiCach', 'Bính gia can ' + boi.join(', '));
+    // Cửu độn
+    if (coTb(o, BINH) && o.mon === 'Sinh Môn' && coDb(o, DINH)) add('thienDon');
+    if (coTb(o, AT) && o.mon === 'Khai Môn' && coDb(o, KY)) add('diaDon');
+    if (coTb(o, DINH) && o.mon === 'Hưu Môn' && o.than === 'Thái Âm') add('nhanDon');
+    if (coTb(o, BINH) && o.mon === 'Sinh Môn' && o.than === 'Cửu Thiên') add('thanDon');
+    if (o.than === 'Cửu Địa' && ((coTb(o, AT) && o.mon === 'Đỗ Môn') || (coTb(o, DINH) && ['Hưu Môn', 'Sinh Môn', 'Khai Môn', 'Đỗ Môn'].indexOf(o.mon) >= 0)))
+      add('quyDon', coTb(o, AT) ? 'theo 統宗 (Ất + Đỗ + Cửu Địa)' : 'theo 旨歸/秘笈 (Đinh + ' + o.mon + ' + Cửu Địa)');
+    if (coTb(o, AT) && catMon && p === 4) add('phongDon');
+    if (coTb(o, AT) && catMon && coDb(o, TAN)) add('vanDon');
+    if (coTb(o, AT) && catMon && (p === 1 || coDb(o, QUY))) add('longDon', p === 1 ? 'tại Khảm' : 'trên địa Quý');
+    if (p === 8 && ((coTb(o, AT) && (o.mon === 'Hưu Môn' || o.mon === 'Sinh Môn') && coDb(o, TAN)) || (coTb(o, TAN) && o.mon === 'Sinh Môn'))) add('hoDon');
+    // Tam trá
+    var ky3 = coTb(o, AT) || coTb(o, BINH) || coTb(o, DINH);
+    if (ky3 && catMon) {
+      if (o.than === 'Thái Âm') add('tamTra', 'chân trá 真詐 — ám kế, mai phục');
+      if (o.than === 'Cửu Địa') add('tamTra', 'trùng trá 重詐 — chọn tướng, chiêu binh, đắp thành');
+      if (o.than === 'Lục Hợp') add('tamTra', 'hưu trá 休詐 — sai sứ, phá địch');
+    }
+    // Ngũ giả
+    var dkq = coTb(o, DINH) || coTb(o, KY) || coTb(o, QUY);
+    if (o.mon === 'Cảnh Môn' && ky3 && o.than === 'Cửu Thiên') add('nguGia', 'thiên giả 天假 — giương uy, ban hiệu lệnh, khiến địch tự phục');
+    if (o.mon === 'Đỗ Môn' && dkq && o.than === 'Cửu Địa') add('nguGia', 'địa giả 地假 — ẩn phục, cuốn cờ lặng trống');
+    if (o.mon === 'Kinh Môn' && coTb(o, NHAM) && o.than === 'Cửu Thiên') add('nguGia', 'nhân giả 人假 — bắt kẻ phản, lùng giặc ẩn');
+    if (o.mon === 'Tử Môn' && dkq && o.than === 'Cửu Địa') add('nguGia', 'quỷ giả 鬼假 — mai phục, giao chiến, đắp đê trữ nước');
+    if (o.mon === 'Thương Môn' && dkq && o.than === 'Lục Hợp') add('nguGia', 'vật giả 物假 — sửa lũy cũ, lấp đường xưa');
+    // Tam kỳ nhập mộ
+    if ((coTb(o, AT) && p === 2) || (coTb(o, BINH) && p === 6) || (coTb(o, DINH) && p === 8)) add('kyMo');
+    // Kích hình (nghi tuần thủ)
+    var KH = { 4: 3, 5: 2, 6: 8, 7: 9, 8: 4, 9: 4 };
+    if (b.cungTrucPhu === p && KH[trucNghi] === p) add('kichHinh', CAN[trucNghi] + ' (tuần ' + K.canChi(b.tuanThuGio) + ') ở ' + K.CUNG[p].ten);
+    // Môn bức
+    if (o.mon && p !== 5 && quanHe(HANH_MON[o.mon], hanhCung(p)) === 'khac') add('monBuc', o.mon + (catMon ? ' (cát môn bị bức: việc tốt khó thành)' : ' (hung môn bị bức: tai càng nặng)'));
+    return out;
+  }
+
+  /* ---------- Ngũ dương/ngũ âm, các giờ đặc biệt ---------- */
+  function thoi(r) {
+    var b = r.ban, tt = r.tuTru, items = [], CHIP = null;
+    var cg = tt.gio % 10, cn = tt.ngay % 10, ct = chiThang(r);
+    function it(ten, han, ket, tone, d, src, suy, ngay) { items.push({ ten: ten, han: han, ket: ket, tone: tone, d: d || '', src: src, suy: !!suy, ngay: !!ngay, chip: CHIP || ten.replace('Sao trực thời: ', 'Sao ') }); CHIP = null; }
+    var duongThoi = cg <= 4;
+    it('Ngũ dương / ngũ âm thời', duongThoi ? '五陽時' : '五陰時', duongThoi ? 'Lợi khách — nên ra tay trước' : 'Lợi chủ — nên ứng sau', 'n',
+      duongThoi ? 'Giờ ' + CAN[cg] + ' thuộc năm can dương Giáp–Mậu: «利以為客……先舉兵，高旗鳴鼓» (giương cờ cao, đánh trống, ra tay trước). Dùng tam kỳ thiên bàn hợp cát môn.'
+        : 'Giờ ' + CAN[cg] + ' thuộc năm can âm Kỷ–Quý: «利以為主……後舉兵，低旗銜枚，待敵而後動» (hạ cờ, ngậm tăm, đợi địch động rồi mới đánh). Dùng tam kỳ địa bàn hợp cát môn.', 'PU · PK');
+    // Thiên bàn / địa bàn mạnh (行兵雜摘: 陽時要天盘強，陰時要地盘強) — so tại cung trực phù
+    var pT = b.cungTrucPhu, oT = lop(r, pT === 5 && b.phai !== 'phi' ? 2 : pT);
+    if (oT) {
+      var vT = vuongSuy(K.CAN_NGU_HANH[b.donCanGio], ct), vD = vuongSuy(K.CAN_NGU_HANH[oT.db], ct);
+      var can = duongThoi ? vT.d >= vD.d : vD.d >= vT.d;
+      CHIP = can ? (duongThoi ? 'Thiên bàn mạnh' : 'Địa bàn mạnh') : (duongThoi ? 'Thiên bàn yếu' : 'Địa bàn yếu');
+      it(duongThoi ? 'Giờ dương cần thiên bàn mạnh' : 'Giờ âm cần địa bàn mạnh', duongThoi ? '陽時要天盤強' : '陰時要地盤強', can ? 'Đạt' : 'Không đạt', can ? 'p' : 'm',
+        'Tại cung trực phù ' + tenCung(pT) + ': thiên bàn ' + CAN[b.donCanGio] + ' ' + vT.ten + ', địa bàn ' + CAN[oT.db] + ' ' + vD.ten + ' (theo lệnh tháng ' + CHI[ct] + ').', 'TT 行兵雜摘', true);
+    }
+    // Sao giờ
+    var tinh = b.trucPhuTinh, tt9 = D.TINH_THOI[tinh], xuanHa = [2, 3, 4, 5, 6, 7].indexOf(ct) >= 0;
+    var v = vuongSuy(HANH_TINH[tinh], ct);
+    var bac = D.TINH_BAC[tinh], dg = bac.indexOf('cát') >= 0 ? 1 : -1;
+    var mua = tt9.mua[xuanHa ? 'xh' : 'td'];
+    it('Sao trực thời: ' + tinh, K.TINH_HAN[tinh] + '時', bac + ' · ' + v.ten + (mua > 0 ? ' · hợp mùa' : mua < 0 ? ' · trái mùa' : ''), dg + (v.d > 0 ? 1 : 0) + mua > 0 ? 'p' : dg + (v.d > 0 ? 1 : 0) + mua < 0 ? 'm' : 'n',
+      tt9.vi + ' Ca 九星吉凶歌: ' + tt9.caVi + ' 三元經: sao đại hung mà vượng tướng giảm thành tiểu hung; cát tinh vô khí thành bình.', 'PU · CQ · TB');
+    // Khai hạp (陽星開 陰星闔)
+    var duongTinh = DUONG_TINH.indexOf(tinh) >= 0;
+    it('Khai / hạp', duongTinh ? '開' : '闔', duongTinh ? 'Dương tinh gia giờ — khai' : 'Âm tinh gia giờ — hạp', 'n',
+      'PK 論陰陽刑德開闔: «蓬任冲輔禽謂之陽星，凡五陽星加時為開；英芮柱心謂之陰星，凡四陰星加時為闔。將兵以開闔為主客……開為主，闔為客». BG: «陽星開時攻戰吉，陰星閉闔所為凶».', 'PK · BG');
+    // Uy đức
+    if (cg === GIAP || cg === BINH) it('Uy đức thời', '威德之時', 'Giờ ' + CAN[cg] + ' — lợi làm khách, phát hiệu lệnh', 'p',
+      'PK: «六丙為威，六甲為德，當此之時，利以為客，發號施令». PU (cùng câu) lại kết «將兵征討，客不勝，不利為主，惟宜固守» — hai sách vênh nhau.', 'PK · PU');
+    // Ngũ bất ngộ
+    var KHG = KHAC[K.CAN_NGU_HANH[cg]] === K.CAN_NGU_HANH[cn] && (cg % 2) === (cn % 2);
+    if (KHG) { var c = D.CACH.nguBatNgo; it(c.ten, c.han, 'Đại kỵ — có kỳ môn cũng không dùng', 'm', 'Can giờ ' + CAN[cg] + ' khắc can ngày ' + CAN[cn] + ' (cùng âm dương). ' + c.y.map(function (y) { return y.vi; }).join(' '), 'BK · PK'); }
+    // Thiên võng / địa la
+    if (cg === QUY) {
+      var pq = cungCanThien(r, QUY)[0], cao = pq >= 5;
+      it('Thiên võng tứ trương', '天網四張', cao ? 'Lưới cao — đại hung, không dùng' : 'Lưới thấp — cúi mà ra được', 'm',
+        'Giờ Quý; thiên bàn Quý ở ' + (pq ? tenCung(pq) : '?') + '. CQ: thiên Quý ở 5–9 là lưới cao, 1–4 là lưới thấp. PK: chỉ lợi trốn, ẩn tích. HK/TB: «天網四張，萬物盡傷».', 'CQ · PK · TB');
+    }
+    if (cungCanThien(r, NHAM).some(function (p) { return coDb(lop(r, p), b.canGioDon); })) it('Địa la già', '地羅遮', 'Kỵ xuất binh', 'm', 'Thiên Nhâm gia can giờ. «地羅遮障莫占前».', 'CQ · TT');
+    // Thời mộ
+    var gz = K.canChiHan(tt.gio);
+    var MO1 = ['戊戌', '壬辰', '丙戌', '癸未', '丁丑'], MO2 = ['乙未', '丙戌', '辛丑', '甲辰', '戊辰'];
+    if (MO1.indexOf(gz) >= 0 || MO2.indexOf(gz) >= 0) it('Thời can nhập mộ', '時干入墓', 'Kỵ xuất sư', 'm', 'Giờ ' + gz + '. CQ: «戊戌，壬辰，丙戌，癸未，丁丑此時百事不宜出師». TB: «時下得乙未丙戌辛丑甲辰戊辰，名入墓».', 'CQ · TB');
+    // Phục / phản ngâm sao, môn
+    var ngam = phucPhan(r);
+    if (ngam.tinh || ngam.mon) {
+      var ph = (ngam.tinh === 'phuc' || ngam.mon === 'phuc');
+      it(ph ? 'Phục ngâm' : 'Phản ngâm', ph ? '伏吟' : '反吟', (ngam.tinh ? 'sao ' + (ngam.tinh === 'phuc' ? 'phục' : 'phản') : '') + (ngam.tinh && ngam.mon ? ', ' : '') + (ngam.mon ? 'môn ' + (ngam.mon === 'phuc' ? 'phục' : 'phản') : ''), 'm',
+        ph ? 'TT: «伏吟宜藏兵暗地，使敵入我伏中». CQ: «只宜靜守，不可妄動急猝進兵，必遭圍困». PU: «不宜用兵».' : 'TT: «反吟有吉格，亦宜進兵，當乘亂破殺». CQ: «反覆不定，積糧靜守吉».', 'TT · CQ · PU');
+    }
+    // Thiên phụ thời
+    var TP = { 0: 5, 5: 5, 1: 8, 6: 8, 2: 6, 7: 6, 3: 4, 8: 4, 4: 2, 9: 2 };   // ngày Giáp Kỷ → giờ Tỵ (己巳)…
+    var tpHop = TP[cn] === tt.gio % 12 && [0, 5].indexOf(cn) >= 0 ? cg === KY : TP[cn] === tt.gio % 12 && cg === GIAP;
+    if (tpHop) it('Thiên phụ thời', '天輔時', 'Hành binh chinh chiến đại thắng; có tội được tha', 'p', 'CQ: «此時萬事皆宜，行兵征戰必獲大勝». Giờ ' + gz + ' của ngày ' + CAN[cn] + '.', 'CQ · PU · TB');
+    // Ngọc nữ thủ môn (三奇遊六儀 — PU)
+    if (['庚午', '己卯', '戊子', '丁酉', '丙午', '乙卯'].indexOf(gz) >= 0) it('Ngọc nữ thủ môn', '玉女守門', 'Lợi việc kín, yến hội; BG: «行兵大勝»', 'p', 'PU: giờ ' + gz + ' là lúc tam kỳ du lục nghi.', 'PU · BG');
+    // Tam giáp hợp
+    if ((cn === 0 || cn === 5) && tt.gio === 0) it('Tam giáp hợp', '三甲合', 'Hành binh, bố trận được', 'p', 'PK: ngày Giáp/Kỷ gặp giờ Giáp Tý.', 'PK');
+    // Chi tam tị ngũ
+    if (b.cungTrucSuRoi === 3) it('Chi tam', '之三', 'Trực sử tới cung 3 — sinh khí, nên hướng tới', 'p', 'PU: «三為生氣，故之三也……三為威». TT: «值使到震宜向之».', 'PU · TT');
+    if (b.cungTrucSuRoi === 5) it('Tị ngũ', '避五', 'Trực sử tới Trung 5 — hại khí, nên tránh', 'm', 'PU: «五為害氣，故避五也». PK phản bác: tam ngũ là Tam Bích/Ngũ Hoàng của phi tinh, không phải số cung.', 'PU · TT · PK');
+    // Ngày: bảo nghĩa chế hòa phạt
+    var cnH = K.CAN_NGU_HANH[cn], chiN = tt.ngay % 12, zH = K.CHI_NGU_HANH[chiN], q = quanHe(cnH, zH);
+    var NGAY = { sinh: ['Bảo nhật 寶日', 'thượng cát', 'p'], duocSinh: ['Nghĩa nhật 義日', 'thứ cát', 'p'], khac: ['Chế nhật 制日', 'trung bình', 'n'], hoa: ['Hòa nhật 和日', 'thứ cát', 'p'], biKhac: ['Phạt nhật 伐日', 'không nên xuất quân', 'm'] }[q];
+    it('Ngày xuất quân', '遁甲擇日', NGAY[0] + ' — ' + NGAY[1], NGAY[2], 'PU: can sinh chi là bảo, chi sinh can là nghĩa, can khắc chi là chế, đồng loại là hòa, chi khắc can là phạt (下克上). Ngày ' + K.canChi(tt.ngay) + '.', 'PU', false, true);
+    if (cn === BINH) it('Địa bính nhật', '旬中地丙日', 'Tướng cầm quân không được phạm — «上將死於陣»', 'm', 'CQ/TT: mỗi tuần có một ngày Bính là địa bính. HK đọc cùng bảng này thành phương «地兵» không được hướng tới.', 'CQ · HK', false, true);
+    return items;
+  }
+  function phucPhan(r) {
+    var b = r.ban, H = { 1: 'Thiên Bồng', 2: 'Thiên Nhuế', 3: 'Thiên Xung', 4: 'Thiên Phụ', 6: 'Thiên Tâm', 7: 'Thiên Trụ', 8: 'Thiên Nhâm', 9: 'Thiên Anh' };
+    var M = { 1: 'Hưu Môn', 2: 'Tử Môn', 3: 'Thương Môn', 4: 'Đỗ Môn', 6: 'Khai Môn', 7: 'Kinh Môn', 8: 'Sinh Môn', 9: 'Cảnh Môn' };
+    var tp = true, tf = true, mp = true, mf = true;
+    [1, 2, 3, 4, 6, 7, 8, 9].forEach(function (p) {
+      if (b.thienBanTinh[p] !== H[p]) tp = false; if (b.thienBanTinh[p] !== H[DOI[p]]) tf = false;
+      if (b.nhanBanMon[p] !== M[p]) mp = false; if (b.nhanBanMon[p] !== M[DOI[p]]) mf = false;
+    });
+    return { tinh: tp ? 'phuc' : tf ? 'phan' : null, mon: mp ? 'phuc' : mf ? 'phan' : null };
+  }
+
+  /* ---------- Chủ khách ---------- */
+  function chuKhach(r) {
+    var b = r.ban, tt = r.tuTru, out = [], diem = 0;
+    var duongThoi = tt.gio % 10 <= 4;
+    out.push({ ten: 'Ngũ dương / ngũ âm', ket: duongThoi ? 'khách' : 'chủ', d: (duongThoi ? 'Giờ dương' : 'Giờ âm') + ' (' + K.canChi(tt.gio) + ')', src: 'PU · PK' });
+    diem += duongThoi ? 1 : -1;
+    // 主客分法 tại cung trực phù (sao) và cung trực sử (môn)
+    function phan(p, hanhX, nhan) {
+      if (!p || p === 5) return;
+      var q = quanHe(hanhCung(p), hanhX), k = { sinh: 'khách', khac: 'chủ', duocSinh: 'chủ', biKhac: 'khách', hoa: 'ngang' }[q];
+      out.push({ ten: 'Cung – ' + nhan, ket: k, d: 'Cung ' + tenCung(p) + ' (' + hanhCung(p) + ') ' + QH_VI[q] + ' ' + nhan + ' (' + hanhX + ')', src: 'TT · CQ 主客分法' });
+      diem += k === 'khách' ? 1 : k === 'chủ' ? -1 : 0;
+    }
+    phan(b.cungTrucPhu === 5 && b.phai !== 'phi' ? 2 : b.cungTrucPhu, HANH_TINH[b.trucPhuTinh], b.trucPhuTinh);
+    phan(b.cungTrucSu, HANH_MON[b.trucSuMon], b.trucSuMon);
+    var dt = DUONG_TINH.indexOf(b.trucPhuTinh) >= 0;
+    out.push({ ten: 'Khai hạp (法竅)', ket: dt ? 'chủ' : 'khách', d: (dt ? 'Dương tinh' : 'Âm tinh') + ' ' + b.trucPhuTinh + ' gia giờ → ' + (dt ? 'khai — «開為主»' : 'hạp — «闔為客»'), src: 'PK', suy: false });
+    diem += dt ? -1 : 1;
+    var k = diem > 0 ? 'khách' : diem < 0 ? 'chủ' : 'ngang';
+    return { hang: out, diem: diem, ket: k, loi: k === 'khách' ? 'Lợi khách — bên động trước, đi đánh, xuất quân (先舉)' : k === 'chủ' ? 'Lợi chủ — bên ngồi chờ, giữ thành, ứng sau (後應)' : 'Chủ khách ngang nhau',
+      ghi: 'Đếm phiếu theo bốn phép của cổ thư (không có trong sách — chỉ để tóm). «主客從來分時日，先起之兵即作客» (秘笈): ai khởi binh trước là khách.' };
+  }
+
+  /* ---------- Phương: cung ---------- */
+  function phuong(r) {
+    var b = r.ban, tt = r.tuTru, duongThoi = tt.gio % 10 <= 4, res = {};
+    cacCung(r).forEach(function (p) { res[p] = { p: p, tot: [], xau: [], cach: cachCung(r, p) }; });
+    function T(p, s, src) { if (res[p]) res[p].tot.push({ s: s, src: src }); }
+    function X(p, s, src) { if (res[p]) res[p].xau.push({ s: s, src: src }); }
+    // 出兵方
+    var coKyMon = false;
+    cacCung(r).forEach(function (p) {
+      var o = lop(r, p);
+      var ky = [AT, BINH, DINH].filter(function (c) { return coTb(o, c); });
+      if (ky.length && CAT_MON.indexOf(o.mon) >= 0) { coKyMon = true; T(p, 'Kỳ môn hội hợp — phương xuất binh (' + ky.map(function (c) { return CAN[c]; }).join(', ') + ' + ' + o.mon + ')', 'TT · CQ 出兵方'); }
+    });
+    if (!coKyMon) {
+      var p0 = duongThoi ? b.cungTrucPhu : (b.cungTrucPhuGoc === 5 && b.phai !== 'phi' ? 2 : b.cungTrucPhuGoc);
+      T(p0, 'Không có kỳ môn hội — giờ ' + (duongThoi ? 'dương ra dưới trực phù thiên bàn' : 'âm ra dưới trực phù địa bàn'), 'TT · CQ 出兵方');
+    }
+    // 三勝宮
+    var tp = r.ban.duong ? b.cungTrucPhu : (b.cungTrucPhuGoc === 5 && b.phai !== 'phi' ? 2 : b.cungTrucPhuGoc);
+    T(tp, 'Tam thắng: cung Thiên Ất (trực phù ' + (r.ban.duong ? 'thiên bàn — dương độn' : 'địa bàn — âm độn') + ') — ngồi đây đánh cung đối xung ' + DOI[tp], 'PK 論三勝宮');
+    var c9 = cungThan(r, 'Cửu Thiên'); if (c9) T(c9, 'Tam thắng: Cửu Thiên — «九天之上，利以陳兵»; đứng đây đánh cung đối xung ' + DOI[c9], 'PK · PU');
+    var cs = cungMon(r, 'Sinh Môn'); if (cs) T(cs, 'Tam thắng: Sinh môn — «背生擊死»; đánh về cung Tử môn ' + (cungMon(r, 'Tử Môn') || '?'), 'PK · TT');
+    var cd = cungThan(r, 'Cửu Địa'); if (cd) T(cd, 'Cửu Địa — «九地之下，利以伏藏»: giấu quân, phục binh', 'PU · TB');
+    var ca = cungThan(r, 'Thái Âm'); if (ca) T(ca, 'Thái Âm — «太陰之中，可以潛形»: ẩn hình, phục binh (安營: 伏兵居太陰)', 'TB');
+    var ch = cungThan(r, 'Lục Hợp'); if (ch) T(ch, 'Lục Hợp — «六合之中，可以逃亡»: đường rút, tránh nạn', 'TB · PU');
+    // 五不擊
+    var nbk = [[b.cungTrucPhu, 'trực phù'], [b.cungTrucSu, 'trực sử'], [c9, 'Cửu Thiên'], [cd, 'Cửu Địa'], [cs, 'Sinh môn']];
+    nbk.forEach(function (x) { if (x[0]) X(x[0], 'Ngũ bất kích: đừng đánh VÀO cung ' + x[1] + ' (nếu địch chiếm thì tránh hoặc đánh tập hậu)', 'PK 論五不擊'); });
+    // Cách cục
+    cacCung(r).forEach(function (p) {
+      res[p].cach.forEach(function (c) {
+        var y = D.CACH[c.k].y[0];
+        (c.loai === 'cat' ? T : X)(p, c.ten + ' ' + c.han + (c.ghi ? ' (' + c.ghi + ')' : '') + ' — ' + y.vi, D.SRC[y.s] ? y.s : '');
+      });
+    });
+    // Phòng cướp doanh: Canh + Huyền Vũ
+    var hv = cungThanThay(r, 'Huyền Vũ');
+    cungCanThien(r, CANH_).forEach(function (p) {
+      X(p, 'Lục Canh (kình địch, Thái Bạch) ở đây — «立寨須看六庚，與玄武所臨之宮，主有刦營之賊»', 'TT 行兵雜摘');
+      if (hv.p === p) X(p, 'Canh cùng ' + hv.ten + (hv.thay ? ' (chỗ Huyền Vũ)' : '') + ' — giặc cướp doanh, gian tế', 'TT');
+    });
+    if (hv.p) X(hv.p, hv.ten + (hv.thay ? ' (giữ chỗ Huyền Vũ)' : '') + ' — gian tế, trộm cướp; phòng tại phương này', 'TT · BK 兵占');
+    // Ất + Tân vượng → phục binh
+    cacCung(r).forEach(function (p) { var o = lop(r, p); if (coTb(o, AT) && coDb(o, TAN) && vuongSuy('Mộc', chiThang(r)).d > 0) X(p, 'Ất gia Tân mà Ất được vượng khí — «此一路必有伏兵»', 'TT 行兵雜摘'); });
+    // Kỳ nghi tương hợp → an doanh
+    var HOP = [[AT, CANH_], [BINH, TAN], [DINH, NHAM], [MAU, QUY], [GIAP, KY]];
+    cacCung(r).forEach(function (p) { var o = lop(r, p); HOP.forEach(function (h) { if ((coTb(o, h[0]) && coDb(o, h[1])) || (coTb(o, h[1]) && coDb(o, h[0]))) T(p, 'Kỳ nghi tương hợp (' + CAN[h[0]] + '–' + CAN[h[1]] + ') — «奇儀相合，安營最利»', 'TT 行兵雜摘'); }); });
+    // Điểm: tốt +1, xấu −1 (cách cát/hung ±1,5)
+    cacCung(r).forEach(function (p) {
+      var x = res[p], s = 0;
+      x.tot.forEach(function () { s += 1; }); x.xau.forEach(function (z) { s -= /Ngũ bất kích/.test(z.s) ? 0 : 1; });
+      x.diem = s; x.nn = noiNgoai(r, p);
+    });
+    return res;
+  }
+
+  /* ---------- 12 chi: tựa / đánh / tránh ---------- */
+  function mauChi(r) {
+    var tt = r.tuTru, b = r.ban, ct = chiThang(r), cn = tt.ngay % 10, zn = tt.ngay % 12, td = thienDia(r);
+    var out = [];
+    function A(chiArr, vai, ten, han, d, src) { out.push({ chi: chiArr, vai: vai, ten: ten, han: han, d: d || '', src: src }); }   // vai: 'tua' (背) 'danh' (擊/向) 'tranh' (避)
+    function khong(idx) { var h = idx - idx % 10, hc = h % 12; return [mod(hc + 10, 12), mod(hc + 11, 12)]; }
+    function doiC(a) { return a.map(function (c) { return mod(c + 6, 12); }); }
+    // 孤虛
+    [['giờ', tt.gio, 'mươi người'], ['ngày', tt.ngay, 'trăm người'], ['tháng', tt.thang, 'nghìn người'], ['năm', tt.nam, 'vạn người']].forEach(function (x) {
+      var c = khong(x[1]);
+      A(c, 'tua', 'Cô (' + x[0] + ')', '孤', 'Tuần không của trụ ' + x[0] + ' ' + K.canChi(x[1]) + ' — dùng khi quân cỡ ' + x[2] + ' (PK). Tựa cô đánh hư: «背孤擊虛，一女可敵十夫».', 'PK · PU · HK');
+      A(doiC(c), 'danh', 'Hư (' + x[0] + ')', '虛', 'Đối xung của cô.', 'PK · PU · HK');
+    });
+    // 雄雌
+    var mua = [2, 3, 4].indexOf(ct) >= 0 ? 0 : [5, 6, 7].indexOf(ct) >= 0 ? 1 : [8, 9, 10].indexOf(ct) >= 0 ? 2 : 3;
+    var hung = [2, 5, 8, 11][mua];
+    A([hung], 'tua', 'Hùng', '雄', 'Xuân Dần, hạ Tỵ, thu Thân, đông Hợi là hùng.', 'TT · CQ');
+    A([mod(hung + 6, 12)], 'danh', 'Thư', '雌', 'Đối xung của hùng — «背雄擊雌».', 'TT · CQ');
+    // 亭亭
+    var dinh = td.duoi(0);
+    A([dinh], 'tua', 'Đình đình', '亭亭', 'Nguyệt tướng ' + TUONG_TEN[td.nt.chi] + ' gia giờ, Thần Hậu (Tý) đóng trên chi ' + CHI[dinh] + '. PU: «亭亭者，天之貴神，背而擊其衝».', 'PU · TT');
+    A([mod(dinh + 6, 12)], 'danh', 'Xung đình đình', '擊衝', 'Đánh vào đối xung của đình đình.', 'PU');
+    // 游都魯都
+    var du = [1, 0, 2, 5, 8][cn % 5];
+    A([du], 'tua', 'Du đô', '游都', 'Ngày ' + CAN[cn] + ': du đô ở ' + CHI[du] + ' — «背游都».', 'TT · CQ · HK');
+    A([mod(du + 6, 12)], 'danh', 'Lỗ đô', '魯都', 'Đối xung của du đô.', 'TT · CQ');
+    // 天目地耳 (tuần của ngày)
+    var tuan = tt.ngay - tt.ngay % 10, tm = mod(tuan + 6, 12), de = mod(tuan + 4, 12), dbi = mod(tuan + 2, 12);
+    A([tm], 'tua', 'Thiên mục', '天目', 'Chi của ngày Canh trong tuần ' + K.canChi(tuan) + '. «背天目向地耳». HK gọi cùng phương này là «雷公» (Lục Canh) — đóng quân bày trận không được phạm.', 'CQ · HK');
+    A([de], 'danh', 'Địa nhĩ', '地耳', 'Chi của ngày Mậu trong tuần — hướng về.', 'CQ · HK');
+    A([dbi], 'tranh', 'Địa binh', '地兵', 'Chi của ngày Bính trong tuần — HK: «凡行兵向陣，勿可犯地兵，將軍忌之».', 'HK');
+    // 太歲 月建 太將軍
+    A([tt.nam % 12], 'tua', 'Thái tuế', '太歲', 'Chi năm ' + CHI[tt.nam % 12] + ' — tựa.', 'TT · CQ');
+    A([ct], 'tua', 'Nguyệt kiến', '月建', 'Chi tháng — «能知地寶，萬事無殆，故宜背之». HK: không dùng được cô hư thì «背建向破».', 'CQ · HK');
+    A([mod(ct + 6, 12)], 'danh', 'Nguyệt phá', '月破', 'Đối xung nguyệt kiến.', 'HK');
+    var y = tt.nam % 12, tg = [2, 3, 4].indexOf(y) >= 0 ? 0 : [5, 6, 7].indexOf(y) >= 0 ? 3 : [8, 9, 10].indexOf(y) >= 0 ? 6 : 9;
+    A([tg], 'tua', 'Thái tướng quân', '太將軍', 'Năm ' + CHI[y] + '.', 'CQ · TT');
+    // 五將方
+    var NG = { 2: [2, 3, 4], 6: [2, 3, 4], 10: [2, 3, 4], 11: [5, 6, 7], 3: [5, 6, 7], 7: [5, 6, 7], 8: [8, 9, 10], 0: [8, 9, 10], 4: [8, 9, 10], 5: [11, 0, 1], 9: [11, 0, 1], 1: [11, 0, 1] };
+    A(NG[zn], 'tranh', 'Ngũ tướng phương', '五將方', 'Ngày ' + CHI[zn] + '. «凡遇敵必審五將方所在避之大吉，犯之必敗，敵若從此方來，當擇利便擊之則勝».', 'CQ · TT');
+    // Cấm hướng công theo can ngày
+    var CAM = { 0: [8, 9, 10], 1: [8, 9, 10], 8: [1, 2, 4, 5, 7, 8, 10, 11], 9: [1, 2, 4, 5, 7, 8, 10, 11], 2: [11, 0, 1], 3: [11, 0, 1], 6: [5, 6, 7], 7: [5, 6, 7], 4: [2, 3, 4], 5: [2, 3, 4] };
+    var CAM_VI = { 0: 'không đánh về Tây', 1: 'không đánh về Tây', 8: 'không đánh bốn duy', 9: 'không đánh bốn duy', 2: 'không đánh về Bắc', 3: 'không đánh về Bắc', 6: 'không đánh về Nam', 7: 'không đánh về Nam', 4: 'không đánh về Đông', 5: 'không đánh về Đông' };
+    A(CAM[cn], 'tranh', 'Kỵ hướng công', '日干忌攻', 'Ngày ' + CAN[cn] + ': ' + CAM_VI[cn] + '.', 'TT · CQ 背擊');
+    // 天馬 天罡 天三門 地四戶
+    var ma = td.duoi(3);
+    A([ma], 'ra', 'Thiên mã', '天馬', 'Thái Xung (Mão) đóng trên chi ' + CHI[ma] + ' — «急則從天馬方出».', 'TT · CQ');
+    var cuong = td.duoi(4);
+    A([cuong], 'ra', 'Thiên cương', '天罡', 'Thiên Cương (Thìn) đóng trên chi ' + CHI[cuong] + ' — «兵圍千里，斗道必通»: bị vây thì phá ra hướng này.', 'CQ 突圍法');
+    var tam = [3, 9, 7].map(function (u) { return td.duoi(u); });
+    var ho = [1, 4, 7, 10].map(function (k) { return mod(ct + k, 12); });   // 除 定 危 開
+    A(tam, 'ra', 'Thiên tam môn', '天三門', 'Thái Xung, Tòng Khôi, Tiểu Cát đóng trên ' + tam.map(function (c) { return CHI[c]; }).join(', ') + '.', 'TB · CQ');
+    var tamHo = tam.filter(function (c) { return ho.indexOf(c) >= 0; });
+    A(ho, 'phuc', 'Địa tứ hộ', '地四戶', 'Trừ, Định, Nguy, Khai của tháng ' + CHI[ct] + ': ' + ho.map(function (c) { return CHI[c]; }).join(', ') + ' — «須置埋伏之卒».', 'TB · BK');
+    if (tamHo.length) A(tamHo, 'ra', 'Tam môn gia tứ hộ', '天三門加地四戶', 'Thiên môn rơi đúng địa hộ — «出其下，吉»: phương ra vào, rút lui tốt nhất.', 'TB');
+    return { ds: out, td: td, cuong: cuong, mtqCuong: mtq(cuong) };
+  }
+
+  /* ---------- Các phép chiêm ---------- */
+  function vsCung(r, p) { return vuongSuy(hanhCung(p === 5 ? 2 : p), chiThang(r)); }
+  function vsKyHieu(r, hanh) { return vuongSuy(hanh, chiThang(r)); }
+  function L(tone, s) { return { t: tone, s: s }; }
+  function cungCanh(r) { var a = cungCanThien(r, CANH_); return a.length ? a[0] : null; }
+  function cungBinh(r) { var a = cungCanThien(r, BINH); return a.length ? a[0] : null; }
+
+  function thangBai(r) {
+    var b = r.ban, tt = r.tuTru, ct = [], s = 0;
+    var chu = b.cungTrucPhu === 5 && b.phai !== 'phi' ? 2 : b.cungTrucPhu, kh = cungCanh(r);
+    if (b.donCanGio === CANH_) return { ten: 'Thắng bại', han: '占勝敗', ket: 'Lục Canh chính là trực phù — chủ khách cùng cung, hai nhà không phân thắng bại', tone: 'n', ct: [L('n', 'Tuần Giáp Thân: Canh là nghi tuần thủ. BK: «如六庚為值符，是主客同宮，二家不分勝負» (ví dụ của sách: Cốc Vũ thượng nguyên âm 5 cục, ngày Bính Tân giờ Nhâm Thìn — hai nhà tự lui).')], src: 'NL · BK' };
+    ct.push(L('n', 'Chủ = cung trực phù ' + tenCung(chu) + ' · Khách = cung thiên bàn Canh ' + tenCung(kh) + '.'));
+    var q = quanHe(hanhCung(chu), hanhCung(kh));
+    if (q === 'khac') { s += 2; ct.push(L('p', 'Cung chủ (' + hanhCung(chu) + ') khắc cung khách (' + hanhCung(kh) + ') — «值符宮克庚宮，主勝».')); }
+    else if (q === 'biKhac') { s -= 2; ct.push(L('m', 'Cung khách (' + hanhCung(kh) + ') khắc cung chủ (' + hanhCung(chu) + ') — «庚克值符宮，客勝».')); }
+    else if (q === 'sinh' || q === 'duocSinh') ct.push(L('n', 'Hai cung tương sinh (' + hanhCung(chu) + ' ' + QH_VI[q] + ' ' + hanhCung(kh) + ') — «如值符與主客相生，必來講和».'));
+    else ct.push(L('n', 'Hai cung cùng hành ' + hanhCung(chu) + ' — sách không nói rõ; ngang thế.'));
+    var vc = vsCung(r, chu), vk = vsCung(r, kh);
+    s += (vc.d - vk.d) / 2;
+    ct.push(L(vc.d > vk.d ? 'p' : vc.d < vk.d ? 'm' : 'n', 'Vượng suy theo lệnh tháng: chủ ' + vc.ten + ', khách ' + vk.ten + ' — «旺相則勝，休囚則敗» (engine so theo hành của cung).'));
+    var pc = cungMon(r, 'Cảnh Môn'), pk = cungMon(r, 'Kinh Môn'), chuMon = 0, khMon = 0;
+    [[pc, 'Cảnh'], [pk, 'Kinh']].forEach(function (x) {
+      if (!x[0]) return;
+      var h = hanhCung(x[0] === 5 ? 2 : x[0]);
+      if (x[0] === chu || quanHe(h, hanhCung(chu)) === 'sinh') { chuMon++; ct.push(L('p', x[1] + ' môn ' + (x[0] === chu ? 'ở cung chủ' : 'ở cung ' + x[0] + ' sinh cung chủ') + ' — «值符宮得景門、驚門或二門與值符宮相生，主勝».')); }
+      if (x[0] === kh || quanHe(h, hanhCung(kh)) === 'sinh') { khMon++; ct.push(L('m', x[1] + ' môn ' + (x[0] === kh ? 'ở cung khách' : 'ở cung ' + x[0] + ' sinh cung khách') + ' — khách được.')); }
+    });
+    s += chuMon - khMon;
+    var ket, tone;
+    if (vc.d > 0 && vk.d > 0 && chuMon && khMon && q !== 'khac' && q !== 'biKhac') { ket = 'Hai bên ngang sức, đều sợ nhau — không đánh mà lui'; tone = 'n'; ct.push(L('n', '«如值符與庚主客俱乘旺相，景門反相刑克，其勢相等，兩相恐懼，不戰而退».')); }
+    var cn = canDon(r, tt.ngay);
+    cacCung(r).forEach(function (p) { var o = lop(r, p); if (coTb(o, cn) && coDb(o, CANH_)) { s += 1; ct.push(L('p', 'Can ngày ' + CAN[cn] + ' gia Canh ở cung ' + p + ' — «日干加庚，主勝».')); } if (coTb(o, CANH_) && coDb(o, cn)) { s -= 1; ct.push(L('m', 'Canh gia can ngày ở cung ' + p + ' — «庚加日干，客勝».')); } });
+    if (!ket) { ket = s >= 1.5 ? 'Chủ thắng' : s <= -1.5 ? 'Khách thắng' : s > 0 ? 'Chủ hơi trội' : s < 0 ? 'Khách hơi trội' : 'Ngang ngửa'; tone = s > 0 ? 'p' : s < 0 ? 'm' : 'n'; }
+    ct.push(L('n', 'Chủ = bên giữ, bên bị đánh, bên ứng sau; khách = bên đi đánh, bên khởi trước.'));
+    return { ten: 'Thắng bại', han: '占勝敗', ket: ket, tone: tone, diem: s, ct: ct, src: 'NL · BK · PK', ghi: 'Điểm (chủ − khách) là thang tự đặt để tóm các luật; luật định tính là của sách.' };
+  }
+
+  function giacToi(r) {
+    var b = r.ban, ct = [], P = cungCanh(r), o = lop(r, P), nn = noiNgoai(r, P);
+    ct.push(L('n', 'Lục Canh = địch, đang ở ' + tenCung(P) + ' — thuộc ' + nn + ' giới (' + (b.duong ? 'sau Đông Chí: 1, 8, 3, 4 là nội' : 'sau Hạ Chí: 9, 2, 7, 6 là nội') + ').'));
+    var ket = nn === 'nội' ? 'Địch đã vào cảnh (hoặc đang ở trong) — chưa đi' : nn === 'ngoại' ? 'Địch còn ở ngoài — chưa tới (đã vào thì sẽ đi)' : 'Canh ở trung cung — sách không xếp';
+    var tone = nn === 'nội' ? 'm' : 'p';
+    if (quanHe(hanhCung(P === 5 ? 2 : P), 'Kim') === 'khac') { ct.push(L('p', 'Cung ' + K.CUNG[P].ten + ' (Hỏa) khắc Canh — «主敵人安營不穩，自驚而退».')); tone = 'p'; }
+    var hv = cungThanThay(r, 'Huyền Vũ'), bh = cungThanThay(r, 'Bạch Hổ');
+    var dai = [];
+    if (hv.p === P) dai.push(hv.ten); if (bh.p === P) dai.push(bh.ten); if (o && (o.tinh === 'Thiên Bồng')) dai.push('Thiên Bồng');
+    if (dai.length) { ct.push(L('m', 'Cung Canh có ' + dai.join(', ') + ' — «主敵人來必大戰».')); tone = 'm'; }
+    if (o && o.than === 'Cửu Thiên') ct.push(L('m', 'Canh được Cửu Thiên — «大張聲勢，鳴鼓而至» (rầm rộ, đánh trống mà tới).'));
+    if (o && o.than === 'Cửu Địa') ct.push(L('m', 'Canh được Cửu Địa — «偃旗息鼓而來» (cuốn cờ lặng trống mà tới).'));
+    if (o && coDb(o, BINH)) ct.push(L('n', 'Thái Bạch nhập Huỳnh (Canh trên Bính): «雖去賊仍來，然在外界亦主不來».'));
+    var hb = cungCanThien(r, BINH).filter(function (p) { return coDb(lop(r, p), CANH_); });
+    if (hb.length) ct.push(L('n', 'Huỳnh nhập Thái Bạch ở cung ' + hb[0] + ': «雖主賊去，總在內限，亦主不去».'));
+    if (o) {
+      var thien = [o.tinh && HANH_TINH[o.tinh], o.mon && HANH_MON[o.mon], K.CAN_NGU_HANH[CANH_]].filter(Boolean);
+      var khacCung = thien.filter(function (h) { return P !== 5 && quanHe(h, hanhCung(P)) === 'khac'; }).length;
+      if (khacCung) ct.push(L('m', khacCung + ' lớp thiên/nhân bàn ở cung Canh khắc cung — «天上奇儀星門克宮，賊得猖狂».'));
+      ct.push(L('n', 'Kỳ tới/đi: xem địa bàn can dưới Canh — ' + CAN[o.db] + ' — «總以六甲所落之地盤干支看歲月日時，為來去之期».'));
+    }
+    var m = mauChi(r), k = m.mtqCuong, T = D.CUONG_MTQ;
+    ct.push(L('n', 'Thiên Cương (Thìn) đóng trên chi ' + CHI[m.cuong] + ' — ' + MTQ_TEN[k] + ': ' + T.map(function (row) { return row[0] + ' → ' + row[1 + k]; }).join('; ') + '.'));
+    return { ten: 'Giặc tới hay đi', han: '占賊盜敵兵來去', ket: ket, tone: tone, ct: ct, src: 'NL · BK · HK' };
+  }
+
+  function phucBinh(r) {
+    var b = r.ban, tt = r.tuTru, td = thienDia(r), ct = [], co = 0;
+    var BON = [0, 3, 5, 8];
+    // A: chi trên các chi địa bàn của cung trực sử
+    var ps = b.cungTrucSu, ga = CUNG_CHI[ps === 5 ? 2 : ps] || [];
+    var hitA = ga.map(function (g) { return td.tren(g); }).filter(function (u) { return BON.indexOf(u) >= 0; });
+    ct.push(L(hitA.length ? 'm' : 'p', 'Cách đọc A (元靈經, chữ «值使上»): trên các chi của cung trực sử ' + tenCung(ps) + ' là ' + ga.map(function (g) { return CHI[td.tren(g)]; }).join(', ') + ' — ' + (hitA.length ? 'có ' + hitA.map(function (u) { return CHI[u]; }).join(', ') + ' → có phục binh' : 'không có Tý Mão Tỵ Thân') + '.'));
+    // B: chi trên chi giờ (= nguyệt tướng)
+    var uB = td.tren(tt.gio % 12), hitB = BON.indexOf(uB) >= 0;
+    ct.push(L(hitB ? 'm' : 'p', 'Cách đọc B (trực sử gia chi giờ — chính ví dụ của sách khớp cách này): trên chi giờ là ' + CHI[uB] + ' (nguyệt tướng ' + TUONG_TEN[td.nt.chi] + ') — ' + (hitB ? 'thuộc Tý Mão Tỵ Thân → có phục binh' : 'không thuộc → không phục binh') + '.'));
+    // C: 虎鈐經 — Mão Tý Thân Tỵ lâm nhật thần
+    var g1 = KY_CUNG_CAN[tt.ngay % 10], g2 = tt.ngay % 12, uC = [td.tren(g1), td.tren(g2)];
+    var hitC = uC.filter(function (u) { return BON.indexOf(u) >= 0; });
+    ct.push(L(hitC.length ? 'm' : 'p', 'Cách đọc C (虎鈐經 占伏兵: «卯子申巳臨日辰，必有伏兵»): trên can ngày (ký ' + CHI[g1] + ') là ' + CHI[uC[0]] + ', trên chi ngày là ' + CHI[uC[1]] + ' — ' + (hitC.length ? 'có phục binh' : 'không') + '.'));
+    var hit = hitA.concat(hitB ? [uB] : []).concat(hitC);
+    co = (hitA.length ? 1 : 0) + (hitB ? 1 : 0) + (hitC.length ? 1 : 0);
+    if (hit.length) {
+      var u = hit[0], vs = vuongSuy(K.CHI_NGU_HANH[u], chiThang(r)), kong = b.khongGio.indexOf(u) >= 0;
+      if (kong || vs.d < 0) ct.push(L('p', 'Chi ' + CHI[u] + (kong ? ' tuần không' : ' ' + vs.ten) + ' — «如空亡、休廢，雖來不戰».'));
+      else if (vs.d > 0) ct.push(L('m', 'Chi ' + CHI[u] + ' ' + vs.ten + ' — «旺相帶刑，必有大戰» (engine chỉ xét vượng tướng, chưa xét hình).'));
+    }
+    var m = mauChi(r);
+    if (m.mtqCuong === 2) ct.push(L('m', 'HK: «以聞事時斗加季，有伏兵» — Thiên Cương đang ở quý.'));
+    var ket = co ? co + '/3 cách đọc báo có phục binh' + (co === 1 ? ' — cẩn thận' : '') : 'Cả ba cách đọc: không thấy phục binh';
+    return { ten: 'Phục binh', han: '占伏兵有無', ket: ket, tone: co ? 'm' : 'p', ct: ct, src: 'NL · HK', ghi: 'Nguyên văn 元靈經 tự ghi «一云值符，未知孰是，存疑»; ví dụ đi kèm (Đại Thử trung nguyên âm 1 cục, giờ Mậu Ngọ: «巳申子卯不在符宮上，定無伏兵») chỉ khớp cách đọc B.' };
+  }
+
+  function thanhTri(r) {
+    var b = r.ban, ct = [], P = cungCanh(r), C = cungTinh(r, 'Thiên Cầm'), B = cungBinh(r);
+    var oC = lop(r, C === 5 && b.phai !== 'phi' ? 2 : C), oP = lop(r, P);
+    var vK = vsKyHieu(r, 'Kim'), vT = vsKyHieu(r, 'Thổ'), vH = vsKyHieu(r, 'Hỏa');
+    ct.push(L('n', 'Canh = quân công (Thái Bạch, binh tượng) ở ' + tenCung(P) + ' · Thiên Cầm = quân giữ ở ' + tenCung(C) + (b.phai !== 'phi' ? ' (chuyển bàn: Cầm theo Nhuế)' : '') + ' · Bính (viện) ở ' + (B ? tenCung(B) : '—') + '.'));
+    // Công thành
+    var canhTrung = P === C || P === 5, khaiCanh = oP && oP.mon === 'Khai Môn';
+    var pha = vK.d > 0 && khaiCanh && canhTrung;
+    ct.push(L(pha ? 'p' : 'n', 'Công thành: Canh ' + vK.ten + (khaiCanh ? ', được Khai môn' : ', không có Khai môn') + (canhTrung ? ', lâm cung Thiên Cầm (gia trung)' : ', không gia trung') + ' — ' + (pha ? '«其城可克»' : 'chưa đủ ba điều «六庚乘旺相，得開門加中五宮»') + '.'));
+    var catC = oC && ['Khai Môn', 'Hưu Môn', 'Sinh Môn', 'Cảnh Môn'].indexOf(oC.mon) >= 0;
+    if (vT.d > 0 && catC) ct.push(L('m', 'Thiên Cầm vượng tướng có cát môn — «其將守可擒得» chép trong 元靈經; 秘笈 ghi «其守將不可擒也» (giữ được, không bắt được tướng giữ) — hai bản trái nhau.'));
+    else if (vT.d < 0 && oC && ['Thương Môn', 'Tử Môn', 'Kinh Môn'].indexOf(oC.mon) >= 0) ct.push(L('p', 'Thiên Cầm hưu tù gặp hung môn — «其守必死».'));
+    // Thủ thành
+    var thuOk = catC && vT.d > 0 && oC && coTb(oC, BINH);
+    var thuNguy = !catC && vT.d <= 0 && ((oC && (oC.tinh === 'Thiên Bồng')) || canhTrung);
+    ct.push(L(thuOk ? 'p' : thuNguy ? 'm' : 'n', 'Thủ thành: cung Cầm ' + (oC ? (oC.mon || '—') : '—') + ', Thổ ' + vT.ten + (oC && coTb(oC, BINH) ? ', có Bính' : ', không có Bính') + ' — ' + (thuOk ? '«其城可守»' : thuNguy ? '«城不可守»' : 'giữ được một phần (thiếu điều kiện)') + '.'));
+    // Viện binh
+    if (B) {
+      var hoi = B === C && (oC && oC.mon === 'Sinh Môn'), ke = keCung(B, C), khacB = B !== 5 && quanHe(hanhCung(B), 'Hỏa') === 'khac';
+      var t = (vH.d < 0 || khacB) ? 'Viện binh không tới (hoặc tới mà vô lực) — Bính ' + vH.ten + (khacB ? ', cung ' + K.CUNG[B].ten + ' khắc Bính' : '')
+        : hoi ? 'Bính, Thiên Cầm, Sinh môn hội một cung — có viện binh, gần và nhanh'
+          : (B === C || ke) ? 'Bính ' + (B === C ? 'cùng cung' : 'ở cung kề') + ' quân giữ — có viện binh, gần và nhanh'
+            : 'Bính xa cung Cầm — viện binh tới chậm';
+      ct.push(L(/không|chậm/.test(t) ? 'm' : 'p', 'Viện binh: ' + t + '. «必天禽、六丙合生門，或在守者左右之宮，必有援兵，近而且速。若離禽宮遠則遲».'));
+      if (B !== 5 && C && quanHe(hanhCung(B), hanhCung(C === 5 ? 2 : C)) === 'sinh') ct.push(L('p', 'Cung Bính sinh cung Cầm — viện binh có lực (ví dụ của sách: Thiên Anh ở Ly sinh Cầm ở Khôn).'));
+    }
+    if (vK.d < 0 && oP && oP.tinh === 'Thiên Bồng') ct.push(L('p', 'Thiên Bồng mang Canh mà Canh bại khí — «攻者不克，守者可守».'));
+    // Thành ở được không
+    var pf = b.cungTrucPhu === 5 && b.phai !== 'phi' ? 2 : b.cungTrucPhu, ps = b.cungTrucSu, oS = lop(r, ps), q = quanHe(hanhCung(pf === 5 ? 2 : pf), hanhCung(ps === 5 ? 2 : ps));
+    var hv = cungThanThay(r, 'Huyền Vũ'), xauS = oS && (coTb(oS, CANH_) || hv.p === ps), bucS = oS && oS.mon && quanHe(hanhCung(ps === 5 ? 2 : ps), HANH_MON[oS.mon]) === 'khac', mbS = oS && oS.mon && quanHe(HANH_MON[oS.mon], hanhCung(ps === 5 ? 2 : ps)) === 'khac';
+    var cu = (q === 'khac' && xauS) || bucS || mbS ? 'không' : (q === 'sinh' || q === 'duocSinh' || q === 'hoa' || q === 'biKhac') ? 'được' : 'tạm được';
+    ct.push(L(cu === 'không' ? 'm' : 'p', 'Thành ở được không: trực phù (động, khách) ' + tenCung(pf) + ' ' + QH_VI[q] + ' trực sử (tĩnh, chủ) ' + tenCung(ps) + (xauS ? '; cung trực sử có Canh/Huyền Vũ' : '') + (bucS ? '; trực sử bị cung khắc («下克上»)' : '') + (mbS ? '; trực sử môn bức' : '') + ' → ' + (cu === 'không' ? 'không nên ở, mau lui tránh' : 'giữ được') + '.'));
+    var ket = pha ? 'Thành dễ bị phá' : thuOk ? 'Thành giữ được' : thuNguy ? 'Thành khó giữ' : 'Thế công thủ chưa ngã ngũ';
+    return { ten: 'Công thành · thủ thành · viện binh', han: '占攻城 · 守城 · 援兵', ket: ket, tone: pha || thuNguy ? 'm' : thuOk ? 'p' : 'n', ct: ct, src: 'NL · BK · PK', ghi: 'Chuyển bàn không có thiên bàn ở Trung 5; engine hiểu «加中五宮» là Canh cùng cung với Thiên Cầm (phi bàn: Canh vào Trung 5).' };
+  }
+
+  function huThuc(r) {
+    var b = r.ban, ngam = phucPhan(r), ct = [];
+    var chu = b.cungTrucPhu === 5 && b.phai !== 'phi' ? 2 : b.cungTrucPhu, kh = cungCanh(r);
+    if (ngam.tinh === 'phan' || ngam.mon === 'phan') return { ten: 'Tình địch hư thật', han: '占賊情虛實', ket: 'Phản ngâm — ý đến phản phúc bất định', tone: 'm', ct: [L('m', '«如返吟，則來意反覆不定».')], src: 'NL' };
+    if (ngam.tinh === 'phuc') { chu = b.cungTrucPhuGoc === 5 ? 2 : b.cungTrucPhuGoc; kh = cungCanDia(r, CANH_)[0]; ct.push(L('n', 'Phục ngâm — dùng bản cung: «以六庚本宮與值符本宮生克看之».')); }
+    if (b.donCanGio === CANH_) return { ten: 'Tình địch hư thật', han: '占賊情虛實', ket: 'Canh là trực phù — cùng cung, khó phân', tone: 'n', ct: ct, src: 'NL' };
+    var q = quanHe(hanhCung(kh === 5 ? 2 : kh), hanhCung(chu === 5 ? 2 : chu));
+    ct.push(L('n', 'Chủ = trực phù ' + tenCung(chu) + ' · Khách = Canh ' + tenCung(kh) + ' · cung khách ' + QH_VI[q] + ' cung chủ.'));
+    var hu = q === 'khac';
+    ct.push(L(hu ? 'm' : 'p', hu ? '«庚落宮克值符落宮，則其情虛詐» — lời hàng, xin hòa là giả.' : '«如相生、相比，定是實情，來意不敢為惡».'));
+    return { ten: 'Tình địch hư thật', han: '占賊情虛實', ket: hu ? 'Hư trá — đề phòng' : q === 'biKhac' ? 'Thật (chủ khắc khách — địch sợ)' : 'Thật tình', tone: hu ? 'm' : 'p', ct: ct, src: 'NL' };
+  }
+
+  function luongThao(r) {
+    var pP = cungTinh(r, 'Thiên Phụ'), pX = cungTinh(r, 'Thiên Xung'), pF = r.ban.cungTrucPhu, ct = [];
+    var f = function (p) { return hanhCung(p === 5 ? 2 : p); };
+    var q = quanHe(f(pP), f(pX));
+    ct.push(L('n', 'Thiên Phụ (ty lương) ở ' + tenCung(pP) + ' · Thiên Xung (tướng lĩnh) ở ' + tenCung(pX) + ' · cung Phụ ' + QH_VI[q] + ' cung Xung.'));
+    var phat = !(q === 'khac' || q === 'biKhac');
+    ct.push(L(phat ? 'p' : 'm', q === 'khac' ? '«天輔落宮克天冲宮，有餉不發».' : q === 'biKhac' ? '«天冲克天輔，亦不吉».' : '«必兩相生比者，發».'));
+    var v = vsKyHieu(r, HANH_TINH[r.ban.trucPhuTinh]), q2 = quanHe(f(pF), f(pX));
+    var nhieu = v.d > 0 && (q2 === 'sinh' || q2 === 'hoa' || pF === pX);
+    ct.push(L(nhieu ? 'p' : v.d < 0 ? 'm' : 'n', 'Thanh Long (= trực phù, «六甲值符屬青龍») ' + v.ten + ', cung trực phù ' + QH_VI[q2] + ' cung Xung — ' + (nhieu ? '«其餉必多»' : v.d < 0 ? '«其餉不足»' : 'lương vừa phải') + '.'));
+    return { ten: 'Lương hướng', han: '占出兵領餉', ket: phat ? (nhieu ? 'Lương phát, nhiều' : 'Lương phát') : 'Lương bị giữ, chậm phát', tone: phat ? 'p' : 'm', ct: ct, src: 'NL' };
+  }
+
+  function thamBao(r) {
+    var b = r.ban, ct = [], f = function (p) { return hanhCung(p === 5 ? 2 : p); };
+    var pS = b.cungTrucSu, pC = b.cungTrucPhu, pK = cungCanh(r);
+    var q1 = quanHe(f(pS), f(pC)), q2 = quanHe(f(pS), f(pK));
+    ct.push(L('n', 'Trực sử (người đi dò) ' + tenCung(pS) + ' · chủ (trực phù) ' + tenCung(pC) + ' · khách (Canh) ' + tenCung(pK) + '.'));
+    var ket = 'Được', tone = 'p';
+    if (q1 === 'khac' && q2 === 'sinh') { ket = 'Người đi dễ ngả về phía địch'; tone = 'm'; ct.push(L('m', '«克主宮生客宮，去必向彼».')); }
+    else if (q2 === 'khac') { ket = 'Dò được tin chắc'; ct.push(L('p', '«若克客宮，必探得的實».')); }
+    else if (q1 === 'sinh') { ket = 'Đi được việc'; ct.push(L('p', '«值使落宮生主宮，去則得力».')); }
+    var oS = lop(r, pS);
+    if (oS && oS.mon && pS !== 5 && (quanHe(f(pS), HANH_MON[oS.mon]) === 'khac' || quanHe(HANH_MON[oS.mon], f(pS)) === 'khac')) {
+      var v = vsKyHieu(r, HANH_MON[oS.mon]); ket = v.d > 0 ? 'Đường có trở, gắng thì đi được' : 'Không dám đi / đường bị chặn'; tone = 'm';
+      ct.push(L('m', 'Môn và cung trực sử tự khắc chế — «值使宮自相克制，必不敢去，或途路有阻，旺則稍可，休囚大凶» (' + oS.mon + ' ' + v.ten + ').'));
+    }
+    return { ten: 'Sai người do thám', han: '占使人探偵', ket: ket, tone: tone, ct: ct, src: 'NL' };
+  }
+
+  function gianDiep(r) {
+    var b = r.ban, ct = [], pS = b.cungTrucSu, pK = cungCanh(r), pB = cungBinh(r);
+    var tS = lop(r, pS) && lop(r, pS).tinh, tK = lop(r, pK) && lop(r, pK).tinh;
+    ct.push(L('n', 'Trực sử = nước kia (' + tenCung(pS) + ', sao ' + (tS || '—') + ') · Bính = mình (' + (pB ? tenCung(pB) : '—') + ') · Canh = người bị ly gián (' + tenCung(pK) + ', sao ' + (tK || '—') + ').'));
+    var vK = vsKyHieu(r, 'Kim'), q = tS && tK ? quanHe(HANH_TINH[tS], HANH_TINH[tK]) : null, ok = q === 'khac' && vK.d <= 0;
+    if (vK.d > 0) ct.push(L('m', 'Canh ' + vK.ten + ' — «庚旺間人無益».'));
+    if (q) ct.push(L(q === 'khac' ? 'p' : 'm', 'Sao cung trực sử ' + QH_VI[q] + ' sao cung Canh — ' + (q === 'khac' ? '«必值使乘星克庚乘星者，其術得行也»' : '«庚星克值使之星者，無益；相生者，無益»') + '.'));
+    ct.push(L('n', 'Sách còn đòi chi của Bính và trực sử (nguyệt tướng gia giờ) phải xung nhau thì việc mới động — engine chưa tính bước này.'));
+    return { ten: 'Dùng gián điệp', han: '占行間', ket: ok ? 'Kế ly gián làm được' : 'Kế ly gián khó thành', tone: ok ? 'p' : 'm', ct: ct, src: 'NL · PK' };
+  }
+
+  function traDu(r) {
+    var b = r.ban, ct = [], pB = cungBinh(r), pK = cungCanh(r), ct2 = cungThanThay(r, 'Chu Tước'), f = function (p) { return hanhCung(p === 5 ? 2 : p); };
+    if (!pB) return { ten: 'Dụ địch vào kế', han: '占詐誘彼墮計中否', ket: 'Không thấy Bính', tone: 'n', ct: [], src: 'NL' };
+    var vT = ct2.p ? vsCung(r, ct2.p) : { ten: '?', d: 0 }, q = quanHe(f(pB), f(pK)), vC = vsKyHieu(r, 'Kim');
+    ct.push(L('n', 'Bính = mình ' + tenCung(pB) + ' · Canh = địch ' + tenCung(pK) + ' · ' + ct2.ten + (ct2.thay ? ' (giữ chỗ Chu Tước)' : '') + ' = tin đồn ' + (ct2.p ? tenCung(ct2.p) + ' ' + vT.ten : '—') + '.'));
+    var ok = vT.d > 0 && (q === 'khac' || q === 'sinh');
+    var nua = (q === 'khac' && vC.d > 0);
+    ct.push(L(ok && !nua ? 'p' : nua ? 'n' : 'm', 'Cung Bính ' + QH_VI[q] + ' cung Canh; Canh ' + vC.ten + '. ' + (ok && !nua ? '«必朱雀落宮旺相，又要六丙落宮克六庚，或丙生六庚，其詐得行».' : nua ? '«庚雖被丙克在旺相之鄉……主半疑半信».' : 'Chưa đủ điều kiện — kế dụ khó thành.')));
+    return { ten: 'Dụ địch vào kế', han: '占詐誘彼墮計中否', ket: ok && !nua ? 'Kế dụ làm được' : nua ? 'Địch nửa tin nửa ngờ' : 'Kế dụ khó thành', tone: ok && !nua ? 'p' : nua ? 'n' : 'm', ct: ct, src: 'NL · PK' };
+  }
+
+  function suGia(r) {
+    var tt = r.tuTru, td = thienDia(r), ct = [];
+    var g1 = KY_CUNG_CAN[tt.ngay % 10], u1 = td.tren(g1), u2 = td.tren(tt.gio % 12);
+    var q = quanHe(K.CHI_NGU_HANH[u1], K.CHI_NGU_HANH[u2]);
+    ct.push(L('n', 'Nguyệt tướng ' + TUONG_TEN[td.nt.chi] + ' gia giờ. Trên can ngày (khách, ký ' + CHI[g1] + ') là ' + CHI[u1] + ' (' + K.CHI_NGU_HANH[u1] + '); trên chi giờ (chủ) là ' + CHI[u2] + ' (' + K.CHI_NGU_HANH[u2] + ').'));
+    var ket = q === 'khac' ? 'Lời sứ giả hư dối' : q === 'biKhac' ? 'Lời sứ giả thật — bên kia sợ ta' : 'Không rõ hư thật';
+    ct.push(L(q === 'khac' ? 'm' : q === 'biKhac' ? 'p' : 'n', q === 'khac' ? '«日干上神、尅辰上……其言虛謬不可聞».' : q === 'biKhac' ? '«辰上尅日上，彼必畏我言詞真».' : 'Hai thần không khắc nhau — sách không kết luận.'));
+    return { ten: 'Sứ giả địch hư thật', han: '占敵使虛實', ket: ket, tone: q === 'khac' ? 'm' : q === 'biKhac' ? 'p' : 'n', ct: ct, src: 'CQ 卷三十七 (phép Lục Nhâm)' };
+  }
+
+  function nguoiDen(r) {
+    var td = thienDia(r), g = td.duoi(0), k = mtq(g);
+    var ket = ['Người lương thiện', 'Khách buôn', 'Gian tế, kẻ xấu'][k];
+    return { ten: 'Người đến thiện ác', han: '占來人善惡', ket: ket, tone: k === 2 ? 'm' : 'p', ct: [L('n', 'Thần Hậu (Tý) đóng trên chi ' + CHI[g] + ' — ' + MTQ_TEN[k] + ': «寅申巳亥良人，子午卯酉商客，辰戌丑未惡細作».')], src: 'NL (phép Lục Nhâm)' };
+  }
+
+  function doSong(r) {
+    var td = thienDia(r), HA = [11, 0, 1], TINH = [3, 9, 4], ct = [], hit = [];
+    HA.forEach(function (u) { var g = td.duoi(u); if (TINH.indexOf(g) >= 0) hit.push(CHI[u] + ' trên ' + CHI[g]); });
+    ct.push(L(hit.length ? 'm' : 'p', 'Tam hà trên trời (Nhâm ký Hợi, Tý, Quý ký Sửu) — ' + (hit.length ? hit.join(', ') + ' rơi vào tam tỉnh (Mão Dậu Thìn): «一河臨井必覆舟»' : 'không rơi vào tam tỉnh dưới đất (Mão Dậu Thìn)') + '.'));
+    return { ten: 'Qua sông', han: '占渡河', ket: hit.length ? 'Nguy lật thuyền — đừng qua' : 'Qua sông được', tone: hit.length ? 'm' : 'p', ct: ct, src: 'CQ 卷三十七' };
+  }
+
+  function timNuoc(r) {
+    var td = thienDia(r), pH = cungMon(r, 'Hưu Môn'), ct = [];
+    ct.push(L('n', 'Hưu môn ở ' + tenCung(pH) + ' — «以休門下定之».'));
+    [[8, 'sông lớn'], [7, 'giếng (Tiểu Cát)'], [3, 'ao đầm (Thái Xung)']].forEach(function (x) { ct.push(L('n', CHI[x[0]] + ' (' + x[1] + ') đóng trên chi ' + CHI[td.duoi(x[0])] + ' — ' + HUONG_CHI[td.duoi(x[0])] + '.')); });
+    return { ten: 'Tìm nước cho quân', han: '占行兵無水', ket: 'Tìm về ' + (pH ? K.CUNG[pH].huong : '?'), tone: 'n', ct: ct, src: 'NL · CQ 刦糧覔水法' };
+  }
+
+  function satGiac(r) {
+    var td = thienDia(r), ct = chiThang(r), mua = [2, 3, 4].indexOf(ct) >= 0 ? 0 : [5, 6, 7].indexOf(ct) >= 0 ? 1 : [8, 9, 10].indexOf(ct) >= 0 ? 2 : 3;
+    var u = [4, 7, 10, 1][mua], g = td.duoi(u);
+    return { ten: 'Giặc nấp ở đâu', han: '察賊所在法', ket: 'Hướng ' + HUONG_CHI[g], tone: 'n', ct: [L('n', 'Thiên mục mùa này là ' + CHI[u] + ' (xuân Thìn, hạ Mùi, thu Tuất, đông Sửu); đóng trên chi ' + CHI[g] + ' — «賊當在下伏其形».')], src: 'CQ 卷三十七' };
+  }
+
+  function rutQuan(r) {
+    var m = mauChi(r), k = m.mtqCuong, td = m.td, ct = [];
+    ct.push(L('n', 'Thiên Cương ở ' + MTQ_TEN[k] + ' (' + CHI[m.cuong] + ') — ' + (k === 0 ? '«係孟直須從右隱»: rút về bên phải' : '«仲季還宜向左藏»: rút về bên trái') + '.'));
+    var tam = [[9, 'Tòng Khôi'], [7, 'Tiểu Cát'], [3, 'Thái Xung']].map(function (x) { return x[1] + ' trên ' + CHI[td.duoi(x[0])]; });
+    ct.push(L('p', 'Thiên tam môn: ' + tam.join(', ') + ' — phương né tránh tốt (trừ phương đang vượng lệnh mùa).'));
+    ct.push(L('p', 'Đại Cát (Sửu, «紫房») trên ' + CHI[td.duoi(1)] + ', Thần Hậu (Tý, «華蓋») trên ' + CHI[td.duoi(0)] + ' — «能藏萬物形無害».'));
+    ct.push(L('n', 'Lạc đường: Thiên Cương gia mạnh đi đường trái, gia trọng đi giữa, gia quý đi phải (黃石公) → đi đường ' + ['trái', 'giữa', 'phải'][k] + '.'));
+    return { ten: 'Rút quân · phá vây · lạc đường', han: '抽軍避寇 · 突圍 · 迷路', ket: 'Phá vây về ' + HUONG_CHI[m.cuong], tone: 'n', ct: ct, src: 'CQ 卷三十七 · NL · PU' };
+  }
+
+  function dauQuan(r) {
+    var b = r.ban, pX = cungTinh(r, 'Thiên Xung'), pF = b.cungTrucPhu, f = function (p) { return hanhCung(p === 5 ? 2 : p); }, q = quanHe(f(pF), f(pX)), ngam = phucPhan(r), ct = [];
+    ct.push(L('n', 'Thiên Xung (võ sĩ) ' + tenCung(pX) + ' · trực phù (chủ soái) ' + tenCung(pF) + '.'));
+    var ket, tone;
+    if (pX === pF) { ket = 'Đến là làm bộ trưởng, sau được trọng dụng'; tone = 'p'; ct.push(L('p', '«天冲若坐值符，一去即為部長，後必大用».')); }
+    else if (q === 'sinh' || q === 'duocSinh' || q === 'hoa') { ket = 'Gặp là được nhận'; tone = 'p'; ct.push(L('p', '«值符宮生天冲宮，及天冲宮生值符宮，一見即投合».')); }
+    else { ket = 'Không được thu nhận'; tone = 'm'; ct.push(L('m', '«如彼此相尅，定不收錄».')); }
+    if (ngam.tinh === 'phuc') ct.push(L('m', 'Phục ngâm — «空回» (đi về tay không).')); if (ngam.tinh === 'phan') ct.push(L('m', 'Phản ngâm — «反復不準».'));
+    return { ten: 'Đầu quân', han: '占投軍', ket: ket, tone: tone, ct: ct, src: 'BK 卷七' };
+  }
+
+  function chiem(r) { return [thangBai(r), giacToi(r), phucBinh(r), thanhTri(r), huThuc(r), thamBao(r), gianDiep(r), traDu(r), suGia(r), nguoiDen(r), luongThao(r), dauQuan(r), timNuoc(r), doSong(r), satGiac(r), rutQuan(r)]; }
+
+  /* ---------- Lục giáp an doanh (theo tuần của giờ — «十時一易») ---------- */
+  function doanh(r, theo) {
+    var tt = r.tuTru, idx = theo === 'ngay' ? tt.ngay : tt.gio, tuan = idx - idx % 10, out = [];
+    for (var i = 0; i < 10; i++) out.push({ can: i, chi: mod(tuan + i, 12), vi: D.DOANH[i] });
+    var kh = [mod(tuan + 10, 12), mod(tuan + 11, 12)];
+    var trungCan = tt.ngay % 10, TRAN = ['Trực trận 直陣', 'Trực trận 直陣', 'Nhuệ trận 銳陣', 'Nhuệ trận 銳陣', 'Phương trận 方陣', 'Phương trận 方陣', 'Viên trận 圓陣', 'Viên trận 圓陣', 'Khúc trận 曲陣', 'Khúc trận 曲陣'];
+    return { tuan: tuan, ds: out, co: kh, quanMon: mod(tuan + 4, 12), tran: TRAN[trungCan], tranGhi: 'CQ 置陣之法: theo ngũ hành can ngày — Giáp Ất trực trận, Bính Đinh nhuệ trận, Mậu Kỷ phương trận, Canh Tân viên trận, Nhâm Quý khúc trận.' };
+  }
+
+  /* ---------- Quét giờ: chọn giờ xuất quân ---------- */
+  function quetGio(y, m, d, opts, n) {
+    var out = [];
+    for (var i = 0; i < (n || 12); i++) {
+      var r = K.lap(y, m, d, i * 2, 0, opts), b = r.ban, tt = r.tuTru, ph = phuong(r);
+      var tot = 0, xau = 0, best = null;
+      cacCung(r).forEach(function (p) { if (!best || ph[p].diem > ph[best].diem) best = p; });
+      var th = thoi(r).filter(function (x) { return !x.ngay; }), dau = th.filter(function (x) { return x.tone === 'm'; }).map(function (x) { return x.chip; }), lanh = th.filter(function (x) { return x.tone === 'p'; }).map(function (x) { return x.chip; });
+      var kyMon = cacCung(r).filter(function (p) { return ph[p].tot.some(function (z) { return /Kỳ môn hội hợp/.test(z.s); }); });
+      out.push({ gio: tt.gio, h: i * 2, chuKhach: chuKhach(r).ket, dau: dau, lanh: lanh, kyMon: kyMon, best: best, bestDiem: ph[best].diem, nguBatNgo: dau.indexOf('Ngũ bất ngộ thời') >= 0 || dau.indexOf('Thiên võng tứ trương') >= 0 });
+    }
+    return out;
+  }
+
+  root.KMB = {
+    quanHe: quanHe, vuongSuy: vuongSuy, lop: lop, cacCung: cacCung, cachCung: cachCung, thoi: thoi, chuKhach: chuKhach, phuong: phuong, mauChi: mauChi,
+    chiem: chiem, thangBai: thangBai, giacToi: giacToi, phucBinh: phucBinh, thanhTri: thanhTri, huThuc: huThuc, luongThao: luongThao, thamBao: thamBao,
+    gianDiep: gianDiep, traDu: traDu, suGia: suGia, nguoiDen: nguoiDen, doSong: doSong, timNuoc: timNuoc, satGiac: satGiac, rutQuan: rutQuan, dauQuan: dauQuan,
+    doanh: doanh, quetGio: quetGio, nguyetTuong: nguyetTuong, thienDia: thienDia, phucPhan: phucPhan, cungCanThien: cungCanThien, cungCanDia: cungCanDia,
+    cungTinh: cungTinh, cungMon: cungMon, cungThan: cungThan, cungThanThay: cungThanThay, noiNgoai: noiNgoai,
+    HANH_TINH: HANH_TINH, HANH_MON: HANH_MON, TUONG_TEN: TUONG_TEN, TUONG_HAN: TUONG_HAN, HUONG_CHI: HUONG_CHI, HUONG_CHI_GON: HUONG_CHI_GON, QH_VI: QH_VI, tenCung: tenCung, MTQ_TEN: MTQ_TEN
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+<script>/* Kỳ Môn Binh Pháp — giao diện */
+(function () {
+  'use strict';
+  var K = window.KyMon, B = window.KMB, D = window.KMB_D;
+  var $ = function (id) { return document.getElementById(id); };
+  var CFG = window.KMB_CFG || {};
+  var LS = CFG.ls || 'kmb-binh-phap-v1';
+  var CUNG_THU_TU = [4, 9, 2, 3, 5, 7, 8, 1, 6];
+  var NGAN_TINH = { 'Thiên Bồng': 'Bồng', 'Thiên Nhuế': 'Nhuế', 'Thiên Xung': 'Xung', 'Thiên Phụ': 'Phụ', 'Thiên Cầm': 'Cầm', 'Thiên Tâm': 'Tâm', 'Thiên Trụ': 'Trụ', 'Thiên Nhâm': 'Nhâm', 'Thiên Anh': 'Anh' };
+  var CAT_MON = { 'Khai Môn': 'cat', 'Hưu Môn': 'cat', 'Sinh Môn': 'cat', 'Cảnh Môn': 'binh', 'Đỗ Môn': 'binh', 'Thương Môn': 'hung', 'Tử Môn': 'hung', 'Kinh Môn': 'hung' };
+  var S = { phai: 'chuyen', dc: CFG.dc || 'chuyetbo', ty: 1, tz: 7, su: 'trung', cung: null, view: 'cong-cu' };
+  try { var sv = JSON.parse(localStorage.getItem(LS) || 'null'); if (sv) ['phai', 'dc', 'ty', 'tz', 'su'].forEach(function (k) { if (sv[k] !== undefined) S[k] = sv[k]; }); } catch (e) { }
+  function save() { try { localStorage.setItem(LS, JSON.stringify({ phai: S.phai, dc: S.dc, ty: S.ty, tz: S.tz, su: S.su })); } catch (e) { } }
+  function esc(s) { return String(s === undefined || s === null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function hz(s) { return esc(s).replace(/(«[^»]*»)/g, '<span class="qh">$1</span>'); }
+  function toneCls(t) { return t === 'p' ? 'tp' : t === 'm' ? 'tm' : 'tn'; }
+  function srcTag(s) { return s ? '<span class="src">' + esc(s) + '</span>' : ''; }
+
+  /* ---------- Điều hướng ---------- */
+  var VIEWS = ['cong-cu', 'chon-gio', 'giao-trinh', 'tra-cuu'].filter(function (x) { return document.getElementById('v-' + x); });
+  function route() {
+    var h = (location.hash || '').replace('#', '');
+    var v = VIEWS.indexOf(h) >= 0 ? h : (document.getElementById(h) && document.getElementById(h).closest('.view') ? document.getElementById(h).closest('.view').id.slice(2) : 'cong-cu');
+    S.view = v;
+    VIEWS.forEach(function (x) { $('v-' + x).hidden = x !== v; });
+    $('ctrl').hidden = v === 'giao-trinh' || v === 'tra-cuu';
+    document.querySelectorAll('nav.views a').forEach(function (a) { if (a.dataset.v === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    if (VIEWS.indexOf(h) < 0 && document.getElementById(h)) setTimeout(function () { document.getElementById(h).scrollIntoView(); }, 0);
+    if (v === 'chon-gio') renderGio();
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ---------- Thời điểm ---------- */
+  function nowInTz(tz) { var d = new Date(Date.now() + tz * 3600000); return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate(), hh: d.getUTCHours(), mi: d.getUTCMinutes() }; }
+  function setNow() { var n = nowInTz(S.tz); $('fDate').value = n.y + '-' + pad(n.m) + '-' + pad(n.d); $('fTime').value = pad(n.hh) + ':' + pad(n.mi); }
+  function readDT() {
+    var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec($('fDate').value), tm = /^(\d{1,2}):?(\d{2})$/.exec($('fTime').value);
+    if (!dm || !tm) return null; var hh = +tm[1], mi = +tm[2]; if (hh > 23 || mi > 59) return null;
+    return { y: +dm[1], m: +dm[2], d: +dm[3], hh: hh, mi: mi };
+  }
+  function shiftHours(h) {
+    var t = readDT(); if (!t) return; var d = new Date(Date.UTC(t.y, t.m - 1, t.d, t.hh, t.mi) + h * 3600000);
+    $('fDate').value = d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()); $('fTime').value = pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes());
+    S.cung = null; render();
+  }
+  function opts() { return { tz: S.tz, phai: S.phai, dinhCuc: S.dc, tyMuon: S.ty === 1, suTuTrung: S.su === 'trung' }; }
+  function lap() { var t = readDT(); if (!t) return null; try { return K.lap(t.y, t.m, t.d, t.hh, t.mi, opts()); } catch (e) { return null; } }
+  function seg(id, val, cb) {
+    var el = $(id);
+    el.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === String(val))); });
+    el.onclick = function (e) { var b = e.target.closest('button'); if (!b) return; cb(b.dataset.v); el.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); };
+  }
+  function initControls() {
+    seg('segPhai', S.phai, function (v) { S.phai = v; S.cung = null; save(); render(); });
+    seg('segCuc', S.dc, function (v) { S.dc = v; save(); render(); });
+    seg('segSu', S.su, function (v) { S.su = v; save(); render(); });
+    seg('segHan', '0', function (v) { document.body.classList.toggle('show-han', v === '1'); });
+    $('fTz').value = String(S.tz); $('fTy').value = String(S.ty);
+    $('fTz').onchange = function () { S.tz = +this.value; save(); render(); };
+    $('fTy').onchange = function () { S.ty = +this.value; save(); render(); };
+    $('fDate').onchange = $('fTime').onchange = function () { S.cung = null; render(); };
+    $('fTime').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); S.cung = null; render(); } });
+    $('bNow').onclick = function () { setNow(); S.cung = null; render(); };
+    $('bPrev').onclick = function () { shiftHours(-2); };
+    $('bNext').onclick = function () { shiftHours(2); };
+    $('ctrl').addEventListener('submit', function (e) { e.preventDefault(); });
+  }
+
+  /* ---------- Bàn ---------- */
+  var CUR = null;
+  function renderBoard(r, P) {
+    var b = r.ban, tt = r.tuTru, dc = r.dinhCuc;
+    $('phLeft').innerHTML = '<b>' + esc(K.canChi(tt.ngay)) + '</b> ngày · <b>' + esc(K.canChi(tt.gio)) + '</b> giờ · ' + esc(dc.tiet) + ' ' + esc(dc.nguyenTen.toLowerCase());
+    $('phRight').innerHTML = (dc.duong ? 'Dương' : 'Âm') + ' độn <b>' + dc.cuc + '</b> cục · ' + (b.phai === 'phi' ? 'phi bàn' : 'chuyển bàn');
+    var pCanh = B.cungCanThien(r, 6)[0], pBinh = B.cungCanThien(r, 2)[0], best = null;
+    B.cacCung(r).forEach(function (p) { if (best === null || P[p].diem > P[best].diem) best = p; });
+    var html = '';
+    CUNG_THU_TU.forEach(function (p) {
+      if (p === 5 && b.phai !== 'phi') {
+        html += '<div class="cell midcell"><span class="cuc">' + (dc.duong ? 'Dương' : 'Âm') + ' <b>' + dc.cuc + '</b></span><small>Tuần thủ ' + esc(K.canChi(b.tuanThuGio)) + ' · ẩn dưới ' + esc(K.CAN[b.donCanGio]) + '</small><small>Trung 5 ký Khôn 2</small></div>';
+        return;
+      }
+      var o = B.lop(r, p), x = P[p];
+      var cls = 'cell' + (S.cung === p ? ' sel' : '') + (p === best && x.diem > 0 ? ' best' : '');
+      var mon = o.mon ? '<span class="c-mon g-' + CAT_MON[o.mon] + '">' + esc(o.mon.replace(' Môn', '')) + '</span>' : '<span class="c-mon g-binh" style="opacity:.5">—</span>';
+      var marks = '';
+      if (b.cungTrucPhu === p) marks += '<i class="mk fu" title="Trực phù">符</i>';
+      if (b.cungTrucSu === p) marks += '<i class="mk fu" title="Trực sử">使</i>';
+      if (p === pCanh) marks += '<i class="mk dich" title="Lục Canh — địch">敵</i>';
+      if (b.cungKhongGio.indexOf(p) >= 0) marks += '<i class="mk kg" title="Tuần không giờ">空</i>';
+      if (b.cungMaGio === p) marks += '<i class="mk ma" title="Dịch mã">馬</i>';
+      var phu = o.tbPhu !== null ? '<span class="phu">+' + esc(K.CAN[o.tbPhu]) + '</span>' : '';
+      var dphu = o.dbPhu !== null ? '<span class="phu">+' + esc(K.CAN[o.dbPhu]) + '</span>' : '';
+      var nCat = x.cach.filter(function (c) { return c.loai === 'cat'; }).length, nHung = x.cach.filter(function (c) { return c.loai === 'hung'; }).length;
+      var badge = '<span class="sc ' + (x.diem > 0 ? 'pos' : x.diem < 0 ? 'neg' : '') + '" title="Tốt ' + x.tot.length + ' · xấu ' + x.xau.length + '">' + (x.diem > 0 ? '+' : '') + x.diem + '</span>';
+      html += '<button type="button" class="' + cls + '" data-p="' + p + '" aria-label="Cung ' + p + ' ' + esc(K.CUNG[p].ten) + '">' +
+        '<span class="c-top"><span>' + (o.than ? esc(o.than) : '—') + '</span><span class="tinh">' + (o.tinh ? esc(NGAN_TINH[o.tinh]) : '—') + (o.tinhPhu ? '·Cầm' : '') + '</span></span>' + mon +
+        '<span class="c-can"><span class="tb">' + (o.tb !== null ? esc(K.CAN[o.tb]) : '—') + '</span>' + phu + '<span class="db">' + esc(K.CAN[o.db]) + '</span>' + dphu + '</span>' +
+        '<span class="c-cach">' + (nCat ? '<span class="g-cat">' + nCat + ' cát cách</span>' : '') + (nHung ? '<span class="g-hung">' + nHung + ' hung</span>' : '') + '</span>' +
+        '<span class="c-foot"><span>' + p + ' ' + esc(K.CUNG[p].ten) + ' · ' + esc(K.CUNG[p].huong) + '</span><span class="marks">' + marks + badge + '</span></span></button>';
+    });
+    $('board').innerHTML = html;
+    $('board').onclick = function (e) { var c = e.target.closest('[data-p]'); if (!c) return; S.cung = +c.dataset.p; render(); var el = $('cungPanel'); if (el && window.innerWidth < 960) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  }
+
+  /* ---------- Tổng luận ---------- */
+  function renderTuTru(r) {
+    var tt = r.tuTru, cols = [['Năm', tt.nam], ['Tháng', tt.thang], ['Ngày', tt.ngay], ['Giờ', tt.gio]];
+    var h = '<div class="tt4">' + cols.map(function (c) { return '<div><span class="k">' + c[0] + '</span><b>' + esc(K.canChi(c[1])) + '</b><span class="hz">' + esc(K.canChiHan(c[1])) + '</span></div>'; }).join('') + '</div>';
+    var giao = '—';
+    try { var u = window.QMAstro.utcFromJD(tt.tiet.jd + tt.tz / 24); giao = pad(u.d) + '/' + pad(u.m) + '/' + u.y + ' ' + pad(u.hh) + ':' + pad(u.mi); } catch (e) { }
+    h += '<dl class="ttm"><dt>Tiết khí hiện hành</dt><dd><b>' + esc(tt.tiet.ten) + '</b> <span class="hz">' + esc(tt.tiet.han) + '</span></dd><dt>Giao tiết</dt><dd><b>' + giao + '</b></dd><dt>Múi giờ</dt><dd><b>UTC' + (tt.tz >= 0 ? '+' : '') + tt.tz + '</b></dd></dl>';
+    $('tuTru').innerHTML = h;
+  }
+  function renderTong(r, P) {
+    var ck = B.chuKhach(r), th = B.thoi(r), b = r.ban;
+    var dirs = B.cacCung(r).slice().sort(function (a, c) { return P[c].diem - P[a].diem; });
+    var top = dirs.filter(function (p) { return P[p].diem > 0; }).slice(0, 3), bad = dirs.filter(function (p) { return P[p].diem < 0; }).slice(-3).reverse();
+    var nm = th.filter(function (x) { return x.tone === 'm'; }).length, np = th.filter(function (x) { return x.tone === 'p'; }).length;
+    var vk = ck.ket === 'khách' ? 'v0' : ck.ket === 'chủ' ? 'v1' : '';
+    var dk = th.filter(function (x) { return x.ten === 'Ngũ bất ngộ thời' || (x.ten === 'Thiên võng tứ trương' && /cao/.test(x.ket)); });
+    var h = dk.length ? '<div class="canh">Giờ này phạm <b>' + dk.map(function (x) { return esc(x.ten); }).join(', ') + '</b> — sách dặn có kỳ môn cũng không dùng. Phương bên dưới chỉ để học cách đọc; muốn chọn giờ khác, mở trang «Chọn giờ».</div>' : '';
+    h += '<div class="verdict ' + vk + '"><span class="vk">Chủ · khách</span><span class="vt">' + esc(ck.loi) + '</span><span class="vn">' + (ck.diem > 0 ? '+' : '') + ck.diem + '</span>' +
+      '<div class="vs">' + ck.hang.map(function (x) { return '<span class="vote v-' + (x.ket === 'khách' ? 'k' : x.ket === 'chủ' ? 'c' : 'n') + '" title="' + esc(x.d) + '">' + esc(x.ten) + ': <b>' + esc(x.ket) + '</b></span>'; }).join('') + '</div></div>';
+    h += '<p class="mini">' + hz(ck.ghi) + '</p>';
+    h += '<div class="sec"><h3>Phương <small>điểm = số dấu tốt − số dấu xấu của cung</small></h3><div class="dirs">' +
+      '<div><span class="k">Nên dùng</span>' + (top.length ? top.map(function (p) { return '<button type="button" class="pbtn pos" data-p="' + p + '">' + esc(B.tenCung(p)) + ' <b>+' + P[p].diem + '</b></button>'; }).join('') : '<span class="empty-note">Không cung nào trội</span>') + '</div>' +
+      '<div><span class="k">Nên tránh</span>' + (bad.length ? bad.map(function (p) { return '<button type="button" class="pbtn neg" data-p="' + p + '">' + esc(B.tenCung(p)) + ' <b>' + P[p].diem + '</b></button>'; }).join('') : '<span class="empty-note">—</span>') + '</div></div></div>';
+    h += '<div class="sec"><h3>Thời <small>' + np + ' lành · ' + nm + ' kỵ</small></h3><div class="tlist">' + th.map(function (x) {
+      return '<details class="trow ' + toneCls(x.tone) + '"><summary><span class="tn-ten">' + esc(x.ten) + ' <span class="hz">' + esc(x.han) + '</span></span><span class="tn-ket">' + esc(x.ket) + '</span></summary><p>' + hz(x.d) + ' ' + srcTag(x.src) + (x.suy ? ' <span class="tag">suy rộng</span>' : '') + '</p></details>';
+    }).join('') + '</div></div>';
+    $('tong').innerHTML = h;
+    $('tong').querySelectorAll('[data-p]').forEach(function (bt) { bt.onclick = function () { S.cung = +bt.dataset.p; render(); }; });
+  }
+
+  /* ---------- Một cung ---------- */
+  function renderCung(r, P) {
+    var p = S.cung; if (!p || !P[p]) { var best = null; B.cacCung(r).forEach(function (q) { if (best === null || P[q].diem > P[best].diem) best = q; }); p = best; }
+    var o = B.lop(r, p), x = P[p];
+    var h = '<div class="rd-head"><h2>Cung ' + esc(B.tenCung(p)) + '</h2><span class="q">' + esc(K.CUNG[p].han) + '</span><span class="m">' + esc(x.nn) + ' giới · ' + esc(K.CUNG[p].hanh) + '</span></div>';
+    var lay = [];
+    if (o.than) lay.push(['Thần', o.than, D.VAI.than[o.than]]);
+    if (o.tinh) lay.push(['Tinh', o.tinh, D.VAI.tinh[o.tinh]]);
+    if (o.tinhPhu) lay.push(['Tinh ký', 'Thiên Cầm', D.VAI.tinh['Thiên Cầm']]);
+    if (o.mon) lay.push(['Môn', o.mon, D.MON_BINH[o.mon].bk]);
+    if (o.tb !== null) lay.push(['Thiên bàn', K.CAN[o.tb], D.VAI.can[o.tb]]);
+    if (o.tbPhu !== null) lay.push(['Thiên bàn ký', K.CAN[o.tbPhu], D.VAI.can[o.tbPhu]]);
+    lay.push(['Địa bàn', K.CAN[o.db], D.VAI.can[o.db]]);
+    if (o.dbPhu !== null) lay.push(['Địa bàn ký', K.CAN[o.dbPhu], D.VAI.can[o.dbPhu]]);
+    h += '<div class="layers">' + lay.map(function (l) { return '<span class="lay"><i>' + esc(l[0]) + '</i>' + esc(l[1]) + (l[2] ? ' <small>· ' + esc(l[2]) + '</small>' : '') + '</span>'; }).join('') + '</div>';
+    h += '<p class="mini">Vai trò trong quân theo 《秘笈》 卷七 兵占.</p>';
+    if (o.mon) h += '<div class="khung"><b>' + esc(o.mon) + '</b> trong binh: ' + hz(D.MON_BINH[o.mon].vi) + ' <span class="hz">' + esc(D.MON_BINH[o.mon].pu) + '</span></div>';
+    h += '<div class="cols2"><div><h3 class="mh g-cat">Dấu tốt (' + x.tot.length + ')</h3><ul class="notes">' + (x.tot.length ? x.tot.map(function (z) { return '<li class="p">' + hz(z.s) + ' ' + srcTag(z.src) + '</li>'; }).join('') : '<li class="n">Không có</li>') + '</ul></div>' +
+      '<div><h3 class="mh g-hung">Dấu xấu, điều cần tránh (' + x.xau.length + ')</h3><ul class="notes">' + (x.xau.length ? x.xau.map(function (z) { return '<li class="m">' + hz(z.s) + ' ' + srcTag(z.src) + '</li>'; }).join('') : '<li class="n">Không có</li>') + '</ul></div></div>';
+    if (x.cach.length) {
+      h += '<div class="sec"><h3>Cách cục ở cung này <small>lời các sách</small></h3><div class="grid2">' + x.cach.map(function (c) {
+        var C = D.CACH[c.k];
+        return '<div class="card ' + (c.loai === 'cat' ? 'cc' : 'ch') + '"><span class="k">' + (c.loai === 'cat' ? 'Cát cách' : 'Hung cách') + '</span><span class="ttl">' + esc(C.ten) + '<span class="hz">' + esc(C.han) + '</span></span>' + (c.ghi ? '<p class="mini">' + esc(c.ghi) + '</p>' : '') +
+          C.y.map(function (y) { return '<p>' + esc(y.vi) + ' <span class="src">' + esc(D.SRC[y.s] || y.s) + '</span></p><div class="han" lang="zh">' + esc(y.han) + '</div>'; }).join('') + '</div>';
+      }).join('') + '</div></div>';
+    }
+    $('cungPanel').innerHTML = h;
+  }
+
+  /* ---------- La bàn 12 chi ---------- */
+  var VAI_MAU = { tua: ['Tựa', '背', 'brass'], danh: ['Đánh vào', '擊', 'cin'], tranh: ['Tránh', '避', 'gray'], ra: ['Lối ra', '出', 'moc'], phuc: ['Đặt phục', '伏', 'thuy'] };
+  function viTri(chi, rad, cx) { cx = cx || 210; var a = ((chi - 6) * 30) * Math.PI / 180; return { x: cx + rad * Math.sin(a), y: cx - rad * Math.cos(a) }; }   // Ngọ ở trên, theo chiều kim đồng hồ về Tây
+  function renderLaBan(r) {
+    var M = B.mauChi(r), by = {}, C = 240;
+    for (var c = 0; c < 12; c++) by[c] = [];
+    M.ds.forEach(function (it) { it.chi.forEach(function (c) { by[c].push(it); }); });
+    var s = '<svg viewBox="0 0 480 480" role="img" aria-label="La bàn mười hai chi: phương tựa, đánh, tránh, ra; Nam ở trên">';
+    s += '<circle cx="240" cy="240" r="214" class="lb-ring"/><circle cx="240" cy="240" r="78" class="lb-in"/>';
+    for (var k = 0; k < 12; k++) { var a = viTri(k + 0.5, 78, C), b2 = viTri(k + 0.5, 214, C); s += '<line x1="' + a.x.toFixed(1) + '" y1="' + a.y.toFixed(1) + '" x2="' + b2.x.toFixed(1) + '" y2="' + b2.y.toFixed(1) + '" class="lb-sp"/>'; }
+    s += '<text x="240" y="16" class="lb-card">NAM</text><text x="240" y="474" class="lb-card">BẮC</text><text x="470" y="244" class="lb-card" style="text-anchor:end">TÂY</text><text x="10" y="244" class="lb-card" style="text-anchor:start">ĐÔNG</text>';
+    for (var c2 = 0; c2 < 12; c2++) {
+      var t = viTri(c2, 56, C); s += '<text x="' + t.x.toFixed(1) + '" y="' + (t.y + 6).toFixed(1) + '" class="lb-chi">' + K.CHI_HAN[c2] + '</text>';
+      var t2 = viTri(c2, 92, C); s += '<text x="' + t2.x.toFixed(1) + '" y="' + (t2.y + 3.5).toFixed(1) + '" class="lb-vi">' + esc(K.CHI[c2]) + '</text>';
+      var list = by[c2], n = Math.min(list.length, 4), anc = viTri(c2, 152, C);
+      list.slice(0, 4).forEach(function (it, j) {
+        var x = anc.x, y = anc.y + (j - (n - 1) / 2) * 17, cl = VAI_MAU[it.vai][2], lab = it.han.length > 3 ? it.han.slice(0, 2) : it.han;
+        s += '<g class="lb-chip c-' + cl + '"><rect x="' + (x - 18).toFixed(1) + '" y="' + (y - 7.5).toFixed(1) + '" width="36" height="15" rx="2"/><text x="' + x.toFixed(1) + '" y="' + (y + 3.6).toFixed(1) + '">' + esc(lab) + '</text><title>' + esc(it.ten + ' — ' + VAI_MAU[it.vai][0]) + '</title></g>';
+      });
+      if (list.length > 4) { var q2 = viTri(c2, 198, C); s += '<text x="' + q2.x.toFixed(1) + '" y="' + (q2.y + 3).toFixed(1) + '" class="lb-more">+' + (list.length - 4) + '</text>'; }
+    }
+    s += '</svg>';
+    $('laBan').innerHTML = s;
+    $('laBanLeg').innerHTML = Object.keys(VAI_MAU).map(function (k) { return '<span><i class="sw c-' + VAI_MAU[k][2] + '"></i>' + VAI_MAU[k][1] + ' ' + VAI_MAU[k][0] + '</span>'; }).join('');
+    var rows = M.ds.map(function (it) {
+      return '<tr><td><span class="pill c-' + VAI_MAU[it.vai][2] + '">' + VAI_MAU[it.vai][1] + '</span> ' + esc(it.ten) + ' <span class="hz">' + esc(it.han) + '</span></td><td>' + it.chi.map(function (c) { return esc(K.CHI[c] + ' ' + K.CHI_HAN[c]); }).join(', ') + '<br><small>' + it.chi.map(function (c) { return esc(B.HUONG_CHI[c]); }).join(' · ') + '</small></td><td class="hd">' + hz(it.d) + ' ' + srcTag(it.src) + '</td></tr>';
+    }).join('');
+    $('laBanTab').innerHTML = '<table class="t"><thead><tr><th>Thần sát</th><th>Chi · hướng</th><th>Lời sách</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    $('ntInfo').innerHTML = 'Nguyệt tướng <b>' + esc(B.TUONG_TEN[M.td.nt.chi]) + ' ' + esc(B.TUONG_HAN[M.td.nt.chi]) + '</b> (từ ' + esc(M.td.nt.trungKhi) + ') gia giờ ' + esc(K.CHI[r.tuTru.gio % 12]) + '. Thiên Cương đóng trên ' + esc(K.CHI[M.cuong]) + ' — ' + esc(D.CUONG_CHI[M.cuong][0]) + ': ' + esc(D.CUONG_CHI[M.cuong][1]) + ' Bấm vào ô trong la bàn để xem tên; bảng bên cạnh ghi đủ.';
+  }
+
+  /* ---------- Chiêm ---------- */
+  function renderChiem(r) {
+    var L = B.chiem(r);
+    $('chiem').innerHTML = L.map(function (c) {
+      return '<article class="cv ' + toneCls(c.tone) + '"><header><span class="k">' + esc(c.han) + '</span><h3>' + esc(c.ten) + '</h3><p class="ket">' + esc(c.ket) + '</p></header>' +
+        '<details><summary>Lập luận (' + c.ct.length + ')</summary><ul class="notes">' + c.ct.map(function (x) { return '<li class="' + x.t + '">' + hz(x.s) + '</li>'; }).join('') + '</ul>' + (c.ghi ? '<p class="mini">' + hz(c.ghi) + '</p>' : '') + '<p class="src">' + esc(c.src) + '</p></details></article>';
+    }).join('');
+  }
+
+  /* ---------- Doanh trại ---------- */
+  var VI_NGAN = ['Thanh Long', 'Bồng Tinh', 'Minh Đường', 'Thái Âm', 'Thiên Môn', 'Địa Hộ', 'Thiên Hình', 'Thiên Đình', 'Thiên Lao', 'Thiên Tàng'];
+  var VAI_NGAN = ['Đại tướng', 'Cờ trống', 'Sĩ tốt', 'Phục binh', 'Cửa quân', 'Tiểu tướng', 'Chém quyết', 'Xử tội', 'Giam giữ', 'Kho phủ'];
+  function renderDoanh(r) {
+    var Dn = B.doanh(r, 'gio'), s = '<svg viewBox="0 0 420 420" role="img" aria-label="Sơ đồ lục giáp an doanh theo tuần của giờ">';
+    s += '<circle cx="210" cy="210" r="196" class="lb-ring"/><circle cx="210" cy="210" r="84" class="dn-wall"/>';
+    var byChi = {}; Dn.ds.forEach(function (x) { byChi[x.chi] = x; });
+    for (var c = 0; c < 12; c++) {
+      var p = viTri(c, 166), x = byChi[c], co = Dn.co.indexOf(c) >= 0;
+      s += '<g class="dn-pt ' + (co ? 'co' : x && x.can === 0 ? 'tuong' : x && x.can === 4 ? 'mon' : '') + '"><circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="27"/><text x="' + p.x.toFixed(1) + '" y="' + (p.y - 3).toFixed(1) + '" class="dn-can">' + (x ? K.CAN_HAN[x.can] + K.CHI_HAN[c] : K.CHI_HAN[c]) + '</text><text x="' + p.x.toFixed(1) + '" y="' + (p.y + 10).toFixed(1) + '" class="dn-ten">' + (co ? 'cô' : esc(VI_NGAN[x.can])) + '</text></g>';
+      var q = viTri(c, 118); if (x) s += '<text x="' + q.x.toFixed(1) + '" y="' + (q.y + 4).toFixed(1) + '" class="dn-vai">' + esc(VAI_NGAN[x.can]) + '</text>';
+    }
+    s += '<text x="210" y="206" class="dn-mid">' + esc(K.canChi(Dn.tuan)) + '</text><text x="210" y="224" class="dn-mid2">tuần của giờ</text></svg>';
+    $('doanh').innerHTML = s;
+    $('doanhTab').innerHTML = '<table class="t"><thead><tr><th>Vị</th><th>Chi</th><th>統宗 · 旨歸</th><th>寶鑑</th><th>秘笈</th></tr></thead><tbody>' + Dn.ds.map(function (x) {
+      return '<tr><td>' + esc(K.CAN[x.can]) + ' ' + esc(x.vi[0]) + ' · ' + esc(x.vi[1]) + '</td><td>' + esc(K.CHI[x.chi]) + ' · ' + esc(B.HUONG_CHI[x.chi]) + '</td><td>' + esc(x.vi[2]) + '</td><td>' + esc(x.vi[3]) + '</td><td>' + esc(x.vi[4]) + '</td></tr>';
+    }).join('') + '<tr><td>Cô (tuần không)</td><td>' + Dn.co.map(function (c) { return esc(K.CHI[c]); }).join(', ') + '</td><td colspan="3">Chỗ trống của tuần — 法竅 六花大陣: tựa cô mà đánh hư</td></tr></tbody></table>';
+    $('tranInfo').innerHTML = 'Thế trận theo can ngày ' + esc(K.CAN[r.tuTru.ngay % 10]) + ': <b>' + esc(Dn.tran) + '</b>. ' + esc(Dn.tranGhi) + ' Cửa quân (Lục Mậu) ở ' + esc(K.CHI[Dn.quanMon]) + ' — «軍門開六戊係戰營», mở năm vị (五位) là thủ doanh.';
+  }
+
+  /* ---------- Chọn giờ ---------- */
+  function renderGio() {
+    var t = readDT(); if (!t) return;
+    var q = B.quetGio(t.y, t.m, t.d, opts(), 12), r0 = K.lap(t.y, t.m, t.d, 12, 0, opts()), ngay = B.thoi(r0).filter(function (x) { return x.ngay; });
+    $('gioHead').innerHTML = 'Ngày <b>' + esc(K.canChi(r0.tuTru.ngay)) + '</b> (' + t.d + '/' + t.m + '/' + t.y + ') · ' + ngay.map(function (x) { return '<span class="pill ' + (x.tone === 'm' ? 'c-cin' : x.tone === 'p' ? 'c-moc' : 'c-gray') + '">' + esc(x.ket) + '</span>'; }).join(' ');
+    $('gioTab').innerHTML = '<table class="t gio"><thead><tr><th>Giờ</th><th>Chủ · khách</th><th>Lành</th><th>Kỵ</th><th>Kỳ môn hội</th><th></th></tr></thead><tbody>' + q.map(function (g) {
+      var hh = g.h === 0 ? '23–01' : pad(g.h - 1) + '–' + pad(g.h + 1);
+      return '<tr class="' + (g.dau.length >= 3 || g.nguBatNgo ? 'xau' : g.lanh.length && !g.dau.length ? 'tot' : '') + '"><td><b>' + esc(K.canChi(g.gio)) + '</b><br><small>' + hh + '</small></td><td>' + esc(g.chuKhach) + '</td><td>' + (g.lanh.map(function (x) { return '<span class="pill c-moc">' + esc(x) + '</span>'; }).join(' ') || '—') + '</td><td>' + (g.dau.map(function (x) { return '<span class="pill c-cin">' + esc(x) + '</span>'; }).join(' ') || '—') + '</td><td>' + (g.kyMon.map(function (p) { return esc(K.CUNG[p].huong); }).join(', ') || '—') + '</td><td><button type="button" class="b" data-h="' + g.h + '">Mở bàn</button></td></tr>';
+    }).join('') + '</tbody></table>';
+    $('gioTab').querySelectorAll('[data-h]').forEach(function (bt) { bt.onclick = function () { $('fTime').value = pad(+bt.dataset.h) + ':10'; S.cung = null; location.hash = 'cong-cu'; render(); }; });
+  }
+
+  /* ---------- Tra cứu ---------- */
+  function renderTraCuu() {
+    var tabs = [['cach', 'Cách cục'], ['tinh', 'Cửu tinh trực thời'], ['mon', 'Bát môn'], ['vai', 'Vai trò trong quân'], ['cuong', 'Thiên Cương sở chỉ'], ['dia', '21 thế đất']];
+    $('tcTabs').innerHTML = tabs.map(function (t, i) { return '<button type="button" role="tab" data-t="' + t[0] + '" aria-selected="' + (i === 0) + '">' + esc(t[1]) + '</button>'; }).join('');
+    function show(k) {
+      var h = '';
+      if (k === 'cach') h = '<table class="t"><thead><tr><th>Cách</th><th>Điều kiện</th><th>Nghĩa trong binh</th></tr></thead><tbody>' + Object.keys(D.CACH).map(function (key) { var c = D.CACH[key]; return '<tr><td><span class="' + (c.loai === 'cat' ? 'g-cat' : 'g-hung') + '">' + esc(c.ten) + '</span><br><span class="hz">' + esc(c.han) + '</span></td><td class="hd">' + esc(c.dk) + '</td><td>' + c.y.map(function (y) { return esc(y.vi) + ' <span class="src">' + esc(y.s) + '</span><div class="han" lang="zh">' + esc(y.han) + '</div>'; }).join('<br>') + '</td></tr>'; }).join('') + '</tbody></table>';
+      if (k === 'tinh') h = '<table class="t"><thead><tr><th>Sao</th><th>三元經</th><th>符應經 九星所主</th><th>九星吉凶歌</th></tr></thead><tbody>' + Object.keys(D.TINH_THOI).map(function (t) { var x = D.TINH_THOI[t]; return '<tr><td>' + esc(t) + '</td><td>' + esc(D.TINH_BAC[t]) + '</td><td>' + esc(x.vi) + '<div class="han" lang="zh">' + esc(x.pu) + '</div></td><td>' + esc(x.caVi) + '<div class="han" lang="zh">' + esc(x.ca) + '</div></td></tr>'; }).join('') + '</tbody></table>';
+      if (k === 'mon') h = '<table class="t"><thead><tr><th>Môn</th><th>秘笈 兵占</th><th>Nghĩa</th></tr></thead><tbody>' + Object.keys(D.MON_BINH).map(function (m) { var x = D.MON_BINH[m]; return '<tr><td>' + esc(m) + '</td><td><span class="hz">' + esc(x.bk) + '</span></td><td>' + hz(x.vi) + '<div class="han" lang="zh">' + esc(x.pu) + '</div></td></tr>'; }).join('') + '</tbody></table>';
+      if (k === 'vai') h = '<div class="grid3"><div><h3 class="mh">Thập can</h3><table class="t"><tbody>' + D.VAI.can.map(function (v, i) { return '<tr><td>' + esc(K.CAN[i]) + ' ' + K.CAN_HAN[i] + '</td><td>' + esc(v) + ' <span class="hz">' + esc(D.VAI.canHan[i]) + '</span></td></tr>'; }).join('') + '</tbody></table></div><div><h3 class="mh">Cửu tinh</h3><table class="t"><tbody>' + Object.keys(D.VAI.tinh).map(function (t) { return '<tr><td>' + esc(t) + '</td><td>' + esc(D.VAI.tinh[t]) + '</td></tr>'; }).join('') + '</tbody></table></div><div><h3 class="mh">Bát thần</h3><table class="t"><tbody>' + Object.keys(D.VAI.than).map(function (t) { return '<tr><td>' + esc(t) + '</td><td>' + esc(D.VAI.than[t]) + '</td></tr>'; }).join('') + '</tbody></table></div></div><p class="note">Theo 《奇門遁甲秘笈大全》 卷七 «兵占». Bạch Hổ, Câu Trần, Cửu Địa, Cửu Thiên không có trong mục này — lấy theo 太白陰經 và nghĩa thường.</p>';
+      if (k === 'cuong') h = '<table class="t"><thead><tr><th>Cương trên chi</th><th>旨歸 / 秘笈</th><th>虎鈐經</th></tr></thead><tbody>' + [5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4].map(function (c) { var x = D.CUONG_CHI[c]; return '<tr><td>' + esc(K.CHI[c]) + ' ' + K.CHI_HAN[c] + '</td><td><span class="' + (x[2] > 0 ? 'g-cat' : 'g-hung') + '">' + esc(x[0]) + '</span> — ' + esc(x[1]) + '</td><td class="hd">' + esc(D.CUONG_HK[c]) + '</td></tr>'; }).join('') + '</tbody></table>' +
+        '<h3 class="mh" style="margin-top:16px">Thiên Cương gia mạnh · trọng · quý <span class="src">元靈經 占賊來否</span></h3><table class="t"><thead><tr><th>Hỏi</th><th>Mạnh 孟 (Dần Thân Tỵ Hợi)</th><th>Trọng 仲 (Tý Ngọ Mão Dậu)</th><th>Quý 季 (Thìn Tuất Sửu Mùi)</th></tr></thead><tbody>' + D.CUONG_MTQ.map(function (row) { return '<tr>' + row.map(function (c) { return '<td>' + esc(c) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table>';
+      if (k === 'dia') h = '<table class="t"><thead><tr><th>Thế đất</th><th>Hình</th></tr></thead><tbody>' + D.DIA_HINH.map(function (x) { return '<tr><td>' + esc(x[1]) + ' <span class="hz">' + esc(x[0]) + '</span></td><td class="hd">' + esc(x[2]) + '</td></tr>'; }).join('') + '</tbody></table><p class="note">《奇門旨歸》 卷三十六 行軍擇地: «故制勝之道，莫先於地». Chỉ Thiên phủ (mặt núi lưng nước) được khen là «進可以戰，退可以守»; các thế còn lại là chỗ phải biết để tránh hoặc lợi dụng.</p>';
+      $('tcOut').innerHTML = '<div class="tscroll">' + h + '</div>';
+      $('tcTabs').querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.t === k)); });
+    }
+    $('tcTabs').onclick = function (e) { var b = e.target.closest('button'); if (b) show(b.dataset.t); };
+    show('cach');
+  }
+
+  /* ---------- Vẽ ---------- */
+  function render() {
+    var r = lap();
+    if (!r) { $('board').innerHTML = '<div class="cell empty">Ngày giờ chưa hợp lệ — nhập dạng 24h, ví dụ 08:30.</div>'; return; }
+    var P = B.phuong(r); CUR = r;
+    if (S.cung && !P[S.cung]) S.cung = null;
+    renderBoard(r, P); renderTuTru(r); renderTong(r, P); renderCung(r, P); if ($('laBan')) renderLaBan(r); if ($('chiem')) renderChiem(r); if ($('doanh')) renderDoanh(r);
+    if (S.view === 'chon-gio') renderGio();
+  }
+
+  setNow(); initControls(); if ($('tcTabs')) renderTraCuu(); route(); render();
+})();
+</script>
+</html>

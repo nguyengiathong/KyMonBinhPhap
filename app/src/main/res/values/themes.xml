@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- values-night swaps this parent for the dark Material theme; the WebView then reports
+         prefers-color-scheme: dark and the page switches to its own dark palette. -->
+    <style name="AppTheme.Parent" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="AppTheme" parent="AppTheme.Parent">
+        <item name="android:windowBackground">@color/paper</item>
+        <item name="android:statusBarColor">@color/surface</item>
+        <item name="android:navigationBarColor">@color/paper</item>
+        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">@bool/light_system_bars</item>
+        <item name="android:colorAccent">@color/cinnabar</item>
+    </style>
+</resources>
