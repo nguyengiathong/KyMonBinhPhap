@@ -59,7 +59,7 @@ lên Google Play. Muốn ký bằng khóa riêng, thêm bốn secret vào repo
 ## Cấu trúc
 
 - `app/src/main/assets/www/` — trang web và phông chữ (Be Vietnam Pro, Newsreader; giấy phép SIL OFL 1.1, kèm theo trong thư mục `fonts/`)
-- `app/src/main/assets/www/app.css`, `app.js` — phần riêng của app: bố cục thanh điều khiển, chín ô bàn cửu cung luôn bằng nhau, chọn giao diện sáng/tối
+- `app/src/main/assets/www/app.css`, `app.js` — phần riêng của app: bố cục thanh điều khiển, «Tổng luận giờ này» thu gọn và đặt trên «Tứ trụ», chín ô bàn cửu cung luôn bằng nhau, chọn giao diện sáng/tối
 - `app/src/main/java/io/github/nguyengiathong/kymonbinhphap/MainActivity.java` — WebView, nút Back đi lùi qua các thẻ của trang, màu thanh hệ thống theo giao diện
 - `app/src/main/res/` — giao diện hệ thống, biểu tượng ấn «兵»
 - `tools/prepare_web.py` — chuyển file HTML thành gói web ngoại tuyến

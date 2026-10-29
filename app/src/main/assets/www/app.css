@@ -67,3 +67,15 @@ body{margin:0 0 20px}
   .board .c-can .db::before{margin-right:3px}
   .board .c-can .phu{font-size:11px}
 }
+
+/* ---------- Tổng luận giờ này: trên Tứ trụ, thu gọn còn khung chủ · khách ---------- */
+.kmb-tong{margin-bottom:18px}
+#tong.kmb-collapsed > :not(.verdict){display:none}
+#tong.kmb-collapsed > .verdict{margin-bottom:0}
+.kmb-more{display:flex; align-items:center; justify-content:center; gap:6px; width:100%; margin-top:12px; padding:7px 10px; border:1px solid var(--line-2); border-radius:3px; background:var(--surface-2); color:var(--ink-2); font:inherit; font-size:13px; font-weight:600; cursor:pointer}
+.kmb-more:hover{color:var(--ink); border-color:var(--line-3)}
+.kmb-more .kmb-warn{color:var(--hung); font-weight:500}
+.kmb-more svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+/* Khung tổng luận đã ra khỏi .stage: màn rộng xếp bàn và chi tiết cung cạnh nhau. */
+.stage.bp.kmb-no-tong{grid-template-areas:"board cung"}
+@media (max-width:960px){.stage.bp.kmb-no-tong{grid-template-areas:"board" "cung"}}

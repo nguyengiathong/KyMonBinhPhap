@@ -68,6 +68,40 @@
     if (narrow.addEventListener) narrow.addEventListener('change', labels);
   })();
 
+  /* ---------- Tổng luận giờ này: lên trên Tứ trụ, mặc định thu gọn ---------- */
+  (function () {
+    var tong = $('tong'), panel = tong && tong.closest('.a-tong'), tt = document.querySelector('.tt-panel');
+    if (!panel || !tt) return;
+    tt.parentNode.insertBefore(panel, tt);
+    panel.classList.add('kmb-tong');
+    var stage = document.querySelector('.stage.bp');
+    if (stage) stage.classList.add('kmb-no-tong');
+
+    // Trang vẽ lại nội dung #tong mỗi lần đổi giờ; lớp kmb-collapsed nằm ở chính #tong nên vẫn giữ.
+    // Khi thu gọn chỉ còn khung chủ · khách; giờ nào có lời cảnh báo (.canh) thì nút báo cho biết.
+    var more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'kmb-more';
+    more.setAttribute('aria-controls', 'tong');
+    panel.appendChild(more);
+    function show(open) {
+      tong.classList.toggle('kmb-collapsed', !open);
+      more.setAttribute('aria-expanded', String(open));
+      more.innerHTML = (open ? 'Thu gọn' : 'Xem thêm') +
+        (!open && tong.querySelector('.canh') ? '<span class="kmb-warn">· giờ này phạm kỵ</span>' : '') +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + (open ? 'M6 15l6-6 6 6' : 'M6 9l6 6 6-6') + '"/></svg>';
+    }
+    new MutationObserver(function () { show(!tong.classList.contains('kmb-collapsed')); }).observe(tong, { childList: true });
+    more.onclick = function () {
+      var open = tong.classList.contains('kmb-collapsed');
+      show(open);
+      // Thu gọn từ cuối phần dài thì kéo về đầu khung, khỏi lạc xuống giữa bàn.
+      var head = document.querySelector('.top'), top = panel.getBoundingClientRect().top, h = head ? head.offsetHeight : 0;
+      if (!open && top < h) window.scrollBy(0, top - h - 8);
+    };
+    show(false);
+  })();
+
   /* ---------- Giao diện ---------- */
   var MODES = { auto: 'Theo máy', light: 'Sáng', dark: 'Tối' };
   var ICONS = {
