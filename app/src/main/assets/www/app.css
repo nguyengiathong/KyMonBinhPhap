@@ -52,3 +52,18 @@ body{margin:0 0 20px}
 .kmb-theme-menu button:hover{background:var(--sunken); color:var(--ink)}
 .kmb-theme-menu button[aria-checked="true"]{color:var(--ink); font-weight:600}
 .kmb-theme-menu button[aria-checked="true"]::after{content:""; margin-left:auto; width:6px; height:6px; border-radius:50%; background:var(--cinnabar)}
+
+/* ---------- Bàn cửu cung: chín ô luôn bằng nhau ----------
+   «1fr» không co nhỏ hơn nội dung, nên ô có «Bính / Mậu +Đinh» làm cả cột rộng ra. minmax(0,1fr)
+   giữ ba cột bằng nhau; ba hàng 1fr cùng cao bằng hàng cao nhất. Chữ dài thì xuống dòng trong ô. */
+.board{grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(3,1fr)}
+.board .cell{min-width:0}
+.board .c-can{flex-wrap:wrap; row-gap:3px}
+.board .c-cach{flex-wrap:wrap; row-gap:0}
+@media (max-width:640px){
+  .board .c-can{column-gap:4px}
+  .board .c-can .tb{font-size:17px}
+  .board .c-can .db{font-size:13.5px}
+  .board .c-can .db::before{margin-right:3px}
+  .board .c-can .phu{font-size:11px}
+}
