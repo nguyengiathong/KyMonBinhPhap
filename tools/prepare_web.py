@@ -5,6 +5,7 @@
 
 Writes app/src/main/assets/www/index.html and downloads the Google Fonts the page links to
 into app/src/main/assets/www/fonts/, so the app needs no network connection at run time.
+The app's own additions (assets/www/app.css and app.js) are kept as they are and linked in.
 """
 import html
 import os
@@ -21,14 +22,16 @@ UA = ('Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) '
       'Chrome/130.0.0.0 Mobile Safari/537.36')
 
 # Artifact pages are fragments: the host adds the document skeleton when it publishes them.
-# The app style drops the default 8px body margin so the sticky header runs edge to edge.
+# The inline script sets the light/dark choice before the page is drawn; app.js keeps it after.
 HEAD = '''<!doctype html>
 <html lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>html{-webkit-tap-highlight-color:transparent} body{margin:0 0 20px}</style>
+<script>(function(){try{var a=window.KmbApp,m=a?a.getThemeMode():localStorage.getItem('kmb-theme');if(a&&m==='auto')m=a.isSystemDark()?'dark':'light';if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)}catch(e){}})();</script>
 '''
+APP_CSS = '<link rel="stylesheet" href="app.css">'
+APP_JS = '<script src="app.js"></script>'
 
 
 def get(url):
@@ -103,8 +106,23 @@ def main():
     if m:
         bundle_fonts(html.unescape(m.group(1)))
         page = page[:m.start()] + '<link rel="stylesheet" href="fonts/fonts.css">' + page[m.end():]
+    # app.css goes after the page's last stylesheet so its rules win; app.js runs after the page's scripts.
+    first_script = page.find('<script')
+    style_end = page.rfind('</style>', 0, first_script if first_script >= 0 else len(page))
+    if style_end >= 0:
+        style_end += len('</style>')
+        page = page[:style_end] + '\n' + APP_CSS + page[style_end:]
+    else:
+        page = APP_CSS + '\n' + page
+    end = page.lower().rfind('</body>')
+    if end < 0:
+        end = page.lower().rfind('</html>')
+    if end >= 0:
+        page = page[:end] + APP_JS + '\n' + page[end:]
+    else:
+        page = page.rstrip('\n') + '\n' + APP_JS + '\n'
     if not page.lstrip().lower().startswith('<!doctype'):
-        page = HEAD + page.lstrip() + ('' if page.endswith('\n') else '\n') + '</html>\n'
+        page = HEAD + page.lstrip() + '</html>\n'
 
     os.makedirs(WWW, exist_ok=True)
     with open(os.path.join(WWW, 'index.html'), 'w', encoding='utf-8') as out:

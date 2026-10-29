@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- values-night swaps this parent for the dark Material theme; the WebView then reports
-         prefers-color-scheme: dark and the page switches to its own dark palette. -->
-    <style name="AppTheme.Parent" parent="android:Theme.Material.Light.NoActionBar" />
-
-    <style name="AppTheme" parent="AppTheme.Parent">
-        <item name="android:windowBackground">@color/paper</item>
-        <item name="android:statusBarColor">@color/surface</item>
-        <item name="android:navigationBarColor">@color/paper</item>
-        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="27">@bool/light_system_bars</item>
-        <item name="android:colorAccent">@color/cinnabar</item>
+    <!-- MainActivity picks one of these when the light/dark choice in the page's header is not
+         "Theo máy". The parent also decides the WebView's prefers-color-scheme and the colours
+         of native dialogs such as the date picker. -->
+    <style name="AppTheme.Light" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/paper_light</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">@color/paper_light</item>
+        <item name="android:statusBarColor">@color/surface_light</item>
+        <item name="android:navigationBarColor">@color/paper_light</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:colorAccent">@color/cinnabar_light</item>
     </style>
+
+    <style name="AppTheme.Dark" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/paper_dark</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">@color/paper_dark</item>
+        <item name="android:statusBarColor">@color/surface_dark</item>
+        <item name="android:navigationBarColor">@color/paper_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <item name="android:colorAccent">@color/cinnabar_dark</item>
+    </style>
+
+    <!-- Follows the system: values-night points it at AppTheme.Dark. -->
+    <style name="AppTheme" parent="AppTheme.Light" />
 </resources>

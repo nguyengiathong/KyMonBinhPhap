@@ -3,14 +3,21 @@ package io.github.nguyengiathong.kymonbinhphap;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Insets;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowInsets;
+import android.view.WindowInsetsController;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -33,6 +40,11 @@ public class MainActivity extends Activity {
     private static final String HOST = "appassets.androidplatform.net";
     private static final String START_URL = "https://" + HOST + "/index.html";
 
+    private static final String KEY_THEME = "theme";
+
+    private SharedPreferences prefs;
+    // "auto" (follow the system), "light" or "dark", chosen from the page's header (app.js).
+    private volatile String themeMode;
     private WebView web;
     private View statusBarFill;
     private OnBackInvokedCallback backCallback;
@@ -40,18 +52,20 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        prefs = getSharedPreferences("app", MODE_PRIVATE);
+        themeMode = prefs.getString(KEY_THEME, "auto");
+        setTheme(themeRes(themeMode));
         super.onCreate(savedInstanceState);
 
         FrameLayout root = new FrameLayout(this);
         web = new WebView(this);
-        web.setBackgroundColor(getColor(R.color.paper));
         statusBarFill = new View(this);
-        statusBarFill.setBackgroundColor(getColor(R.color.surface));
         root.addView(web, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         root.addView(statusBarFill, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, Gravity.TOP));
         setContentView(root);
+        applyThemeColors();
 
         // Android 15+ always draws the app behind the system bars, so do it on every version
         // that can and keep the page clear of the bars, display cutouts and the keyboard.
@@ -77,6 +91,7 @@ public class MainActivity extends Activity {
         settings.setAllowContentAccess(false);
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
+        web.addJavascriptInterface(new AppBridge(), "KmbApp");
 
         web.setWebViewClient(new WebViewClient() {
             @Override
@@ -121,6 +136,84 @@ public class MainActivity extends Activity {
 
         if (savedInstanceState == null || web.restoreState(savedInstanceState) == null) {
             web.loadUrl(START_URL);
+        }
+    }
+
+    /** The page's side of the light/dark choice; app.js calls it as window.KmbApp. */
+    private final class AppBridge {
+        @JavascriptInterface
+        public String getThemeMode() {
+            return themeMode;
+        }
+
+        @JavascriptInterface
+        public boolean isSystemDark() {
+            return MainActivity.this.isSystemDark();
+        }
+
+        @JavascriptInterface
+        public void setThemeMode(String mode) {
+            if ("auto".equals(mode) || "light".equals(mode) || "dark".equals(mode)) {
+                runOnUiThread(() -> changeThemeMode(mode));
+            }
+        }
+    }
+
+    private static int themeRes(String mode) {
+        switch (mode) {
+            case "light": return R.style.AppTheme_Light;
+            case "dark": return R.style.AppTheme_Dark;
+            default: return R.style.AppTheme;
+        }
+    }
+
+    private boolean isSystemDark() {
+        return (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                == Configuration.UI_MODE_NIGHT_YES;
+    }
+
+    private boolean isDark() {
+        return "dark".equals(themeMode) || ("auto".equals(themeMode) && isSystemDark());
+    }
+
+    // The page has already switched its own colours through data-theme; this brings the native
+    // parts along without reloading it. Later launches start in the right theme from onCreate.
+    private void changeThemeMode(String mode) {
+        themeMode = mode;
+        prefs.edit().putString(KEY_THEME, mode).apply();
+        setTheme(themeRes(mode));  // dialogs the page opens next, such as the date picker
+        applyThemeColors();
+        if (Build.VERSION.SDK_INT >= 33) {
+            getSplashScreen().setSplashScreenTheme("auto".equals(mode) ? Resources.ID_NULL : themeRes(mode));
+        }
+    }
+
+    // Colours the window, the strip behind the status bar and the system bar icons to match the
+    // page's light or dark palette.
+    @SuppressWarnings("deprecation")
+    private void applyThemeColors() {
+        boolean dark = isDark();
+        int paper = getColor(dark ? R.color.paper_dark : R.color.paper_light);
+        int surface = getColor(dark ? R.color.surface_dark : R.color.surface_light);
+        Window window = getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(paper));
+        window.setStatusBarColor(surface);  // ignored from Android 15, where statusBarFill shows through
+        window.setNavigationBarColor(paper);
+        web.setBackgroundColor(paper);
+        statusBarFill.setBackgroundColor(surface);
+        if (Build.VERSION.SDK_INT >= 30) {
+            WindowInsetsController controller = window.getInsetsController();
+            int light = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                    | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+            if (controller != null) {
+                controller.setSystemBarsAppearance(dark ? 0 : light, light);
+            }
+        } else {
+            View decor = window.getDecorView();
+            int light = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    | (Build.VERSION.SDK_INT >= 26 ? View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR : 0);
+            int flags = decor.getSystemUiVisibility();
+            decor.setSystemUiVisibility(dark ? flags & ~light : flags | light);
         }
     }
 

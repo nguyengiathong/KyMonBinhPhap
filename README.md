@@ -2,7 +2,8 @@
 
 Ứng dụng Android hiển thị trang «Kỳ Môn Binh Pháp» (奇門兵法) trong một WebView toàn màn hình.
 Trang, mã JavaScript và phông chữ đều nằm sẵn trong APK nên ứng dụng chạy hoàn toàn ngoại tuyến,
-không xin quyền truy cập Internet. Giao diện tự theo chế độ sáng/tối của máy.
+không xin quyền truy cập Internet. Nút ở đầu trang (cạnh «Chọn giờ») chọn giao diện: theo máy,
+sáng hoặc tối, cùng bảng màu với artifact; thanh trạng thái của Android đổi màu theo.
 
 ## Tải và cài đặt
 
@@ -25,8 +26,9 @@ python3 tools/prepare_web.py duong/dan/Ky-Mon-Binh-Phap.html
 ```
 
 Script ghi `app/src/main/assets/www/index.html`, bổ sung phần khung tài liệu (`<!doctype>`,
-`viewport`) và tải các phông Google Fonts mà trang dùng về `assets/www/fonts/` để chạy offline.
-Commit rồi push là có APK mới.
+`viewport`), tải các phông Google Fonts mà trang dùng về `assets/www/fonts/` để chạy offline và
+gắn `app.css` / `app.js` vào trang. Hai file này là phần riêng của app (thanh điều khiển xếp
+ba dòng, nút sáng/tối), không bị ghi đè khi tạo lại trang. Commit rồi push là có APK mới.
 
 ## Tự dựng APK trên máy
 
@@ -57,7 +59,8 @@ lên Google Play. Muốn ký bằng khóa riêng, thêm bốn secret vào repo
 ## Cấu trúc
 
 - `app/src/main/assets/www/` — trang web và phông chữ (Be Vietnam Pro, Newsreader; giấy phép SIL OFL 1.1, kèm theo trong thư mục `fonts/`)
-- `app/src/main/java/io/github/nguyengiathong/kymonbinhphap/MainActivity.java` — WebView, nút Back đi lùi qua các thẻ của trang
+- `app/src/main/assets/www/app.css`, `app.js` — phần riêng của app: bố cục thanh điều khiển, chọn giao diện sáng/tối
+- `app/src/main/java/io/github/nguyengiathong/kymonbinhphap/MainActivity.java` — WebView, nút Back đi lùi qua các thẻ của trang, màu thanh hệ thống theo giao diện
 - `app/src/main/res/` — giao diện hệ thống, biểu tượng ấn «兵»
 - `tools/prepare_web.py` — chuyển file HTML thành gói web ngoại tuyến
 - `.github/workflows/build-apk.yml` — dựng và phát hành APK

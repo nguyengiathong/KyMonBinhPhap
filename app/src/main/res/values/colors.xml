@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Same tokens as the page's :root (light); values-night holds the dark ones. -->
-    <color name="paper">#F0F1ED</color>
-    <color name="surface">#FCFCFA</color>
-    <color name="cinnabar">#A93420</color>
+    <!-- Same tokens as the page's :root, light and dark. -->
+    <color name="paper_light">#F0F1ED</color>
+    <color name="surface_light">#FCFCFA</color>
+    <color name="cinnabar_light">#A93420</color>
+    <color name="paper_dark">#0D1012</color>
+    <color name="surface_dark">#15191B</color>
+    <color name="cinnabar_dark">#DC6D4D</color>
     <color name="ic_launcher_background">#A93420</color>
 </resources>

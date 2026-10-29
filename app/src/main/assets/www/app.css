@@ -1,0 +1,54 @@
+/* Phần riêng của ứng dụng Android, nạp sau CSS của trang (tools/prepare_web.py chèn vào).
+   Giữ ở file riêng để lần sau tạo lại index.html từ artifact không mất. */
+html{-webkit-tap-highlight-color:transparent}
+body{margin:0 0 20px}
+
+/* ---------- Thanh điều khiển: ba dòng (app.js xếp các ô vào .ctl-row) ----------
+   1. ngày · giờ · lùi/tới giờ   2. múi giờ · giao ngày · nguyên văn   3. phái · định cục · trực sử */
+.controls.ctl{flex-direction:column; align-items:stretch; gap:12px}
+.ctl-row{display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px 16px}
+.ctl .field > label, .ctl .field > .lab{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+@media (max-width:640px){
+  .controls.ctl{padding:11px 12px 12px; gap:10px}
+  .ctl-row{display:grid; gap:8px; align-items:end}
+  .ctl-time{grid-template-columns:minmax(0,1fr) 4.4em auto}
+  .ctl-opts{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}
+  .ctl-mode{grid-template-columns:repeat(3,minmax(0,1fr)); align-items:start}
+  .ctl .field{gap:4px}
+  .ctl .field > label, .ctl .field > .lab{font-size:10px; letter-spacing:.07em}
+  .ctl .field input, .ctl .field select{width:100%; height:34px; padding:5px 6px; font-size:13.5px}
+  .ctl input.tin{width:100%; padding-inline:2px}
+  .ctl .btnrow{flex-wrap:nowrap; gap:4px}
+  .ctl .btnrow .b{height:34px; padding:5px 9px; font-size:13px}
+  .ctl .seg{flex-wrap:nowrap}
+  .ctl .seg button{padding:6px 10px; font-size:12.5px}
+  .ctl-opts .seg button{height:34px}
+  /* Hai lựa chọn của mỗi ô dòng 3 xếp chồng để vừa ba cột. */
+  .ctl-mode .seg{display:flex; flex-direction:column; width:100%}
+  .ctl-mode .seg button{border-right:0; border-bottom:1px solid var(--line-2); padding:6px 4px; line-height:1.35}
+  .ctl-mode .seg button:last-child{border-bottom:0}
+  /* app.js tách phần đuôi của nhãn dài («Trực sử khi tuần thủ…», «Hiện chữ Hán») ra đây. */
+  .kmb-long{display:none}
+}
+@media (max-width:400px){
+  .ctl-time{grid-template-columns:minmax(0,1fr) 3.9em auto}
+  .ctl .field input[type="date"]{padding-inline:5px; font-size:13px}
+  .ctl input[type="date"]::-webkit-calendar-picker-indicator{margin-left:2px; padding:0}
+  .ctl .btnrow .b{padding-inline:5px}
+  .ctl .btnrow .b.primary{padding-inline:6px}
+  .ctl-mode .seg button{font-size:11.5px; padding-inline:1px; white-space:nowrap}
+}
+
+/* ---------- Chọn giao diện sáng / tối ---------- */
+.kmb-theme{position:relative; display:flex}
+.kmb-theme-btn{display:grid; place-items:center; width:36px; height:34px; padding:0; border:0; border-radius:3px; background:none; color:var(--ink-3); cursor:pointer}
+.kmb-theme-btn:hover, .kmb-theme-btn[aria-expanded="true"]{color:var(--ink); background:var(--sunken)}
+.kmb-theme svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.kmb-theme svg .fill{fill:currentColor; stroke:none}
+.kmb-theme-menu{position:absolute; right:0; top:calc(100% + 6px); z-index:30; min-width:172px; padding:4px; background:var(--surface); border:1px solid var(--line-2); border-radius:4px; box-shadow:var(--shadow)}
+.kmb-theme-menu[hidden]{display:none}
+.kmb-theme-menu button{display:flex; align-items:center; gap:10px; width:100%; padding:9px 10px; border:0; border-radius:3px; background:none; color:var(--ink-2); font:inherit; font-size:14px; text-align:left; cursor:pointer}
+.kmb-theme-menu button:hover{background:var(--sunken); color:var(--ink)}
+.kmb-theme-menu button[aria-checked="true"]{color:var(--ink); font-weight:600}
+.kmb-theme-menu button[aria-checked="true"]::after{content:""; margin-left:auto; width:6px; height:6px; border-radius:50%; background:var(--cinnabar)}

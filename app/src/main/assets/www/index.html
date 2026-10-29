@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>html{-webkit-tap-highlight-color:transparent} body{margin:0 0 20px}</style>
+<script>(function(){try{var a=window.KmbApp,m=a?a.getThemeMode():localStorage.getItem('kmb-theme');if(a&&m==='auto')m=a.isSystemDark()?'dark':'light';if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m)}catch(e){}})();</script>
 <title>Kỳ Môn Binh Pháp</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
@@ -405,6 +405,7 @@ table.gio td:first-child{white-space:nowrap}
 @media (max-width:760px){#tuTru{grid-template-columns:minmax(0,1fr)}}
 
 </style>
+<link rel="stylesheet" href="app.css">
 
 <header class="top gutter">
   <div class="wrap">
@@ -2352,4 +2353,5 @@ root.KM_CACH = CACH;
   setNow(); initControls(); if ($('tcTabs')) renderTraCuu(); route(); render();
 })();
 </script>
+<script src="app.js"></script>
 </html>
